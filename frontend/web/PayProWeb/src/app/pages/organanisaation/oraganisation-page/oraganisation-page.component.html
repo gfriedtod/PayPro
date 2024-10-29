@@ -1,3 +1,213 @@
-<div class="w-full flex justify-center items-center bg-red-500">
-  dsa2
+<div class="w-full flex flex-col justify-start  bg-[#F9F9F9] p-10 gap-10">
+  <div class="w-full flex justify-start ">
+    <h1 class="text-3xl font-bold">Departements</h1>
+  </div>
+
+  <div class="grid grid-cols-4 gap-4">
+    <div class="col-span-1">
+      <div class="bg-[#FEF4EB] shadow-white border-none   w-full h-28 flex justify-start items-center gap-2 p-5"
+           hlmCard>
+        <div class="bg-white w-14 h-14" hlmCard>
+          <div class="w-full h-full flex justify-center items-center">
+            <hlm-icon class="text-black" name="lucideUserPlus"></hlm-icon>
+
+          </div>
+        </div>
+        <div class="flex flex-col justify-center items-start">
+          <h1 class="font-bold">Total Departement</h1>
+          <h1 class=>10</h1>
+        </div>
+      </div>
+    </div>
+    <div class="col-span-1">
+      <div class="bg-[#E9F8FF] w-full h-28 flex justify-start items-center gap-2 p-5" hlmCard>
+        <div class="bg-white w-14 h-14" hlmCard>
+          <div class="w-full h-full flex justify-center items-center">
+            <hlm-icon class="text-black" name="lucideUserMinus"></hlm-icon>
+
+          </div>
+        </div>
+        <div class="flex flex-col justify-center items-start">
+          <h1 class="font-bold">New Departement</h1>
+          <h1 class=>10</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-between">
+    <div class="flex  gap-3">
+      <input class="bg-white h-12 text-gray-300 " hlmInput placeholder="Departement name" type="text">
+      <brn-select class="inline-block" placeholder="Select an option">
+        <hlm-select-trigger class="w-56 h-[3rem]">
+          <hlm-select-value/>
+        </hlm-select-trigger>
+        <hlm-select-content>
+          <hlm-option value="Refresh">Refresh</hlm-option>
+          <hlm-option value="Settings">Settings</hlm-option>
+          <hlm-option value="Help">Help</hlm-option>
+          <hlm-option value="Signout">Sign out</hlm-option>
+        </hlm-select-content>
+      </brn-select>
+      <brn-select class="inline-block" placeholder="Select an option">
+        <hlm-select-trigger class="w-56 h-[3rem]">
+          <hlm-select-value/>
+        </hlm-select-trigger>
+        <hlm-select-content>
+          <hlm-option value="Refresh">Refresh</hlm-option>
+          <hlm-option value="Settings">Settings</hlm-option>
+          <hlm-option value="Help">Help</hlm-option>
+          <hlm-option value="Signout">Sign out</hlm-option>
+        </hlm-select-content>
+      </brn-select>
+      <button class="h-11" hlmBtn>
+        <hlm-icon name="lucideSearch"></hlm-icon>
+      </button>
+    </div>
+
+    <hlm-sheet side="right">
+      <button brnSheetTrigger class="gap-2 h-11 " hlmBtn>
+        <hlm-icon name="lucidePlus"></hlm-icon>
+        Add Departement
+      </button>
+      <hlm-sheet-content *brnSheetContent="let ctx">
+        <hlm-sheet-header>
+          <h3 hlmSheetTitle>Edit Profile</h3>
+          <p hlmSheetDescription>Make changes to your profile here. Click save when you're done.</p>
+        </hlm-sheet-header>
+        <div class="py-4 grid gap-4">
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="name" hlmLabel>Name</label>
+            <input class="col-span-3" hlmInput id="name" value="Pedro Duarte"/>
+          </div>
+        </div>
+        <hlm-sheet-footer>
+          <button hlmBtn type="submit">Save Changes</button>
+        </hlm-sheet-footer>
+      </hlm-sheet-content>
+    </hlm-sheet>
+  </div>
+  <div class="flex flex-col justify-between gap-4 sm:flex-row">
+    <input
+      (ngModelChange)="_rawFilterInput.set($event)"
+      [ngModel]="_emailFilter()"
+      class="w-full md:w-80 bg-white h-12 "
+      hlmInput
+      placeholder="Filter Name..."
+    />
+
+    <button [brnMenuTriggerFor]="menu" align="end" hlmBtn variant="outline">
+      Columns
+      <hlm-icon class="ml-2" name="lucideChevronDown" size="sm"/>
+    </button>
+    <ng-template #menu>
+      <hlm-menu class="w-32">
+        @for (column of _brnColumnManager.allColumns; track column.name) {
+          <button
+            hlmMenuItemCheckbox
+            [disabled]="_brnColumnManager.isColumnDisabled(column.name)"
+            [checked]="_brnColumnManager.isColumnVisible(column.name)"
+            (triggered)="_brnColumnManager.toggleVisibility(column.name)"
+          >
+            <hlm-menu-item-check/>
+            <span>{{ column.label }}</span>
+          </button>
+        }
+      </hlm-menu>
+    </ng-template>
+  </div>
+
+  <brn-table
+    [dataSource]="_filteredSortedPaginatedPayments()"
+    [displayedColumns]="_allDisplayedColumns()"
+    [trackBy]="_trackBy"
+    class="border-border mt-4 block h-[335px] relative overflow-auto rounded-md border"
+    hlm
+    stickyHeader
+  >
+    <brn-column-def class="w-12" name="select">
+      <hlm-th *brnHeaderDef>
+        <hlm-checkbox (changed)="handleHeaderCheckboxChange()" [checked]="_checkboxState()"/>
+      </hlm-th>
+      <hlm-td *brnCellDef="let element">
+        <hlm-checkbox (changed)="togglePayment(element)" [checked]="_isPaymentSelected(element)"/>
+      </hlm-td>
+    </brn-column-def>
+    <brn-column-def class="w-32 sm:w-40" name="status">
+      <hlm-th *brnHeaderDef truncate>Status</hlm-th>
+      <hlm-td *brnCellDef="let element" truncate>
+        {{ element.status | titlecase }}
+      </hlm-td>
+    </brn-column-def>
+    <brn-column-def class="w-60 lg:flex-1" name="email">
+      <hlm-th *brnHeaderDef>
+        <button (click)="handleEmailSortChange()" hlmBtn size="sm" variant="ghost">
+          Email
+          <hlm-icon class="ml-3" name="lucideArrowUpDown" size="sm"/>
+        </button>
+      </hlm-th>
+      <hlm-td *brnCellDef="let element" truncate>
+        {{ element.email }}
+      </hlm-td>
+    </brn-column-def>
+    <brn-column-def class="justify-end w-20" name="amount">
+      <hlm-th *brnHeaderDef>Amount</hlm-th>
+      <hlm-td *brnCellDef="let element" class="font-medium tabular-nums">
+        $ {{ element.amount | number: '1.2-2' }}
+      </hlm-td>
+    </brn-column-def>
+    <brn-column-def class="w-16" name="actions">
+      <hlm-th *brnHeaderDef></hlm-th>
+      <hlm-td *brnCellDef="let element">
+        <button [brnMenuTriggerFor]="menu" align="end" class="h-6 w-6 p-0.5" hlmBtn variant="ghost">
+          <hlm-icon class="w-4 h-4" name="lucideMoreHorizontal"/>
+        </button>
+
+        <ng-template #menu>
+          <hlm-menu>
+            <hlm-menu-label>Actions</hlm-menu-label>
+            <hlm-menu-separator/>
+            <hlm-menu-group>
+              <button hlmMenuItem>Copy payment ID</button>
+            </hlm-menu-group>
+            <hlm-menu-separator/>
+            <hlm-menu-group>
+              <button hlmMenuItem>View customer</button>
+              <button hlmMenuItem>View payment details</button>
+            </hlm-menu-group>
+          </hlm-menu>
+        </ng-template>
+      </hlm-td>
+    </brn-column-def>
+    <div brnNoDataRow class="flex items-center justify-center p-20 text-muted-foreground">No data</div>
+  </brn-table>
+  <div
+    *brnPaginator="let ctx; totalElements: _totalElements(); pageSize: _pageSize(); onStateChange: _onStateChange"
+    class="flex flex-col justify-between mt-4 sm:flex-row sm:items-center"
+  >
+    <span class="text-sm text-muted-foreground text-sm">{{ _selected().length }} of {{ _totalElements() }} row(s) selected</span>
+    <div class="flex mt-2 sm:mt-0">
+      <brn-select [(ngModel)]="_pageSize" class="inline-block" placeholder="{{ _availablePageSizes[0] }}">
+        <hlm-select-trigger class="inline-flex mr-1 w-15 h-9">
+          <hlm-select-value/>
+        </hlm-select-trigger>
+        <hlm-select-content>
+          @for (size of _availablePageSizes; track size) {
+            <hlm-option [value]="size">
+              {{ size === 10000 ? 'All' : size }}
+            </hlm-option>
+          }
+        </hlm-select-content>
+      </brn-select>
+
+      <div class="flex space-x-1">
+        <button (click)="ctx.decrement()" [disabled]="!ctx.decrementable()" hlmBtn size="sm" variant="outline">
+          Previous
+        </button>
+        <button (click)="ctx.increment()" [disabled]="!ctx.incrementable()" hlmBtn size="sm" variant="outline">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

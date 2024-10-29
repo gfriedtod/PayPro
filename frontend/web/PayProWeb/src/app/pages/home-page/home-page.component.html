@@ -1,4 +1,4 @@
-<div class="w-full flex flex-col justify-start overflow-y-scroll bg-[#EBEBEB] p-10 gap-10">
+<div class="w-full flex flex-col justify-start  bg-[#F9F9F9] p-10 gap-10">
         <div class="w-full flex justify-start ">
             <h1 class="text-3xl font-bold">Employees</h1>
         </div>
@@ -91,10 +91,59 @@
         <hlm-icon name="lucideSearch"></hlm-icon>
       </button>
     </div>
-    <button hlmBtn class="gap-2 h-11 ">
-      <hlm-icon name="lucidePlus"></hlm-icon>
-      Add employee
-    </button>
+
+    <hlm-sheet side="right">
+      <button brnSheetTrigger class="gap-2 h-11 " hlmBtn>
+        <hlm-icon name="lucidePlus"></hlm-icon>
+        Add employee
+      </button>
+      <hlm-sheet-content *brnSheetContent="let ctx">
+        <hlm-sheet-header>
+          <h3 hlmSheetTitle>Edit Profile</h3>
+          <p hlmSheetDescription>Make changes to your profile here. Click save when you're done.</p>
+        </hlm-sheet-header>
+        <div class="py-4 grid gap-4">
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="name" hlmLabel>Name</label>
+            <input class="col-span-3" hlmInput id="name" value="Pedro Duarte"/>
+          </div>
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="username" hlmLabel>Username</label>
+            <input class="col-span-3" hlmInput id="username" value="@peduarte"/>
+          </div>
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="password" hlmLabel>Password</label>
+            <input class="col-span-3" hlmInput id="password" value="@peduarte"/>
+          </div>
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="email" hlmLabel>email</label>
+            <input class="col-span-3" hlmInput id="email" value="@peduarte"/>
+          </div>
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="cni" hlmLabel>CNI</label>
+            <input class="col-span-3" hlmInput id="cni" value="@peduarte"/>
+          </div>
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="cni" hlmLabel>Departement</label>
+
+            <brn-select class="inline-block" placeholder="Select an option">
+              <hlm-select-trigger class="w-60">
+                <hlm-select-value />
+              </hlm-select-trigger>
+              <hlm-select-content>
+                <hlm-option value="Refresh">Refresh</hlm-option>
+                <hlm-option value="Settings">Comtabiliter</hlm-option>
+                <hlm-option value="Help">Finance</hlm-option>
+                <hlm-option value="Signout">It</hlm-option>
+              </hlm-select-content>
+            </brn-select>
+          </div>
+        </div>
+        <hlm-sheet-footer>
+          <button hlmBtn type="submit">Save Changes</button>
+        </hlm-sheet-footer>
+      </hlm-sheet-content>
+    </hlm-sheet>
   </div>
   <div class="flex flex-col justify-between gap-4 sm:flex-row">
     <input
@@ -129,7 +178,7 @@
   <brn-table
     hlm
     stickyHeader
-    class="border-border mt-4 block h-[335px] overflow-auto rounded-md border"
+    class="border-border mt-4 block h-[335px] relative overflow-auto rounded-md border"
     [dataSource]="_filteredSortedPaginatedPayments()"
     [displayedColumns]="_allDisplayedColumns()"
     [trackBy]="_trackBy"
@@ -156,7 +205,9 @@
         </button>
       </hlm-th>
       <hlm-td truncate *brnCellDef="let element">
-        {{ element.email }}
+        <button class="w-full h-10 flex gap-2 font-normal flex justify-start" hlmBtn hlmBtn routerLink="/users"
+                variant="ghost"> {{ element.email }}
+        </button>
       </hlm-td>
     </brn-column-def>
     <brn-column-def name="amount" class="justify-end w-20">

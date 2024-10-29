@@ -29,6 +29,15 @@ import {debounceTime, map} from 'rxjs';
 import {FormsModule} from '@angular/forms';
 import {BrnMenuTriggerDirective} from '@spartan-ng/ui-menu-brain';
 import {DecimalPipe, TitleCasePipe} from '@angular/common';
+import {
+  HlmSheetComponent,
+  HlmSheetContentComponent, HlmSheetDescriptionDirective, HlmSheetFooterComponent,
+  HlmSheetHeaderComponent,
+  HlmSheetTitleDirective
+} from '@spartan-ng/ui-sheet-helm';
+import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui-sheet-brain';
+import {HlmLabelDirective} from '@spartan-ng/ui-label-helm';
+import {RouterLink} from '@angular/router';
 
 export type Payment = {
   id: string;
@@ -222,7 +231,22 @@ const PAYMENT_DATA: Payment[] = [
     HlmCheckboxImports,
     HlmInputDirective,
     HlmCardImports,
-    HlmCardDirective
+    HlmCardDirective,
+    HlmTdComponent,
+    HlmSheetComponent,
+    HlmSheetComponent,
+    HlmSheetContentComponent,
+    BrnSheetContentDirective,
+    HlmSheetHeaderComponent,
+    HlmSheetTitleDirective,
+    HlmSheetDescriptionDirective,
+    HlmLabelDirective,
+    HlmSheetFooterComponent,
+    BrnSheetTriggerDirective,
+    HlmSheetTitleDirective,
+    HlmSheetDescriptionDirective,
+    RouterLink,
+    HlmButtonDirective
   ],
   providers: [
     provideIcons({

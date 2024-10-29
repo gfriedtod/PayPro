@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import {HomePageComponent} from './pages/home-page/home-page.component';
 import {OraganisationPageComponent} from './pages/organanisaation/oraganisation-page/oraganisation-page.component';
+import {UserDetailComponent} from './pages/user-detail/user-detail.component';
 
 export const routes: Routes = [
 
@@ -9,11 +10,16 @@ export const routes: Routes = [
     component: HomePageComponent,
   },
   {
-    path: '**',
+    path: '',
     redirectTo: 'home',
+    pathMatch: "full"
   },
   {
     path: 'organisation',
     component:OraganisationPageComponent
+  },
+  {
+    path: 'users',
+    component:UserDetailComponent
   }
 ];
