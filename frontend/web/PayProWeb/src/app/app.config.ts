@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import {provideIcons} from '@ng-icons/core';
 import {lucideArrowRight, lucideCheck, lucideChevronDown} from '@ng-icons/lucide';
+import {provideHttpClient} from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideIcons(
@@ -13,5 +14,6 @@ export const appConfig: ApplicationConfig = {
       lucideCheck
     },
 
-  )]
+  ),
+    provideHttpClient()]
 };

@@ -4,13 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb8246f-7697-401a-88cc-4ce7ac94a7f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PayPro.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/public/logo.png" afterDir="false" />
+    <list default="true" id="cdb8246f-7697-401a-88cc-4ce7ac94a7f9" name="Changes" comment="init">
+      <change afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/environement/env.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/model/DepartementDto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/model/OrganisationDto.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/model/UserDto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/domain/model/OrganisationDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/domain/model/OrganisationDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/in/rest/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/in/rest/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/adapter/UserPersistenceAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/adapter/UserPersistenceAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/repository/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/app.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/home-page/home-page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/home-page/home-page.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/home-page/home-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/home-page/home-page.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,12 +46,13 @@
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "master",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/danie/IdeaProjects/PayPro/frontend/web/PayProWeb",
+    "last_opened_file_path": "C:/Users/danie/IdeaProjects/PayPro",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "show.migrate.to.gradle.popup": "false",
     "vue.rearranger.settings.migration": "true"
   }
@@ -69,10 +77,24 @@
       <workItem from="1728911783074" duration="1440000" />
       <workItem from="1729236567857" duration="2164000" />
       <workItem from="1729495377864" duration="618000" />
+      <workItem from="1730190674484" duration="1037000" />
     </task>
+    <task id="LOCAL-00001" summary="init">
+      <option name="closed" value="true" />
+      <created>1730191015131</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1730191015131</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="init" />
+    <option name="LAST_COMMIT_MESSAGE" value="init" />
   </component>
 </project>

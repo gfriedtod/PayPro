@@ -39,7 +39,9 @@ public class UserPersistenceAdapter implements UserOutputPort {
 
     @Override
     public List<UserDto> findAllByOrganisation(OrganisationDto organisation) {
-        System.out.println("test exist "+modelMapper.map(organisation, Organisation.class).getName());
-        return userRepository.findAllByOrganisation(modelMapper.map(organisation, Organisation.class)).stream().map(user -> modelMapper.map(user, UserDto.class)).toList();
+        System.out.println("test exist "+modelMapper.map(organisation, Organisation.class).getId());
+        var list = userRepository.findAllByOrganisation(modelMapper.map(organisation, Organisation.class)).stream().map(user -> modelMapper.map(user, UserDto.class)).toList();
+        System.out.println(list.size());
+        return list;
     }
 }

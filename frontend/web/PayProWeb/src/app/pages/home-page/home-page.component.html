@@ -179,7 +179,7 @@
     hlm
     stickyHeader
     class="border-border mt-4 block h-[335px] relative overflow-auto rounded-md border"
-    [dataSource]="_filteredSortedPaginatedPayments()"
+    [dataSource]="_filteredSortedPaginatedUserDtos()"
     [displayedColumns]="_allDisplayedColumns()"
     [trackBy]="_trackBy"
   >
@@ -188,16 +188,16 @@
         <hlm-checkbox [checked]="_checkboxState()" (changed)="handleHeaderCheckboxChange()" />
       </hlm-th>
       <hlm-td *brnCellDef="let element">
-        <hlm-checkbox [checked]="_isPaymentSelected(element)" (changed)="togglePayment(element)" />
+        <hlm-checkbox [checked]="_isUserDtoSelected(element)" (changed)="toggleUserDto(element)" />
       </hlm-td>
     </brn-column-def>
     <brn-column-def name="status" class="w-32 sm:w-40">
       <hlm-th truncate *brnHeaderDef>Status</hlm-th>
       <hlm-td truncate *brnCellDef="let element">
-        {{ element.status | titlecase }}
+        {{ element.rule | titlecase }}
       </hlm-td>
     </brn-column-def>
-    <brn-column-def name="email" class="w-60 lg:flex-1">
+    <brn-column-def name="email" class="w-32 lg:flex-1">
       <hlm-th *brnHeaderDef>
         <button hlmBtn size="sm" variant="ghost" (click)="handleEmailSortChange()">
           Email
@@ -210,12 +210,19 @@
         </button>
       </hlm-td>
     </brn-column-def>
-    <brn-column-def name="amount" class="justify-end w-20">
-      <hlm-th *brnHeaderDef>Amount</hlm-th>
+    <brn-column-def name="amount" class="">
+      <hlm-th *brnHeaderDef>Name</hlm-th>
       <hlm-td class="font-medium tabular-nums" *brnCellDef="let element">
-        $ {{ element.amount | number: '1.2-2'}}
+        {{ element.displayName }}
       </hlm-td>
     </brn-column-def>
+    <brn-column-def name="departement" class="w-32">
+      <hlm-th *brnHeaderDef>Departement</hlm-th>
+      <hlm-td class="font-medium tabular-nums" *brnCellDef="let element">
+        {{ element.department.name}}
+      </hlm-td>
+    </brn-column-def>
+
     <brn-column-def name="actions" class="w-16">
       <hlm-th *brnHeaderDef></hlm-th>
       <hlm-td *brnCellDef="let element">
@@ -228,12 +235,12 @@
             <hlm-menu-label>Actions</hlm-menu-label>
             <hlm-menu-separator />
             <hlm-menu-group>
-              <button hlmMenuItem>Copy payment ID</button>
+              <button hlmMenuItem>Copy UserDto ID</button>
             </hlm-menu-group>
             <hlm-menu-separator />
             <hlm-menu-group>
               <button hlmMenuItem>View customer</button>
-              <button hlmMenuItem>View payment details</button>
+              <button hlmMenuItem>View UserDto details</button>
             </hlm-menu-group>
           </hlm-menu>
         </ng-template>
