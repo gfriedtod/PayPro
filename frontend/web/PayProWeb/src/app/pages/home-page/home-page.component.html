@@ -14,7 +14,7 @@
         </div>
         <div class="flex flex-col justify-center items-start">
           <h1 class="font-bold">Total Employees</h1>
-          <h1 class=>10</h1>
+          <h1 class=>{{ users().length }}</h1>
         </div>
       </div >
     </div>
@@ -81,10 +81,11 @@
           <hlm-select-value />
         </hlm-select-trigger>
         <hlm-select-content>
-          <hlm-option value="Refresh">Refresh</hlm-option>
-          <hlm-option value="Settings">Settings</hlm-option>
-          <hlm-option value="Help">Help</hlm-option>
-          <hlm-option value="Signout">Sign out</hlm-option>
+          @for (val of departmentDtos();track val.id){
+            <hlm-option value="{{val.id}}">{{ val.name }}</hlm-option>
+
+          }
+
         </hlm-select-content>
       </brn-select>
       <button hlmBtn class="h-11">
@@ -131,10 +132,10 @@
                 <hlm-select-value />
               </hlm-select-trigger>
               <hlm-select-content>
-                <hlm-option value="Refresh">Refresh</hlm-option>
-                <hlm-option value="Settings">Comtabiliter</hlm-option>
-                <hlm-option value="Help">Finance</hlm-option>
-                <hlm-option value="Signout">It</hlm-option>
+                @for (val of departmentDtos();track val.id){
+                  <hlm-option value="{{val.id}}">{{ val.name }}</hlm-option>
+
+                }
               </hlm-select-content>
             </brn-select>
           </div>

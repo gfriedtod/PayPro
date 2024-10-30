@@ -12,5 +12,6 @@ export interface UserDto {
 	password: string;
 	rule: string;
 	cni: string;
+  gender: string;
 }
 

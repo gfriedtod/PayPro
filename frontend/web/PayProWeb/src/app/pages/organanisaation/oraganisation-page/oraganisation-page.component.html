@@ -15,7 +15,7 @@
         </div>
         <div class="flex flex-col justify-center items-start">
           <h1 class="font-bold">Total Departement</h1>
-          <h1 class=>10</h1>
+          <h1 class=>{{ departmentDtos().length }}</h1>
         </div>
       </div>
     </div>
@@ -118,7 +118,7 @@
   </div>
 
   <brn-table
-    [dataSource]="_filteredSortedPaginatedPayments()"
+    [dataSource]="_filteredSortedPaginatedDepartementDtos()"
     [displayedColumns]="_allDisplayedColumns()"
     [trackBy]="_trackBy"
     class="border-border mt-4 block h-[335px] relative overflow-auto rounded-md border"
@@ -130,30 +130,24 @@
         <hlm-checkbox (changed)="handleHeaderCheckboxChange()" [checked]="_checkboxState()"/>
       </hlm-th>
       <hlm-td *brnCellDef="let element">
-        <hlm-checkbox (changed)="togglePayment(element)" [checked]="_isPaymentSelected(element)"/>
+        <hlm-checkbox (changed)="toggleDepartementDto(element)" [checked]="_isDepartementDtoSelected(element)"/>
       </hlm-td>
     </brn-column-def>
-    <brn-column-def class="w-32 sm:w-40" name="status">
-      <hlm-th *brnHeaderDef truncate>Status</hlm-th>
+    <brn-column-def class="w-32 sm:w-40" name="ids">
+      <hlm-th *brnHeaderDef truncate>Ids</hlm-th>
       <hlm-td *brnCellDef="let element" truncate>
-        {{ element.status | titlecase }}
+        {{ element.id | titlecase }}
       </hlm-td>
     </brn-column-def>
-    <brn-column-def class="w-60 lg:flex-1" name="email">
+    <brn-column-def class="w-60 lg:flex-1" name="name">
       <hlm-th *brnHeaderDef>
         <button (click)="handleEmailSortChange()" hlmBtn size="sm" variant="ghost">
-          Email
+          Name
           <hlm-icon class="ml-3" name="lucideArrowUpDown" size="sm"/>
         </button>
       </hlm-th>
-      <hlm-td *brnCellDef="let element" truncate>
-        {{ element.email }}
-      </hlm-td>
-    </brn-column-def>
-    <brn-column-def class="justify-end w-20" name="amount">
-      <hlm-th *brnHeaderDef>Amount</hlm-th>
-      <hlm-td *brnCellDef="let element" class="font-medium tabular-nums">
-        $ {{ element.amount | number: '1.2-2' }}
+      <hlm-td *brnCellDef="let element"  class="font-bold" truncate>
+        {{ element.name | titlecase }}
       </hlm-td>
     </brn-column-def>
     <brn-column-def class="w-16" name="actions">
@@ -168,12 +162,12 @@
             <hlm-menu-label>Actions</hlm-menu-label>
             <hlm-menu-separator/>
             <hlm-menu-group>
-              <button hlmMenuItem>Copy payment ID</button>
+              <button hlmMenuItem>Copy DepartementDto ID</button>
             </hlm-menu-group>
             <hlm-menu-separator/>
             <hlm-menu-group>
               <button hlmMenuItem>View customer</button>
-              <button hlmMenuItem>View payment details</button>
+              <button hlmMenuItem>View DepartementDto details</button>
             </hlm-menu-group>
           </hlm-menu>
         </ng-template>

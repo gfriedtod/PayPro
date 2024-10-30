@@ -4,20 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb8246f-7697-401a-88cc-4ce7ac94a7f9" name="Changes" comment="init">
-      <change afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/environement/env.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/model/DepartementDto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/model/OrganisationDto.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/model/UserDto.ts" afterDir="false" />
+    <list default="true" id="cdb8246f-7697-401a-88cc-4ce7ac94a7f9" name="Changes" comment="fetch all users">
+      <change afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/domain/service/DepartmentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/in/rest/DepartmentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/adapter/DepartmentPersistenceAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/domain/model/OrganisationDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/domain/model/OrganisationDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/in/rest/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/in/rest/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/adapter/UserPersistenceAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/adapter/UserPersistenceAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/app.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/app.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/application/in/DepartementUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/application/in/DepartementUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/application/out/DepartementOutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/application/out/DepartementOutputPort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/configuration/BeanConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/configuration/BeanConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/repository/DepartmentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/repository/DepartmentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/model/UserDto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/model/UserDto.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/home-page/home-page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/home-page/home-page.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/home-page/home-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/home-page/home-page.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/organanisaation/oraganisation-page/oraganisation-page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/organanisaation/oraganisation-page/oraganisation-page.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/organanisaation/oraganisation-page/oraganisation-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/organanisaation/oraganisation-page/oraganisation-page.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +28,25 @@
     <execution />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "gfriedtod"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/gfriedtod/PayPro",
+    "accountId": "944e34c4-de19-4693-98c8-6b662be99662"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
 }</component>
@@ -44,7 +61,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "com.codeium.enabled": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "fetch-departement",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/danie/IdeaProjects/PayPro",
     "node.js.detected.package.eslint": "true",
@@ -77,7 +94,7 @@
       <workItem from="1728911783074" duration="1440000" />
       <workItem from="1729236567857" duration="2164000" />
       <workItem from="1729495377864" duration="618000" />
-      <workItem from="1730190674484" duration="1037000" />
+      <workItem from="1730190674484" duration="3516000" />
     </task>
     <task id="LOCAL-00001" summary="init">
       <option name="closed" value="true" />
@@ -87,7 +104,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730191015131</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fetch all users">
+      <option name="closed" value="true" />
+      <created>1730278898431</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1730278898431</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -95,6 +120,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init" />
-    <option name="LAST_COMMIT_MESSAGE" value="init" />
+    <MESSAGE value="fetch all users" />
+    <option name="LAST_COMMIT_MESSAGE" value="fetch all users" />
   </component>
 </project>
