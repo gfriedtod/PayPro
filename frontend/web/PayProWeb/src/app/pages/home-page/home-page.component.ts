@@ -32,7 +32,7 @@ import {
 } from '@spartan-ng/ui-menu-helm';
 import {SelectionModel} from '@angular/cdk/collections';
 import {toObservable, toSignal} from '@angular/core/rxjs-interop';
-import {debounceTime, map, tap} from 'rxjs';
+import {debounceTime, map, of, tap} from 'rxjs';
 import {FormsModule} from '@angular/forms';
 import {BrnMenuTriggerDirective} from '@spartan-ng/ui-menu-brain';
 import {DecimalPipe, TitleCasePipe} from '@angular/common';
@@ -47,6 +47,8 @@ import {HlmLabelDirective} from '@spartan-ng/ui-label-helm';
 import {RouterLink} from '@angular/router';
 import {UserDto} from '../../model/UserDto';
 import {UserService} from '../../services/user/user.service';
+import {DepartementDto} from '../../model/DepartementDto';
+import {DepartementService} from '../../services/departement/departement.service';
 
 
 @Component({
@@ -144,12 +146,18 @@ import {UserService} from '../../services/user/user.service';
 })
 export class HomePageComponent implements OnInit {
 
-  private users: WritableSignal<UserDto[]> = signal([]);
+   users: WritableSignal<UserDto[]> = signal([]);
+  departmentDtos = signal<DepartementDto[]>([]);
+
 
   async ngOnInit() {
     console.log("hello home");
     (await this.userService.fetchUsers()).subscribe(
       (users) => this.users.set(users),
+      (error) => console.error(error)
+    );
+    (await this.departementService.fetchDepatments()).subscribe(
+      (users) => this.departmentDtos.set(users),
       (error) => console.error(error)
     )
   }
@@ -214,7 +222,7 @@ export class HomePageComponent implements OnInit {
   protected readonly _onStateChange = ({ startIndex, endIndex }: PaginatorState) =>
     this._displayedIndices.set({ start: startIndex, end: endIndex });
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,private departementService: DepartementService) {
     // needed to sync the debounced filter to the name filter, but being able to override the
     // filter when loading new users without debounce
     effect(() => this._emailFilter.set(this._debouncedFilter() ?? ''), { allowSignalWrites: true });
@@ -244,4 +252,5 @@ export class HomePageComponent implements OnInit {
     }
   }
   protected readonly lucideSearch = lucideSearch;
+  protected readonly of = of;
 }
