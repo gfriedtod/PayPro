@@ -18,10 +18,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FileDto implements Serializable {
-    UUID id;
-    Instant createdAt;
-    String name;
-    LocalDate dateFile;
-    UserDto user;
-    OrganisationDto organisation;
+    private UUID id;
+    private Instant createdAt;
+    private String name;
+    private LocalDate dateFile;
+    private UserDto user;
+    private OrganisationDto organisation;
+    private String link;
+
 }

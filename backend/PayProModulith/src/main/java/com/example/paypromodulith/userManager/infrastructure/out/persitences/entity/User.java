@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
@@ -46,5 +47,27 @@ public class User {
 
     @Column(name = "cni", length = Integer.MAX_VALUE)
     private String cni;
+
+    @ColumnDefault("'MALE'")
+    @Column(name = "gender", length = Integer.MAX_VALUE)
+    private String gender;
+
+    @ColumnDefault("now()")
+    @Column(name = "\"dateBirth\"")
+    private LocalDate dateBirth;
+
+
+
+    @ColumnDefault("'https://afriksportsmagazine.com/wp-content/uploads/2024/02/C3N09690.webp'")
+    @Column(name = "image", length = Integer.MAX_VALUE)
+    private String image;
+
+    @ColumnDefault("'+237 677777777'")
+    @Column(name = "phone", length = Integer.MAX_VALUE)
+    private String phone;
+
+    @ColumnDefault("'Douala'")
+    @Column(name = "address", length = Integer.MAX_VALUE)
+    private String address;
 
 }

@@ -13,4 +13,8 @@ export class UserService {
   async fetchUsers() {
     return this.http.get<UserDto[]>(environment.api + `/users/organisation/${fakeOrganisation.id}`);
   }
+
+  async postUser(user: UserDto) {
+    return this.http.post<UserDto>(environment.api + `/users`, user);
+  }
 }

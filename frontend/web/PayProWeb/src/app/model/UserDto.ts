@@ -13,5 +13,9 @@ export interface UserDto {
 	rule: string;
 	cni: string;
   gender: string;
+  // image: string | undefined;
+  dateBirth: string | undefined;
+  address: string | undefined;
+  phone: string | undefined;
 }
 

@@ -1,13 +1,11 @@
 package com.example.paypromodulith.userManager.domain.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Value;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.UUID;
 
 /**
@@ -16,15 +14,21 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserDto implements Serializable {
-    UUID id;
-    Instant createdAt;
-    DepartmentDto department;
-    OrganisationDto organisation;
-    String displayName;
-    String name;
-    String email;
-    String password;
-    String rule;
-    String cni;
+    private UUID id;
+    private Instant createdAt;
+    private DepartmentDto department;
+    private OrganisationDto organisation;
+    private String displayName;
+    private String name;
+    private String email;
+    private String password;
+    private String rule;
+    private String cni;
+    private String phone;
+    private String address;
+    private LocalDate dateBirth;
+    private String gender;
+    private String image;
 }

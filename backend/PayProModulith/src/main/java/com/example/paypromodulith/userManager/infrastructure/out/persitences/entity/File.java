@@ -36,4 +36,8 @@ public class File {
     @JoinColumn(name = "organisation_id")
     private Organisation organisation;
 
+    @ColumnDefault("'https://docs.google.com/document/d/1dcwSw2JbVDjKLf9T7NNMSrmQToyqvN7VJva5iQX84RE/edit?tab=t.0'")
+    @Column(name = "link", length = Integer.MAX_VALUE)
+    private String link;
+
 }

@@ -1,10 +1,17 @@
-import {Component, computed, effect, signal, TrackByFunction} from '@angular/core';
+import {Component, computed, effect, OnInit, signal, TrackByFunction, WritableSignal} from '@angular/core';
 import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
 import {provideIcons} from '@ng-icons/core';
-import {lucideArrowLeft, lucideChevronDown, lucidePlus, lucideUser} from '@ng-icons/lucide';
+import {
+  lucideArrowLeft,
+  lucideChevronDown,
+  lucideMoreHorizontal,
+  lucidePlus,
+  lucideUser,
+  lucideFile
+} from '@ng-icons/lucide';
 import {HlmIconComponent} from '@spartan-ng/ui-icon-helm';
 import {HlmCardContentDirective, HlmCardDirective, HlmCardHeaderDirective} from '@spartan-ng/ui-card-helm';
-import {Router, RouterLink} from '@angular/router';
+import { RouterLink } from '@angular/router';
 import {
   BrnCellDefDirective,
   BrnColumnDefComponent,
@@ -13,17 +20,17 @@ import {
 } from '@spartan-ng/ui-table-brain';
 import {BrnSelectComponent, BrnSelectContentComponent, BrnSelectValueComponent} from '@spartan-ng/ui-select-brain';
 import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui-sheet-brain';
-import {DecimalPipe, TitleCasePipe} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {DatePipe, DecimalPipe, TitleCasePipe, UpperCasePipe} from '@angular/common';
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {toObservable, toSignal} from '@angular/core/rxjs-interop';
-import {debounceTime, map} from 'rxjs';
+import {debounceTime, map, timer} from 'rxjs';
 import {SelectionModel} from '@angular/cdk/collections';
 import {HlmTableDirective, HlmTableImports, HlmTdComponent, HlmThComponent} from '@spartan-ng/ui-table-helm';
 import {HlmCheckboxComponent, HlmCheckboxImports} from '@spartan-ng/ui-checkbox-helm';
 import {HlmSelectImports, HlmSelectOptionComponent} from '@spartan-ng/ui-select-helm';
 import {
   HlmMenuComponent,
-  HlmMenuGroupComponent, HlmMenuItemCheckboxDirective, HlmMenuItemCheckComponent,
+  HlmMenuGroupComponent, HlmMenuItemCheckboxDirective, HlmMenuItemCheckComponent, HlmMenuItemImports,
   HlmMenuLabelComponent,
   HlmMenuSeparatorComponent
 } from '@spartan-ng/ui-menu-helm';
@@ -36,135 +43,18 @@ import {
 } from '@spartan-ng/ui-sheet-helm';
 import {HlmInputDirective} from '@spartan-ng/ui-input-helm';
 import {HlmLabelDirective} from '@spartan-ng/ui-label-helm';
-export type Payment = {
-  id: string;
-  amount: number;
-  status: 'pending' | 'processing' | 'success' | 'failed';
-  email: string;
-};
+import {UserDto} from '../../model/UserDto';
+import {Storage, StorageService} from '../../services/storage/storage.service';
+import {StorageImageService} from '../../services/storage-image/storage-image.service';
+import {FileDto} from '../../model/FileDto';
+import {v4} from 'uuid';
+import {data} from 'autoprefixer';
+import {FileService} from '../../services/file/file.service';
+import {DepartementDto} from '../../model/DepartementDto';
+import {DepartementService} from '../../services/departement/departement.service';
+import {fakeOrganisation} from '../../environement/env';
+import {UserService} from '../../services/user/user.service';
 
-const PAYMENT_DATA: Payment[] = [
-  {
-    id: 'm5gr84i9',
-    amount: 316,
-    status: 'success',
-    email: 'ken99@yahoo.com',
-  },
-  {
-    id: '3u1reuv4',
-    amount: 242,
-    status: 'success',
-    email: 'Abe45@gmail.com',
-  },
-  {
-    id: 'derv1ws0',
-    amount: 837,
-    status: 'processing',
-    email: 'Monserrat44@gmail.com',
-  },
-  {
-    id: '5kma53ae',
-    amount: 874,
-    status: 'success',
-    email: 'Silas22@gmail.com',
-  },
-  {
-    id: 'bhqecj4p',
-    amount: 721,
-    status: 'failed',
-    email: 'carmella@hotmail.com',
-  },
-  {
-    id: 'p0r8sd2f',
-    amount: 123,
-    status: 'failed',
-    email: 'john.doe@example.com',
-  },
-  {
-    id: '8uyv3n1x',
-    amount: 589,
-    status: 'processing',
-    email: 'emma.smith@gmail.com',
-  },
-  {
-    id: '2zqo6ptr',
-    amount: 456,
-    status: 'success',
-    email: 'jackson78@hotmail.com',
-  },
-  {
-    id: 'l7we9a3m',
-    amount: 632,
-    status: 'success',
-    email: 'grace_22@yahoo.com',
-  },
-  {
-    id: 'o9p2v3qk',
-    amount: 987,
-    status: 'failed',
-    email: 'robert.adams@gmail.com',
-  },
-  {
-    id: 'q1o8r7mz',
-    amount: 321,
-    status: 'processing',
-    email: 'alexander34@gmail.com',
-  },
-  {
-    id: 'i5n3s0tv',
-    amount: 555,
-    status: 'failed',
-    email: 'olivia_morris@hotmail.com',
-  },
-  {
-    id: '3xr7s2nl',
-    amount: 789,
-    status: 'success',
-    email: 'michael_cole@yahoo.com',
-  },
-  {
-    id: 'u9v2p1qy',
-    amount: 234,
-    status: 'success',
-    email: 'lily.jones@gmail.com',
-  },
-  {
-    id: 'b4q0e1cp',
-    amount: 876,
-    status: 'failed',
-    email: 'ryan_14@hotmail.com',
-  },
-  {
-    id: 's1z8m7op',
-    amount: 456,
-    status: 'success',
-    email: 'sophia.green@gmail.com',
-  },
-  {
-    id: 'n5a3v0lt',
-    amount: 987,
-    status: 'failed',
-    email: 'david.miller@yahoo.com',
-  },
-  {
-    id: '2qr7v9sm',
-    amount: 654,
-    status: 'processing',
-    email: 'emma_jones@hotmail.com',
-  },
-  {
-    id: 'y9b2h8qq',
-    amount: 789,
-    status: 'success',
-    email: 'jacob_89@gmail.com',
-  },
-  {
-    id: 'c4a0r1xp',
-    amount: 123,
-    status: 'failed',
-    email: 'samantha.richards@yahoo.com',
-  },
-];
 @Component({
   selector: 'app-user-detail',
   standalone: true,
@@ -238,6 +128,17 @@ const PAYMENT_DATA: Payment[] = [
     HlmLabelDirective,
     HlmInputDirective,
     HlmSheetFooterComponent,
+    HlmIconComponent,
+    DatePipe,
+    UpperCasePipe,
+    HlmMenuItemCheckComponent,
+    HlmMenuItemCheckboxDirective,
+    HlmMenuItemImports,
+    HlmMenuItemCheckboxDirective,
+    HlmMenuItemCheckComponent,
+    HlmMenuItemImports,
+    HlmIconComponent,
+    HlmIconComponent,
     HlmIconComponent
   ],
   providers: [
@@ -245,13 +146,38 @@ const PAYMENT_DATA: Payment[] = [
       lucideArrowLeft,
       lucideUser,
       lucideChevronDown,
-      lucidePlus
+      lucidePlus,
+      lucideMoreHorizontal,
+      lucideFile
     })
   ],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.css'
 })
-export class UserDetailComponent {
+export class UserDetailComponent implements OnInit{
+  user : WritableSignal<UserDto> =signal({} as UserDto);
+  files: WritableSignal<FileDto[]> = signal([]);
+  departmentDtos = signal<DepartementDto[]>([]);
+
+  documentForm = new FormGroup({
+    document: new FormControl('', [Validators.required]),
+    date: new FormControl('', [Validators.required]),
+    name: new FormControl('', [Validators.required]),
+  });
+  userFrom: FormGroup = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    department: new FormControl('', [Validators.required]),
+    role: new FormControl('', [Validators.required]),
+    status: new FormControl('USER', [Validators.required]),
+    gender: new FormControl('', [Validators.required]),
+    displayName: new FormControl('', [Validators.required]),
+    cni: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    dateOfBirth: new FormControl('', [Validators.required]),
+    phone: new FormControl('', [Validators.required]),
+    address: new FormControl('', [Validators.required]),
+  });
 
   protected readonly _rawFilterInput = signal('');
   protected readonly _emailFilter = signal('');
@@ -261,16 +187,15 @@ export class UserDetailComponent {
   protected readonly _availablePageSizes = [5, 10, 20, 10000];
   protected readonly _pageSize = signal(this._availablePageSizes[0]);
 
-  private readonly _selectionModel = new SelectionModel<Payment>(true);
-  protected readonly _isPaymentSelected = (payment: Payment) => this._selectionModel.isSelected(payment);
+  private readonly _selectionModel = new SelectionModel<FileDto>(true);
+  protected readonly _isFileDtoSelected = (FileDto: FileDto) => this._selectionModel.isSelected(FileDto);
   protected readonly _selected = toSignal(this._selectionModel.changed.pipe(map((change) => change.source.selected)), {
     initialValue: [],
   });
 
   protected readonly _brnColumnManager = useBrnColumnManager({
-    status: { visible: true, label: 'Status' },
-    email: { visible: true, label: 'Email' },
-    amount: { visible: true, label: 'Amount ($)' },
+    date: { visible: true, label: 'Date' },
+    name: { visible: true, label: 'Name' },
   });
   protected readonly _allDisplayedColumns = computed(() => [
     'select',
@@ -278,57 +203,58 @@ export class UserDetailComponent {
     'actions',
   ]);
 
-  private readonly _payments = signal(PAYMENT_DATA);
-  private readonly _filteredPayments = computed(() => {
+  private readonly _FileDtos = this.files;
+  private readonly _filteredFileDtos = computed(() => {
     const emailFilter = this._emailFilter()?.trim()?.toLowerCase();
     if (emailFilter && emailFilter.length > 0) {
-      return this._payments().filter((u) => u.email.toLowerCase().includes(emailFilter));
+      return this._FileDtos().filter((u) => u.name.toLowerCase().includes(emailFilter));
     }
-    return this._payments();
+    return this._FileDtos();
   });
   private readonly _emailSort = signal<'ASC' | 'DESC' | null>(null);
-  protected readonly _filteredSortedPaginatedPayments = computed(() => {
+  protected readonly _filteredSortedPaginatedFileDtos = computed(() => {
     const sort = this._emailSort();
     const start = this._displayedIndices().start;
     const end = this._displayedIndices().end + 1;
-    const payments = this._filteredPayments();
+    const FileDtos = this._filteredFileDtos();
     if (!sort) {
-      return payments.slice(start, end);
+      return FileDtos.slice(start, end);
     }
-    return [...payments]
-      .sort((p1, p2) => (sort === 'ASC' ? 1 : -1) * p1.email.localeCompare(p2.email))
+    return [...FileDtos]
+      .sort((p1, p2) => (sort === 'ASC' ? 1 : -1) * p1.name.localeCompare(p2.name))
       .slice(start, end);
   });
-  protected readonly _allFilteredPaginatedPaymentsSelected = computed(() =>
-    this._filteredSortedPaginatedPayments().every((payment) => this._selected().includes(payment)),
+  protected readonly _allFilteredPaginatedFileDtosSelected = computed(() =>
+    this._filteredSortedPaginatedFileDtos().every((FileDto) => this._selected().includes(FileDto)),
   );
   protected readonly _checkboxState = computed(() => {
     const noneSelected = this._selected().length === 0;
-    const allSelectedOrIndeterminate = this._allFilteredPaginatedPaymentsSelected() ? true : 'indeterminate';
+    const allSelectedOrIndeterminate = this._allFilteredPaginatedFileDtosSelected() ? true : 'indeterminate';
     return noneSelected ? false : allSelectedOrIndeterminate;
   });
 
-  protected readonly _trackBy: TrackByFunction<Payment> = (_: number, p: Payment) => p.id;
-  protected readonly _totalElements = computed(() => this._filteredPayments().length);
+  protected readonly _trackBy: TrackByFunction<FileDto> = (_: number, p: FileDto) => p.id;
+  protected readonly _totalElements = computed(() => this._filteredFileDtos().length);
   protected readonly _onStateChange = ({ startIndex, endIndex }: PaginatorState) =>
     this._displayedIndices.set({ start: startIndex, end: endIndex });
+   image!: File;
 
-  constructor() {
+  constructor(private userService: UserService,private storage: StorageImageService, private fileService: FileService, private departementService: DepartementService) {
     // needed to sync the debounced filter to the name filter, but being able to override the
     // filter when loading new users without debounce
     effect(() => this._emailFilter.set(this._debouncedFilter() ?? ''), { allowSignalWrites: true });
   }
 
-  protected togglePayment(payment: Payment) {
-    this._selectionModel.toggle(payment);
+  protected toggleFileDto(FileDto: FileDto) {
+    this._selectionModel.toggle(FileDto);
   }
 
   protected handleHeaderCheckboxChange() {
     const previousCbState = this._checkboxState();
     if (previousCbState === 'indeterminate' || !previousCbState) {
-      this._selectionModel.select(...this._filteredSortedPaginatedPayments());
+      this._selectionModel.select(...this._filteredSortedPaginatedFileDtos());
     } else {
-      this._selectionModel.deselect(...this._filteredSortedPaginatedPayments());
+      this._selectionModel.deselect(...this._filteredSortedPaginatedFileDtos());
     }
   }
 
@@ -347,7 +273,99 @@ export class UserDetailComponent {
 
   }
 
-  selectedImage($event: Event) {
-    
+  selectedImage($event: any) {
+    this.documentForm.get('document')?.setValue($event.target!.files![0])
+    // if ($event.target!.files![0].type != 'image/png' || $event.target!.files![0].type != 'image/jpeg') {
+    //   // this.state.set(-3)
+    //   // timer(1000).subscribe(() => this.state.set(0))
+    //
+    // }
+    this.image = $event.target!.files![0]
+  }
+
+  async subMitDocument() {
+    let file : WritableSignal<FileDto>
+    if(this.documentForm.valid){
+      const data = (await this.storage.storeFile(this.image))
+      file = signal<FileDto>({
+        dateFile: this.documentForm.value.date as string,
+        user: this.user(),
+        id: v4(),
+        createdAt: new Date().toISOString(),
+        organisation: this.user().organisation,
+        name: this.documentForm.value.name as string,
+        link: data?.data.publicUrl!
+      })
+
+      this.fileService.saveDoc(file()).subscribe(
+        (data) => {
+          this._FileDtos.update(()=>[...this.files(), data]);
+        },
+      )
+
+    }
+
+
+  }
+
+  async ngOnInit() {
+    this.user.set(JSON.parse(localStorage.getItem(Storage.sharedData)!) as UserDto);
+    this.userFrom.setControl('name', new FormControl(this.user().name));
+    this.userFrom.setControl('email', new FormControl(this.user().email));
+    this.userFrom.setControl('department', new FormControl(this.user().department.id));
+    this.userFrom.setControl('role', new FormControl(this.user().rule));
+    this.userFrom.setControl('status', new FormControl(this.user().rule));
+    this.userFrom.setControl('gender', new FormControl(this.user().gender));
+    this.userFrom.setControl('displayName', new FormControl(this.user().displayName));
+    this.userFrom.setControl('cni', new FormControl(this.user().cni));
+    this.userFrom.setControl('dateOfBirth', new FormControl(this.user().dateBirth));
+    this.userFrom.setControl('phone', new FormControl(this.user().phone));
+    this.userFrom.setControl('address', new FormControl(this.user().address));
+    this.fileService.fetchDocs(this.user()).subscribe(
+      (data) => {
+        this._FileDtos.set(data);
+      },
+    );
+
+    (await this.departementService.fetchDepatments()).subscribe(
+      (users) => this.departmentDtos.set(users),
+      (error) => console.error(error)
+    )
+  }
+
+  async saveUser() {
+    let user: WritableSignal<UserDto>;
+    console.log(this.userFrom.value);
+
+    if (this.userFrom.valid) {
+      console.log(this.userFrom.value);
+      user = signal({
+        id:  this.user().id,
+        createdAt: '',
+        organisation: fakeOrganisation,
+        name: this.userFrom.value.name as string,
+        email: this.userFrom.value.email as string,
+        department: this.departmentDtos().find((d) => d.id === this.userFrom.value.department) as DepartementDto, //this.userFrom.value.department ,
+        rule: this.userFrom.value.role as string,
+        status: this.userFrom.value.status as string,
+        gender: this.userFrom.value.gender as string,
+        displayName: this.userFrom.value.displayName as string,
+        cni: this.userFrom.value.cni as string,
+        password: this.userFrom.value.password as string,
+        dateBirth: this.userFrom.value.dateOfBirth as string,
+        phone: this.userFrom.value.phone as string,
+        address: this.userFrom.value.address as string,
+      });
+      (await this.userService.postUser(user())).subscribe(
+        (user)=> {
+
+        },
+        (error) => console.error(error)
+      )
+    }
+  }
+  openLink(link:string) {
+    window.open(link, '_blank');
+
   }
 }

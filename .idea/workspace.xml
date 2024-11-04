@@ -5,19 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb8246f-7697-401a-88cc-4ce7ac94a7f9" name="Changes" comment="fetch all users">
-      <change afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/domain/service/DepartmentService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/in/rest/DepartmentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/adapter/DepartmentPersistenceAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/application/in/DepartementUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/application/in/DepartementUseCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/application/out/DepartementOutputPort.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/application/out/DepartementOutputPort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/configuration/BeanConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/configuration/BeanConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/repository/DepartmentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/repository/DepartmentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/model/UserDto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/model/UserDto.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/in/rest/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/in/rest/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/adapter/UserPersistenceAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/PayProModulith/src/main/java/com/example/paypromodulith/userManager/infrastructure/out/persitences/adapter/UserPersistenceAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/home-page/home-page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/home-page/home-page.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/home-page/home-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/home-page/home-page.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/organanisaation/oraganisation-page/oraganisation-page.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/organanisaation/oraganisation-page/oraganisation-page.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/organanisaation/oraganisation-page/oraganisation-page.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/web/PayProWeb/src/app/pages/organanisaation/oraganisation-page/oraganisation-page.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +53,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "com.codeium.enabled": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "fetch-departement",
+    "git-widget-placeholder": "add-user",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/danie/IdeaProjects/PayPro",
     "node.js.detected.package.eslint": "true",

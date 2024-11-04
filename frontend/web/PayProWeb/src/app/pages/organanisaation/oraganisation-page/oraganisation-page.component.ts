@@ -26,7 +26,7 @@ import {HlmTableDirective, HlmTableImports, HlmTdComponent, HlmThComponent} from
 import {HlmCheckboxComponent, HlmCheckboxImports} from '@spartan-ng/ui-checkbox-helm';
 import {
   HlmMenuComponent,
-  HlmMenuGroupComponent,
+  HlmMenuGroupComponent, HlmMenuItemDirective,
   HlmMenuItemImports, HlmMenuLabelComponent,
   HlmMenuSeparatorComponent,
   HlmMenuStructureImports
@@ -116,7 +116,10 @@ import {DepartementService} from '../../../services/departement/departement.serv
     HlmSheetTitleDirective,
     HlmSheetDescriptionDirective,
     HlmSheetFooterComponent,
-    HlmSheetCloseDirective
+    HlmSheetCloseDirective,
+    HlmMenuSeparatorComponent,
+    HlmMenuItemDirective,
+    HlmMenuItemImports
   ],
   providers: [
     provideIcons({
