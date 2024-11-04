@@ -26,19 +26,22 @@ import {HlmCheckboxComponent, HlmCheckboxImports} from '@spartan-ng/ui-checkbox-
 import {
   HlmMenuComponent,
   HlmMenuGroupComponent,
-  HlmMenuItemImports, HlmMenuLabelComponent,
+  HlmMenuItemImports,
+  HlmMenuLabelComponent,
   HlmMenuSeparatorComponent,
   HlmMenuStructureImports
 } from '@spartan-ng/ui-menu-helm';
 import {SelectionModel} from '@angular/cdk/collections';
 import {toObservable, toSignal} from '@angular/core/rxjs-interop';
-import {debounceTime, map, of, tap} from 'rxjs';
-import {FormsModule} from '@angular/forms';
+import {debounceTime, map, of} from 'rxjs';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {BrnMenuTriggerDirective} from '@spartan-ng/ui-menu-brain';
 import {DecimalPipe, TitleCasePipe} from '@angular/common';
 import {
   HlmSheetComponent,
-  HlmSheetContentComponent, HlmSheetDescriptionDirective, HlmSheetFooterComponent,
+  HlmSheetContentComponent,
+  HlmSheetDescriptionDirective,
+  HlmSheetFooterComponent,
   HlmSheetHeaderComponent,
   HlmSheetTitleDirective
 } from '@spartan-ng/ui-sheet-helm';
@@ -49,6 +52,10 @@ import {UserDto} from '../../model/UserDto';
 import {UserService} from '../../services/user/user.service';
 import {DepartementDto} from '../../model/DepartementDto';
 import {DepartementService} from '../../services/departement/departement.service';
+import {GeneratePasswordService} from '../../services/generate-password/generate-password.service';
+import {fakeOrganisation} from '../../environement/env';
+import {v4} from 'uuid';
+import {StorageService} from '../../services/storage/storage.service';
 
 
 @Component({
@@ -129,7 +136,18 @@ import {DepartementService} from '../../services/departement/departement.service
     HlmSheetTitleDirective,
     HlmSheetDescriptionDirective,
     RouterLink,
-    HlmButtonDirective
+    HlmButtonDirective,
+    ReactiveFormsModule,
+    HlmSelectOptionComponent,
+    HlmSelectImports,
+    HlmSelectOptionComponent,
+    HlmSelectImports,
+    HlmSelectOptionComponent,
+    HlmSelectImports,
+    HlmSelectOptionComponent,
+    HlmSelectImports,
+    HlmSelectOptionComponent,
+    HlmSelectImports
   ],
   providers: [
     provideIcons({
@@ -147,19 +165,26 @@ import {DepartementService} from '../../services/departement/departement.service
 export class HomePageComponent implements OnInit {
 
    users: WritableSignal<UserDto[]> = signal([]);
+  userFrom: FormGroup = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    department: new FormControl('', [Validators.required]),
+    role: new FormControl('', [Validators.required]),
+    status: new FormControl('USER', [Validators.required]),
+    gender: new FormControl('', [Validators.required]),
+    displayName: new FormControl('', [Validators.required]),
+    cni: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    dateOfBirth: new FormControl('', [Validators.required]),
+    phone: new FormControl('', [Validators.required]),
+    address: new FormControl('', [Validators.required]),
+  });
   departmentDtos = signal<DepartementDto[]>([]);
 
-
-  async ngOnInit() {
-    console.log("hello home");
-    (await this.userService.fetchUsers()).subscribe(
-      (users) => this.users.set(users),
-      (error) => console.error(error)
-    );
-    (await this.departementService.fetchDepatments()).subscribe(
-      (users) => this.departmentDtos.set(users),
-      (error) => console.error(error)
-    )
+  constructor(private userService: UserService, private departementService: DepartementService, private generatePasswordService: GeneratePasswordService,private storageService: StorageService) {
+    // needed to sync the debounced filter to the name filter, but being able to override the
+    // filter when loading new users without debounce
+    effect(() => this._emailFilter.set(this._debouncedFilter() ?? ''), { allowSignalWrites: true });
   }
   protected readonly _rawFilterInput = signal('');
   protected readonly _emailFilter = signal('');
@@ -222,10 +247,17 @@ export class HomePageComponent implements OnInit {
   protected readonly _onStateChange = ({ startIndex, endIndex }: PaginatorState) =>
     this._displayedIndices.set({ start: startIndex, end: endIndex });
 
-  constructor(private userService: UserService,private departementService: DepartementService) {
-    // needed to sync the debounced filter to the name filter, but being able to override the
-    // filter when loading new users without debounce
-    effect(() => this._emailFilter.set(this._debouncedFilter() ?? ''), { allowSignalWrites: true });
+  async ngOnInit() {
+    this.userFrom.setControl('password', new FormControl(this.generatePasswordService.generatePassword()))
+    console.log("hello home");
+    (await this.userService.fetchUsers()).subscribe(
+      (users) => this.users.set(users),
+      (error) => console.error(error)
+    );
+    (await this.departementService.fetchDepatments()).subscribe(
+      (users) => this.departmentDtos.set(users),
+      (error) => console.error(error)
+    )
   }
 
   protected toggleUserDto(UserDto: UserDto) {
@@ -253,4 +285,43 @@ export class HomePageComponent implements OnInit {
   }
   protected readonly lucideSearch = lucideSearch;
   protected readonly of = of;
+
+  async saveUser() {
+    let user: WritableSignal<UserDto>;
+    console.log(this.userFrom.value);
+
+    if (this.userFrom.valid) {
+      console.log(this.userFrom.value);
+      user = signal({
+        id:  v4(),
+        createdAt: '',
+        organisation: fakeOrganisation,
+        name: this.userFrom.value.name as string,
+        email: this.userFrom.value.email as string,
+        department: this.departmentDtos().find((d) => d.id === this.userFrom.value.department) as DepartementDto, //this.userFrom.value.department ,
+        rule: this.userFrom.value.role as string,
+        status: this.userFrom.value.status as string,
+        gender: this.userFrom.value.gender as string,
+        displayName: this.userFrom.value.displayName as string,
+        cni: this.userFrom.value.cni as string,
+        password: this.userFrom.value.password as string,
+        dateBirth: this.userFrom.value.dateOfBirth as string,
+        phone: this.userFrom.value.phone as string,
+        address: this.userFrom.value.address as string,
+      });
+      (await this.userService.postUser(user())).subscribe(
+        (user)=> {
+          this.users.update((u) => [...u, user]);
+        },
+        (error) => console.error(error)
+      )
+    }
+  }
+
+  save(data: any) {
+    this.storageService.setData(data);
+  }
+  sortGender(gender: string){
+    return this.users().filter((u) => u.gender == gender).length
+  }
 }

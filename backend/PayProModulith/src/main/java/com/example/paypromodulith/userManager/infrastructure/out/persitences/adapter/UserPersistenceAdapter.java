@@ -4,6 +4,7 @@ import com.example.paypromodulith.userManager.application.out.UserOutputPort;
 import com.example.paypromodulith.userManager.domain.model.OrganisationDto;
 import com.example.paypromodulith.userManager.domain.model.UserDto;
 import com.example.paypromodulith.userManager.infrastructure.out.persitences.entity.Organisation;
+import com.example.paypromodulith.userManager.infrastructure.out.persitences.entity.User;
 import com.example.paypromodulith.userManager.infrastructure.out.persitences.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -24,7 +25,7 @@ public class UserPersistenceAdapter implements UserOutputPort {
 
     @Override
     public UserDto create(UserDto userDto) {
-        return null;
+        return modelMapper.map(userRepository.save(modelMapper.map(userDto, User.class)), UserDto.class);
     }
 
     @Override

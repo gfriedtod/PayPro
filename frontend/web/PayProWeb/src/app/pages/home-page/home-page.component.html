@@ -28,7 +28,7 @@
         </div>
         <div class="flex flex-col justify-center items-start">
           <h1 class="font-bold">Total Male</h1>
-          <h1 class=>10</h1>
+          <h1 class=>{{ sortGender("MALE") }}</h1>
         </div>
       </div >
     </div>
@@ -42,7 +42,7 @@
         </div>
         <div class="flex flex-col justify-center items-start">
           <h1 class="font-bold">Total Female</h1>
-          <h1 class=>10</h1>
+          <h1 class=>{{ sortGender("FEMALE") }}</h1>
         </div>
       </div >
     </div>
@@ -98,36 +98,53 @@
         <hlm-icon name="lucidePlus"></hlm-icon>
         Add employee
       </button>
-      <hlm-sheet-content *brnSheetContent="let ctx">
+      <hlm-sheet-content *brnSheetContent="let ctx" class="overflow-scroll">
         <hlm-sheet-header>
           <h3 hlmSheetTitle>Edit Profile</h3>
           <p hlmSheetDescription>Make changes to your profile here. Click save when you're done.</p>
         </hlm-sheet-header>
-        <div class="py-4 grid gap-4">
+        <div [formGroup]="userFrom" class="py-4 grid gap-4">
           <div class="items-center grid grid-cols-4 gap-4">
             <label class="text-right" for="name" hlmLabel>Name</label>
-            <input class="col-span-3" hlmInput id="name" value="Pedro Duarte"/>
+            <input class="col-span-3" formControlName="name" hlmInput id="name" value="Pedro Duarte"/>
           </div>
           <div class="items-center grid grid-cols-4 gap-4">
             <label class="text-right" for="username" hlmLabel>Username</label>
-            <input class="col-span-3" hlmInput id="username" value="@peduarte"/>
+            <input class="col-span-3" formControlName="displayName" hlmInput id="username" value="@peduarte"/>
           </div>
           <div class="items-center grid grid-cols-4 gap-4">
             <label class="text-right" for="password" hlmLabel>Password</label>
-            <input class="col-span-3" hlmInput id="password" value="@peduarte"/>
+            <input class="col-span-3" formControlName="password" hlmInput id="password" value="@peduarte"/>
           </div>
           <div class="items-center grid grid-cols-4 gap-4">
             <label class="text-right" for="email" hlmLabel>email</label>
-            <input class="col-span-3" hlmInput id="email" value="@peduarte"/>
+            <input class="col-span-3" formControlName="email" hlmInput id="email" value="@peduarte"/>
+          </div>
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="dateOfBirth" hlmLabel>Date of Birth</label>
+            <input class="col-span-3" formControlName="dateOfBirth" hlmInput id="dateOfBirth" type="date"
+                   value="@peduarte"/>
+          </div>
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="address" hlmLabel>Address</label>
+            <input class="col-span-3" formControlName="address" hlmInput id="address" value="@peduarte"/>
+          </div>
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="email" hlmLabel>Phone</label>
+            <input class="col-span-3" formControlName="phone" hlmInput id="phone" value="@peduarte"/>
           </div>
           <div class="items-center grid grid-cols-4 gap-4">
             <label class="text-right" for="cni" hlmLabel>CNI</label>
-            <input class="col-span-3" hlmInput id="cni" value="@peduarte"/>
+            <input class="col-span-3" formControlName="cni" hlmInput id="cni" value="@peduarte"/>
           </div>
           <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="role" hlmLabel>Role</label>
+            <input class="col-span-3" formControlName="role" hlmInput id="role" value="@peduarte"/>
+          </div>
+          <div class="items-center grid grid-cols-4 gap-5">
             <label class="text-right" for="cni" hlmLabel>Departement</label>
 
-            <brn-select class="inline-block" placeholder="Select an option">
+            <brn-select class="inline-block" formControlName="department" placeholder="Select an option">
               <hlm-select-trigger class="w-60">
                 <hlm-select-value />
               </hlm-select-trigger>
@@ -139,9 +156,42 @@
               </hlm-select-content>
             </brn-select>
           </div>
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="cni" hlmLabel>Gender</label>
+
+            <brn-select class="inline-block" formControlName="gender" placeholder="Select an option">
+              <hlm-select-trigger class="w-60">
+                <hlm-select-value/>
+              </hlm-select-trigger>
+              <hlm-select-content>
+
+                <hlm-option value="MALE">MALE</hlm-option>
+                <hlm-option value="FEMALE">FEMALE</hlm-option>
+
+              </hlm-select-content>
+            </brn-select>
+          </div>
+
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="cni" hlmLabel>Status</label>
+
+            <brn-select class="inline-block" formControlName="status" placeholder="Select an option">
+              <hlm-select-trigger class="w-60">
+                <hlm-select-value/>
+              </hlm-select-trigger>
+              <hlm-select-content>
+
+                <hlm-option value="ADMIN">ADMIN</hlm-option>
+                <hlm-option value="USER">USER</hlm-option>
+
+              </hlm-select-content>
+            </brn-select>
+          </div>
+
+
         </div>
         <hlm-sheet-footer>
-          <button hlmBtn type="submit">Save Changes</button>
+          <button (click)="saveUser()" hlmBtn type="submit">Save Changes</button>
         </hlm-sheet-footer>
       </hlm-sheet-content>
     </hlm-sheet>
@@ -206,7 +256,8 @@
         </button>
       </hlm-th>
       <hlm-td truncate *brnCellDef="let element">
-        <button class="w-full h-10 flex gap-2 font-normal flex justify-start" hlmBtn hlmBtn routerLink="/users"
+        <button (click)="save(element)" class="w-full h-10 flex gap-2 font-normal flex justify-start" hlmBtn hlmBtn
+                routerLink="/users"
                 variant="ghost"> {{ element.email }}
         </button>
       </hlm-td>

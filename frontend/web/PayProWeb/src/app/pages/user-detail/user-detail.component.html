@@ -9,8 +9,8 @@
       <div hlmCardHeader class="w-full h-full flex justify-center items-center">
         <div class="w-24 h-24 rounded-full bg-[url(https://afriksportsmagazine.com/wp-content/uploads/2024/02/C3N09690.webp)] bg-cover bg-no-repeat">
         </div>
-        <div class="text-2xl font-bold">John Doe</div>
-        <div class=" text-gray-500 font-semibold">Ux designer</div>
+        <div class="text-2xl font-bold">{{ user().name }}</div>
+        <div class=" text-gray-500 font-semibold">{{ user().rule }}</div>
         <div class=" text-gray-500 text-center">Member since 1st jan 2023</div>
 
       </div>
@@ -24,33 +24,34 @@
           <div class="flex flex-col gap-3 w-6/12 ">
             <div class="flex justify-between">
               <div class="text-gray-500">Email</div>
-              <div class="text-black">X4Ji7&#64;example.com</div>
+              <div class="text-black ">{{ user().email }}</div>
             </div>
             <div class="flex justify-between">
               <div class="text-gray-500">Phone</div>
-              <div class="text-black">+237 687418021</div>
+              <div class="text-black ">{{ user().phone }}</div>
             </div>
-            <div class="flex justify-between">
-              <div class="text-gray-500">Gender</div>
-              <div class="text-black">Male</div>
-            </div>
+
             <div class="flex justify-between">
               <div class="text-gray-500">Date birth</div>
-              <div class="text-black">01/01/2000</div>
+              <div class="text-black ">{{ user().dateBirth }}</div>
             </div>
           </div>
           <div class="flex flex-col gap-3 w-6/12 ">
-            <div class="flex justify-between">
+            <div class="flex justify-between items-end">
               <div class="text-gray-500">Employee Id</div>
-              <div class="text-black">X4Ji7</div>
+              <div class="text-black text-xs">{{ user().id | titlecase }}</div>
             </div>
             <div class="flex justify-between">
-              <div class="text-gray-500">Present Adress</div>
-              <div class="text-black">Douala wouri</div>
+              <div class="text-gray-500">Present Address</div>
+              <div class="text-black ">{{ user().address }}</div>
             </div>
             <div class="flex justify-between">
-              <div class="text-gray-500">Departement</div>
-              <div class="text-black">It departement</div>
+              <div class="text-gray-500">Gender</div>
+              <div class="text-black ">{{ user().gender }}</div>
+            </div>
+            <div class="flex justify-between">
+              <div class="text-gray-500">Department</div>
+              <div class="text-black ">{{ user().department.name | uppercase }}</div>
             </div>
           </div>
 
@@ -62,57 +63,106 @@
   <hlm-sheet side="right">
     <button brnSheetTrigger class="gap-2 h-11 " hlmBtn>
       <hlm-icon name="lucidePlus"></hlm-icon>
-      Update employee
+      Add employee
     </button>
-    <hlm-sheet-content *brnSheetContent="let ctx">
+    <hlm-sheet-content *brnSheetContent="let ctx" class="overflow-scroll">
       <hlm-sheet-header>
         <h3 hlmSheetTitle>Edit Profile</h3>
-
-
         <p hlmSheetDescription>Make changes to your profile here. Click save when you're done.</p>
       </hlm-sheet-header>
-      <div class="py-4 grid gap-4">
+      <div [formGroup]="userFrom" class="py-4 grid gap-4">
         <div class="items-center grid grid-cols-4 gap-4">
           <label class="text-right" for="name" hlmLabel>Name</label>
-          <input class="col-span-3" hlmInput id="name" value="Pedro Duarte"/>
+          <input class="col-span-3" formControlName="name" hlmInput id="name" value="Pedro Duarte"/>
         </div>
         <div class="items-center grid grid-cols-4 gap-4">
           <label class="text-right" for="username" hlmLabel>Username</label>
-          <input class="col-span-3" hlmInput id="username" value="@peduarte"/>
+          <input class="col-span-3" formControlName="displayName" hlmInput id="username" value="@peduarte"/>
         </div>
         <div class="items-center grid grid-cols-4 gap-4">
           <label class="text-right" for="password" hlmLabel>Password</label>
-          <input class="col-span-3" hlmInput id="password" value="@peduarte"/>
+          <input class="col-span-3" formControlName="password" hlmInput id="password" value="@peduarte"/>
         </div>
         <div class="items-center grid grid-cols-4 gap-4">
           <label class="text-right" for="email" hlmLabel>email</label>
-          <input class="col-span-3" hlmInput id="email" value="@peduarte"/>
+          <input class="col-span-3" formControlName="email" hlmInput id="email" value="@peduarte"/>
+        </div>
+        <div class="items-center grid grid-cols-4 gap-4">
+          <label class="text-right" for="dateOfBirth" hlmLabel>Date of Birth</label>
+          <input class="col-span-3" formControlName="dateOfBirth" hlmInput id="dateOfBirth" type="date"
+                 value="@peduarte"/>
+        </div>
+        <div class="items-center grid grid-cols-4 gap-4">
+          <label class="text-right" for="address" hlmLabel>Address</label>
+          <input class="col-span-3" formControlName="address" hlmInput id="address" value="@peduarte"/>
+        </div>
+        <div class="items-center grid grid-cols-4 gap-4">
+          <label class="text-right" for="email" hlmLabel>Phone</label>
+          <input class="col-span-3" formControlName="phone" hlmInput id="phone" value="@peduarte"/>
         </div>
         <div class="items-center grid grid-cols-4 gap-4">
           <label class="text-right" for="cni" hlmLabel>CNI</label>
-          <input class="col-span-3" hlmInput id="cni" value="@peduarte"/>
+          <input class="col-span-3" formControlName="cni" hlmInput id="cni" value="@peduarte"/>
         </div>
         <div class="items-center grid grid-cols-4 gap-4">
+          <label class="text-right" for="role" hlmLabel>Role</label>
+          <input class="col-span-3" formControlName="role" hlmInput id="role" value="@peduarte"/>
+        </div>
+        <div class="items-center grid grid-cols-4 gap-5">
           <label class="text-right" for="cni" hlmLabel>Departement</label>
 
-          <brn-select class="inline-block" placeholder="Select an option">
+          <brn-select class="inline-block" formControlName="department" placeholder="Select an option">
             <hlm-select-trigger class="w-60">
               <hlm-select-value />
             </hlm-select-trigger>
             <hlm-select-content>
-              <hlm-option value="Refresh">Refresh</hlm-option>
-              <hlm-option value="Settings">Comtabiliter</hlm-option>
-              <hlm-option value="Help">Finance</hlm-option>
-              <hlm-option value="Signout">It</hlm-option>
+              @for (val of departmentDtos();track val.id){
+                <hlm-option value="{{val.id}}">{{ val.name }}</hlm-option>
+
+              }
             </hlm-select-content>
           </brn-select>
         </div>
+        <div class="items-center grid grid-cols-4 gap-4">
+          <label class="text-right" for="cni" hlmLabel>Gender</label>
+
+          <brn-select class="inline-block" formControlName="gender" placeholder="Select an option">
+            <hlm-select-trigger class="w-60">
+              <hlm-select-value/>
+            </hlm-select-trigger>
+            <hlm-select-content>
+
+              <hlm-option value="MALE">MALE</hlm-option>
+              <hlm-option value="FEMALE">FEMALE</hlm-option>
+
+            </hlm-select-content>
+          </brn-select>
+        </div>
+
+        <div class="items-center grid grid-cols-4 gap-4">
+          <label class="text-right" for="cni" hlmLabel>Status</label>
+
+          <brn-select class="inline-block" formControlName="status" placeholder="Select an option">
+            <hlm-select-trigger class="w-60">
+              <hlm-select-value/>
+            </hlm-select-trigger>
+            <hlm-select-content>
+
+              <hlm-option value="ADMIN">ADMIN</hlm-option>
+              <hlm-option value="USER">USER</hlm-option>
+
+            </hlm-select-content>
+          </brn-select>
+        </div>
+
+
       </div>
       <hlm-sheet-footer>
-        <button hlmBtn type="submit">Save Changes</button>
+        <button (click)="saveUser()" hlmBtn type="submit">Save Changes</button>
       </hlm-sheet-footer>
     </hlm-sheet-content>
   </hlm-sheet>
+
   <hlm-sheet side="right">
     <button brnSheetTrigger class="gap-2 h-11 " hlmBtn>
       <hlm-icon name="lucidePlus"></hlm-icon>
@@ -125,15 +175,15 @@
 
         <p hlmSheetDescription>Make changes to your profile here. Click save when you're done.</p>
       </hlm-sheet-header>
-      <div class="py-4 grid gap-4">
+      <div [formGroup]="documentForm" class="py-4 grid gap-4">
         <div class="items-center grid grid-cols-4 gap-4">
           <label class="text-right" for="doc-name" hlmLabel>Name</label>
-          <input class="col-span-3" hlmInput id="doc-name" value="Pedro Duarte"/>
+          <input class="col-span-3" formControlName="name" hlmInput id="doc-name" value="Pedro Duarte"/>
         </div>
 
         <div class="items-center grid grid-cols-4 gap-4">
           <label class="text-right" for="date" hlmLabel>Date</label>
-          <input class="col-span-3" hlmInput type="date" id="date" value="@peduarte"/>
+          <input class="col-span-3" formControlName="date" hlmInput id="date" type="date" value="@peduarte"/>
         </div>
         <div class="items-center grid grid-cols-4 gap-4">
             <label class="text-right" for="document" hlmLabel>Document</label>
@@ -146,10 +196,9 @@
             />
         </div>
 
-
       </div>
       <hlm-sheet-footer>
-        <button hlmBtn type="submit">Save Changes</button>
+        <button (click)="subMitDocument()" hlmBtn type="submit">Save Changes</button>
       </hlm-sheet-footer>
     </hlm-sheet-content>
   </hlm-sheet>
@@ -190,7 +239,7 @@
   hlm
   stickyHeader
   class="border-border mt-4 block h-[335px]  overflow-auto relative  rounded-md border"
-  [dataSource]="_filteredSortedPaginatedPayments()"
+  [dataSource]="_filteredSortedPaginatedFileDtos()"
   [displayedColumns]="_allDisplayedColumns()"
   [trackBy]="_trackBy"
 >
@@ -199,16 +248,16 @@
       <hlm-checkbox [checked]="_checkboxState()" (changed)="handleHeaderCheckboxChange()" />
     </hlm-th>
     <hlm-td *brnCellDef="let element">
-      <hlm-checkbox [checked]="_isPaymentSelected(element)" (changed)="togglePayment(element)" />
+      <hlm-checkbox (changed)="toggleFileDto(element)" [checked]="_isFileDtoSelected(element)"/>
     </hlm-td>
   </brn-column-def>
-  <brn-column-def name="status" class="w-32 sm:w-40">
-    <hlm-th truncate *brnHeaderDef>Status</hlm-th>
+  <brn-column-def class=" sm:w-40" name="date">
+    <hlm-th *brnHeaderDef truncate>Date</hlm-th>
     <hlm-td truncate *brnCellDef="let element">
-      {{ element.status | titlecase }}
+      {{ element.dateFile | titlecase }}
     </hlm-td>
   </brn-column-def>
-  <brn-column-def name="email" class="w-60 lg:flex-1">
+  <brn-column-def class="w-60 lg:flex-1" name="name">
     <hlm-th *brnHeaderDef>
       <button hlmBtn size="sm" variant="ghost" (click)="handleEmailSortChange()">
         Document name
@@ -216,15 +265,11 @@
       </button>
     </hlm-th>
     <hlm-td truncate *brnCellDef="let element">
-      <button class="w-full h-10 flex gap-2 font-normal flex justify-start" hlmBtn hlmBtn routerLink="/users"
-              variant="ghost"> {{ element.email }}
+
+      <button (click)="openLink(element.link)" class=" group-hover:font-bold group-hover:text-black w-full h-10 flex hover:font-bold hover:text-black hover:transition-all gap-2 font-normal flex justify-start" hlmBtn hlmBtn variant="ghost">
+        <hlm-icon class=""  name="lucideFile"></hlm-icon>
+        {{ element.name }}
       </button>
-    </hlm-td>
-  </brn-column-def>
-  <brn-column-def name="amount" class="justify-end w-20">
-    <hlm-th *brnHeaderDef>Amount</hlm-th>
-    <hlm-td class="font-medium tabular-nums" *brnCellDef="let element">
-      $ {{ element.amount | number: '1.2-2'}}
     </hlm-td>
   </brn-column-def>
   <brn-column-def name="actions" class="w-16">
@@ -239,12 +284,12 @@
           <hlm-menu-label>Actions</hlm-menu-label>
           <hlm-menu-separator />
           <hlm-menu-group>
-            <button hlmMenuItem>Copy payment ID</button>
+            <button hlmMenuItem>Copy FileDto ID</button>
           </hlm-menu-group>
           <hlm-menu-separator />
           <hlm-menu-group>
             <button hlmMenuItem>View customer</button>
-            <button hlmMenuItem>View payment details</button>
+            <button hlmMenuItem>View FileDto details</button>
           </hlm-menu-group>
         </hlm-menu>
       </ng-template>
