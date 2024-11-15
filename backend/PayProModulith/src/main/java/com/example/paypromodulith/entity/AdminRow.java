@@ -1,4 +1,4 @@
-package com.example.paypromodulith.userManager.infrastructure.out.persitences.entity;
+package com.example.paypromodulith.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,7 +25,7 @@ public class AdminRow {
     @ManyToOne(fetch = FetchType.LAZY)
     @ColumnDefault("gen_random_uuid()")
     @JoinColumn(name = "admin")
-    private Admin admin;
+    private User admin;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @ColumnDefault("gen_random_uuid()")

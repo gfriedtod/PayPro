@@ -54,6 +54,7 @@ import {DepartementDto} from '../../model/DepartementDto';
 import {DepartementService} from '../../services/departement/departement.service';
 import {fakeOrganisation} from '../../environement/env';
 import {UserService} from '../../services/user/user.service';
+import {HlmSpinnerComponent} from '@spartan-ng/ui-spinner-helm';
 
 @Component({
   selector: 'app-user-detail',
@@ -139,7 +140,9 @@ import {UserService} from '../../services/user/user.service';
     HlmMenuItemImports,
     HlmIconComponent,
     HlmIconComponent,
-    HlmIconComponent
+    HlmIconComponent,
+    HlmSpinnerComponent,
+    HlmSpinnerComponent
   ],
   providers: [
     provideIcons({
@@ -238,6 +241,7 @@ export class UserDetailComponent implements OnInit{
   protected readonly _onStateChange = ({ startIndex, endIndex }: PaginatorState) =>
     this._displayedIndices.set({ start: startIndex, end: endIndex });
    image!: File;
+  loading = signal<boolean>(false);
 
   constructor(private userService: UserService,private storage: StorageImageService, private fileService: FileService, private departementService: DepartementService) {
     // needed to sync the debounced filter to the name filter, but being able to override the
@@ -286,6 +290,7 @@ export class UserDetailComponent implements OnInit{
   async subMitDocument() {
     let file : WritableSignal<FileDto>
     if(this.documentForm.valid){
+      this.loading.set(true);
       const data = (await this.storage.storeFile(this.image))
       file = signal<FileDto>({
         dateFile: this.documentForm.value.date as string,
@@ -299,9 +304,13 @@ export class UserDetailComponent implements OnInit{
 
       this.fileService.saveDoc(file()).subscribe(
         (data) => {
+
           this._FileDtos.update(()=>[...this.files(), data]);
+          this.loading.set(false)
         },
+        (error) => console.error(error)
       )
+      this.loading.set(false)
 
     }
 
@@ -309,6 +318,7 @@ export class UserDetailComponent implements OnInit{
   }
 
   async ngOnInit() {
+    this.loading.set(true);
     this.user.set(JSON.parse(localStorage.getItem(Storage.sharedData)!) as UserDto);
     this.userFrom.setControl('name', new FormControl(this.user().name));
     this.userFrom.setControl('email', new FormControl(this.user().email));
@@ -323,6 +333,7 @@ export class UserDetailComponent implements OnInit{
     this.userFrom.setControl('address', new FormControl(this.user().address));
     this.fileService.fetchDocs(this.user()).subscribe(
       (data) => {
+        this.loading.set(false);
         this._FileDtos.set(data);
       },
     );

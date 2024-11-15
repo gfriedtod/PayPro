@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pay_pro_app/page/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,10 +29,10 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const HomePageView(),
     );
   }
 }

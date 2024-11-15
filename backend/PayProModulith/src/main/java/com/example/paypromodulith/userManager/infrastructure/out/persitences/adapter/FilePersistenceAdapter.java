@@ -1,11 +1,12 @@
 package com.example.paypromodulith.userManager.infrastructure.out.persitences.adapter;
 
+import com.example.paypromodulith.entity.File;
+import com.example.paypromodulith.entity.User;
 import com.example.paypromodulith.userManager.application.in.FileUseCase;
 import com.example.paypromodulith.userManager.application.out.FileOutputPort;
 import com.example.paypromodulith.userManager.domain.model.FileDto;
 import com.example.paypromodulith.userManager.domain.model.UserDto;
-import com.example.paypromodulith.userManager.infrastructure.out.persitences.entity.File;
-import com.example.paypromodulith.userManager.infrastructure.out.persitences.entity.User;
+
 import com.example.paypromodulith.userManager.infrastructure.out.persitences.repository.FileRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;

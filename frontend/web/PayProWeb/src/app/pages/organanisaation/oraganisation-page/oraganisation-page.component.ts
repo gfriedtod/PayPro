@@ -41,6 +41,7 @@ import {
 } from '@spartan-ng/ui-sheet-helm';
 import {DepartementDto} from '../../../model/DepartementDto';
 import {DepartementService} from '../../../services/departement/departement.service';
+import {HlmSpinnerComponent} from '@spartan-ng/ui-spinner-helm';
 
 @Component({
   selector: 'app-oraganisation-page',
@@ -119,7 +120,8 @@ import {DepartementService} from '../../../services/departement/departement.serv
     HlmSheetCloseDirective,
     HlmMenuSeparatorComponent,
     HlmMenuItemDirective,
-    HlmMenuItemImports
+    HlmMenuItemImports,
+    HlmSpinnerComponent
   ],
   providers: [
     provideIcons({
@@ -136,9 +138,10 @@ export class OraganisationPageComponent {
 
   departmentDtos = signal<DepartementDto[]>([]);
   async ngOnInit()  {
+    this.loading.set(true);
     console.log("hello home");
     (await this.departementService.fetchDepatments()).subscribe(
-      (users) => this.departmentDtos.set(users),
+      (users) => {this.departmentDtos.set(users); this.loading.set(false)},
       (error) => console.error(error)
     )
   }
@@ -201,6 +204,7 @@ export class OraganisationPageComponent {
   protected readonly _totalElements = computed(() => this._filteredDepartementDtos().length);
   protected readonly _onStateChange = ({ startIndex, endIndex }: PaginatorState) =>
     this._displayedIndices.set({ start: startIndex, end: endIndex });
+  loading = signal<boolean>(false);
 
   constructor(private departementService: DepartementService) {
     // needed to sync the debounced filter to the name filter, but being able to override the

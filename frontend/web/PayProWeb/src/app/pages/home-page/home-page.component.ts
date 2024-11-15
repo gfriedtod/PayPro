@@ -56,6 +56,7 @@ import {GeneratePasswordService} from '../../services/generate-password/generate
 import {fakeOrganisation} from '../../environement/env';
 import {v4} from 'uuid';
 import {StorageService} from '../../services/storage/storage.service';
+import {HlmSpinnerComponent} from '@spartan-ng/ui-spinner-helm';
 
 
 @Component({
@@ -147,7 +148,15 @@ import {StorageService} from '../../services/storage/storage.service';
     HlmSelectOptionComponent,
     HlmSelectImports,
     HlmSelectOptionComponent,
-    HlmSelectImports
+    HlmSelectImports,
+    HlmSelectOptionComponent,
+    HlmSelectImports,
+    HlmSelectImports,
+    HlmSelectImports,
+    HlmSpinnerComponent,
+    HlmSpinnerComponent,
+    HlmSpinnerComponent,
+    HlmSpinnerComponent
   ],
   providers: [
     provideIcons({
@@ -180,6 +189,7 @@ export class HomePageComponent implements OnInit {
     address: new FormControl('', [Validators.required]),
   });
   departmentDtos = signal<DepartementDto[]>([]);
+  loading = signal(false)
 
   constructor(private userService: UserService, private departementService: DepartementService, private generatePasswordService: GeneratePasswordService,private storageService: StorageService) {
     // needed to sync the debounced filter to the name filter, but being able to override the
@@ -250,8 +260,9 @@ export class HomePageComponent implements OnInit {
   async ngOnInit() {
     this.userFrom.setControl('password', new FormControl(this.generatePasswordService.generatePassword()))
     console.log("hello home");
+    this.loading.set(true);
     (await this.userService.fetchUsers()).subscribe(
-      (users) => this.users.set(users),
+      (users) => {this.users.set(users);this.loading.set(false)},
       (error) => console.error(error)
     );
     (await this.departementService.fetchDepatments()).subscribe(
@@ -291,6 +302,7 @@ export class HomePageComponent implements OnInit {
     console.log(this.userFrom.value);
 
     if (this.userFrom.valid) {
+      this.loading.set(true);
       console.log(this.userFrom.value);
       user = signal({
         id:  v4(),
@@ -312,10 +324,14 @@ export class HomePageComponent implements OnInit {
       (await this.userService.postUser(user())).subscribe(
         (user)=> {
           this.users.update((u) => [...u, user]);
+          this.loading.set(false)
         },
-        (error) => console.error(error)
+        (error) =>{ console.error(error);this.loading.set(false)
+        }
       )
+
     }
+
   }
 
   save(data: any) {

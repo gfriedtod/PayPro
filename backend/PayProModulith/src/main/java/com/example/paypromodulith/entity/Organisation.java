@@ -1,4 +1,4 @@
-package com.example.paypromodulith.userManager.infrastructure.out.persitences.entity;
+package com.example.paypromodulith.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,6 +17,7 @@ import java.util.UUID;
 @Table(name = "organisations")
 public class Organisation {
     @Id
+    @ColumnDefault("gen_random_uuid()")
     @Column(name = "id", nullable = false)
     private UUID id;
 

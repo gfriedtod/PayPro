@@ -173,7 +173,12 @@
         </ng-template>
       </hlm-td>
     </brn-column-def>
-    <div brnNoDataRow class="flex items-center justify-center p-20 text-muted-foreground">No data</div>
+    <div brnNoDataRow class="flex items-center justify-center p-20 text-muted-foreground">
+      @if(loading()){
+      <hlm-spinner />
+    }@else{
+      No data
+    }</div>
   </brn-table>
   <div
     *brnPaginator="let ctx; totalElements: _totalElements(); pageSize: _pageSize(); onStateChange: _onStateChange"

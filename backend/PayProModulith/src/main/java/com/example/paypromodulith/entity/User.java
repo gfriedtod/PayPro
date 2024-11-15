@@ -1,4 +1,4 @@
-package com.example.paypromodulith.userManager.infrastructure.out.persitences.entity;
+package com.example.paypromodulith.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,6 +15,7 @@ import java.util.UUID;
 @Table(name = "users")
 public class User {
     @Id
+    @ColumnDefault("gen_random_uuid()")
     @Column(name = "id", nullable = false)
     private UUID id;
 
@@ -25,10 +26,6 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private Department department;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "organisation_id")
-    private Organisation organisation;
 
     @Column(name = "display_name")
     private String displayName;
@@ -53,10 +50,12 @@ public class User {
     private String gender;
 
     @ColumnDefault("now()")
-    @Column(name = "\"dateBirth\"")
+    @Column(name = "date_birth")
     private LocalDate dateBirth;
 
-
+    @ColumnDefault("'Douala'")
+    @Column(name = "address", length = Integer.MAX_VALUE)
+    private String address;
 
     @ColumnDefault("'https://afriksportsmagazine.com/wp-content/uploads/2024/02/C3N09690.webp'")
     @Column(name = "image", length = Integer.MAX_VALUE)
@@ -66,8 +65,8 @@ public class User {
     @Column(name = "phone", length = Integer.MAX_VALUE)
     private String phone;
 
-    @ColumnDefault("'Douala'")
-    @Column(name = "address", length = Integer.MAX_VALUE)
-    private String address;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "organisation_id")
+    private Organisation organisation;
 
 }

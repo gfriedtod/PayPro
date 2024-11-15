@@ -1,9 +1,9 @@
 package com.example.paypromodulith.userManager.infrastructure.out.persitences.adapter;
 
+import com.example.paypromodulith.entity.Organisation;
 import com.example.paypromodulith.userManager.application.out.DepartementOutputPort;
 import com.example.paypromodulith.userManager.domain.model.DepartmentDto;
 import com.example.paypromodulith.userManager.domain.model.OrganisationDto;
-import com.example.paypromodulith.userManager.infrastructure.out.persitences.entity.Organisation;
 import com.example.paypromodulith.userManager.infrastructure.out.persitences.repository.DepartmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
