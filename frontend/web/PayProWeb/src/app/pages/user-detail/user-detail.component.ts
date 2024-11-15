@@ -1,5 +1,4 @@
 import {Component, computed, effect, OnInit, signal, TrackByFunction, WritableSignal} from '@angular/core';
-import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
 import {provideIcons} from '@ng-icons/core';
 import {
   lucideArrowLeft,
@@ -9,40 +8,15 @@ import {
   lucideUser,
   lucideFile
 } from '@ng-icons/lucide';
-import {HlmIconComponent} from '@spartan-ng/ui-icon-helm';
-import {HlmCardContentDirective, HlmCardDirective, HlmCardHeaderDirective} from '@spartan-ng/ui-card-helm';
+
 import { RouterLink } from '@angular/router';
-import {
-  BrnCellDefDirective,
-  BrnColumnDefComponent,
-  BrnPaginatorDirective,
-  BrnTableComponent, BrnTableImports, PaginatorState, useBrnColumnManager
-} from '@spartan-ng/ui-table-brain';
-import {BrnSelectComponent, BrnSelectContentComponent, BrnSelectValueComponent} from '@spartan-ng/ui-select-brain';
-import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui-sheet-brain';
+
 import {DatePipe, DecimalPipe, TitleCasePipe, UpperCasePipe} from '@angular/common';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {toObservable, toSignal} from '@angular/core/rxjs-interop';
 import {debounceTime, map, timer} from 'rxjs';
 import {SelectionModel} from '@angular/cdk/collections';
-import {HlmTableDirective, HlmTableImports, HlmTdComponent, HlmThComponent} from '@spartan-ng/ui-table-helm';
-import {HlmCheckboxComponent, HlmCheckboxImports} from '@spartan-ng/ui-checkbox-helm';
-import {HlmSelectImports, HlmSelectOptionComponent} from '@spartan-ng/ui-select-helm';
-import {
-  HlmMenuComponent,
-  HlmMenuGroupComponent, HlmMenuItemCheckboxDirective, HlmMenuItemCheckComponent, HlmMenuItemImports,
-  HlmMenuLabelComponent,
-  HlmMenuSeparatorComponent
-} from '@spartan-ng/ui-menu-helm';
-import {BrnMenuTriggerDirective} from '@spartan-ng/ui-menu-brain';
-import {
-  HlmSheetComponent,
-  HlmSheetContentComponent, HlmSheetDescriptionDirective,
-  HlmSheetFooterComponent,
-  HlmSheetHeaderComponent, HlmSheetImports
-} from '@spartan-ng/ui-sheet-helm';
-import {HlmInputDirective} from '@spartan-ng/ui-input-helm';
-import {HlmLabelDirective} from '@spartan-ng/ui-label-helm';
+
 import {UserDto} from '../../model/UserDto';
 import {Storage, StorageService} from '../../services/storage/storage.service';
 import {StorageImageService} from '../../services/storage-image/storage-image.service';
@@ -54,11 +28,43 @@ import {DepartementDto} from '../../model/DepartementDto';
 import {DepartementService} from '../../services/departement/departement.service';
 import {fakeOrganisation} from '../../environement/env';
 import {UserService} from '../../services/user/user.service';
-import {HlmSpinnerComponent} from '@spartan-ng/ui-spinner-helm';
+import {HlmButtonDirective} from '../../components/lib/ui-button-helm/src';
+import {HlmIconComponent} from '../../components/lib/ui-icon-helm/src';
+import {HlmCardContentDirective, HlmCardDirective, HlmCardHeaderDirective} from '../../components/lib/ui-card-helm/src';
+import {
+  HlmTableDirective,
+  HlmTableImports,
+  HlmTdComponent,
+  HlmThComponent
+} from '../../components/lib/ui-table-helm/src';
+import {HlmCheckboxComponent, HlmCheckboxImports} from '../../components/lib/ui-checkbox-helm/src';
+import {HlmSelectImports, HlmSelectOptionComponent} from '../../components/lib/ui-select-helm/src';
+import {
+  HlmMenuComponent,
+  HlmMenuGroupComponent, HlmMenuItemCheckboxDirective, HlmMenuItemCheckComponent, HlmMenuItemImports,
+  HlmMenuLabelComponent,
+  HlmMenuSeparatorComponent
+} from '../../components/lib/ui-menu-helm/src';
+import {BrnMenuTriggerDirective} from '@spartan-ng/ui-menu-brain';
+import {
+  HlmSheetComponent,
+  HlmSheetContentComponent, HlmSheetDescriptionDirective,
+  HlmSheetFooterComponent,
+  HlmSheetHeaderComponent, HlmSheetImports
+} from '../../components/lib/ui-sheet-helm/src';
+import {HlmInputDirective} from '../../components/lib/ui-input-helm/src';
+import {HlmLabelDirective} from '../../components/lib/ui-label-helm/src';
+import {HlmSpinnerComponent} from '../../components/lib/ui-spinner-helm/src';
+import {
+  BrnCellDefDirective,
+  BrnColumnDefComponent,
+  BrnPaginatorDirective,
+  BrnTableComponent, BrnTableImports, PaginatorState, useBrnColumnManager
+} from '@spartan-ng/ui-table-brain';
+import {BrnSelectComponent, BrnSelectContentComponent, BrnSelectValueComponent} from '@spartan-ng/ui-select-brain';
+import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui-sheet-brain';
 
 @Component({
-  selector: 'app-user-detail',
-  standalone: true,
   imports: [
     HlmButtonDirective,
     HlmIconComponent,
@@ -90,8 +96,8 @@ import {HlmSpinnerComponent} from '@spartan-ng/ui-spinner-helm';
     HlmCheckboxComponent,
     HlmCheckboxImports,
     HlmTdComponent,
-    HlmTableImports,
     HlmCheckboxComponent,
+    HlmTableImports,
     HlmThComponent,
     HlmTableImports,
     HlmSelectOptionComponent,
@@ -154,8 +160,10 @@ import {HlmSpinnerComponent} from '@spartan-ng/ui-spinner-helm';
       lucideFile
     })
   ],
-  templateUrl: './user-detail.component.html',
-  styleUrl: './user-detail.component.css'
+  selector: 'app-user-detail',
+  standalone: true,
+  styleUrl: './user-detail.component.css',
+  templateUrl: './user-detail.component.html'
 })
 export class UserDetailComponent implements OnInit{
   user : WritableSignal<UserDto> =signal({} as UserDto);

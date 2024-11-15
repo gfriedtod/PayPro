@@ -1,15 +1,17 @@
 import {Component} from '@angular/core';
+
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {
   HlmCardContentDirective,
   HlmCardDirective,
   HlmCardFooterDirective,
   HlmCardHeaderDirective
-} from '@spartan-ng/ui-card-helm';
-import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {HlmInputDirective} from '@spartan-ng/ui-input-helm';
-import {HlmLabelDirective} from '@spartan-ng/ui-label-helm';
-import {HlmCheckboxComponent} from '@spartan-ng/ui-checkbox-helm';
+} from '../../components/lib/ui-card-helm/src';
+import {HlmButtonDirective} from '../../components/lib/ui-button-helm/src';
+import {HlmInputDirective} from '../../components/lib/ui-input-helm/src';
+import {HlmLabelDirective} from '../../components/lib/ui-label-helm/src';
+import {HlmCheckboxComponent} from '../../components/lib/ui-checkbox-helm/src';
+
 
 @Component({
   selector: 'app-singup',

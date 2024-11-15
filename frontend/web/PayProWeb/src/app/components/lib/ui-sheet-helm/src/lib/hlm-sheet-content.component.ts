@@ -1,11 +1,12 @@
 import { Component, ElementRef, Renderer2, computed, effect, inject, input, signal } from '@angular/core';
 import { lucideX } from '@ng-icons/lucide';
 import { hlm, injectExposedSideProvider, injectExposesStateProvider } from '@spartan-ng/ui-core';
-import { HlmIconComponent, provideIcons } from '@spartan-ng/ui-icon-helm';
 import { BrnSheetCloseDirective } from '@spartan-ng/ui-sheet-brain';
 import { cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
 import { HlmSheetCloseDirective } from './hlm-sheet-close.directive';
+import {provideIcons} from '@ng-icons/core';
+import {HlmIconComponent} from '../../../ui-icon-helm/src';
 
 export const sheetVariants = cva(
 	'fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:duration-500',

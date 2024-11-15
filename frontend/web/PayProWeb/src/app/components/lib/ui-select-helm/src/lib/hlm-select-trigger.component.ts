@@ -2,10 +2,10 @@ import { Component, ContentChild, type ElementRef, ViewChild, computed, inject, 
 import { provideIcons } from '@ng-icons/core';
 import { lucideChevronDown } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/ui-core';
-import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { BrnSelectComponent, BrnSelectTriggerDirective } from '@spartan-ng/ui-select-brain';
 import { type VariantProps, cva } from 'class-variance-authority';
 import type { ClassValue } from 'clsx';
+import {HlmIconComponent} from '../../../ui-icon-helm/src';
 
 export const selectTriggerVariants = cva(
 	'flex items-center justify-between rounded-md border border-input bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',

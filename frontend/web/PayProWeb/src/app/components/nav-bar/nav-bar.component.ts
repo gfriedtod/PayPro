@@ -1,11 +1,12 @@
 import {Component, OnInit, signal} from '@angular/core';
-import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
-import {HlmIconComponent} from '@spartan-ng/ui-icon-helm';
+
 import {lucideArrowRight, lucideUser, lucideWorkflow} from '@ng-icons/lucide';
 import {provideIcons} from '@ng-icons/core';
 import {Route, Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {of} from 'rxjs';
 import {NgClass} from '@angular/common';
+import {HlmIconComponent} from '../lib/ui-icon-helm/src';
+import {HlmButtonDirective} from '../lib/ui-button-helm/src';
 
 @Component({
   selector: 'app-nav-bar',

@@ -11,41 +11,43 @@ import {lucidePlus, lucideUser, lucideUserMinus, lucideUserPlus,lucideSearch} fr
 import {toObservable, toSignal} from '@angular/core/rxjs-interop';
 import {debounceTime, map} from 'rxjs';
 import {SelectionModel} from '@angular/cdk/collections';
-import {HlmCardContentDirective, HlmCardDirective, HlmCardImports} from '@spartan-ng/ui-card-helm';
-import {HlmIconComponent} from '@spartan-ng/ui-icon-helm';
-import {HlmInputDirective} from '@spartan-ng/ui-input-helm';
-import {
-  HlmSelectContentDirective,
-  HlmSelectImports,
-  HlmSelectOptionComponent,
-  HlmSelectValueDirective
-} from '@spartan-ng/ui-select-helm';
-import {HlmScrollAreaModule} from '@spartan-ng/ui-scrollarea-helm';
-import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
-import {HlmTableDirective, HlmTableImports, HlmTdComponent, HlmThComponent} from '@spartan-ng/ui-table-helm';
-import {HlmCheckboxComponent, HlmCheckboxImports} from '@spartan-ng/ui-checkbox-helm';
-import {
-  HlmMenuComponent,
-  HlmMenuGroupComponent, HlmMenuItemDirective,
-  HlmMenuItemImports, HlmMenuLabelComponent,
-  HlmMenuSeparatorComponent,
-  HlmMenuStructureImports
-} from '@spartan-ng/ui-menu-helm';
+
 import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui-sheet-brain';
-import {
-  HlmSheetCloseDirective,
-  HlmSheetComponent,
-  HlmSheetContentComponent, HlmSheetDescriptionDirective, HlmSheetFooterComponent,
-  HlmSheetHeaderComponent,
-  HlmSheetTitleDirective
-} from '@spartan-ng/ui-sheet-helm';
+
 import {DepartementDto} from '../../../model/DepartementDto';
 import {DepartementService} from '../../../services/departement/departement.service';
-import {HlmSpinnerComponent} from '@spartan-ng/ui-spinner-helm';
+import {HlmCardContentDirective, HlmCardDirective, HlmCardImports} from '../../../components/lib/ui-card-helm/src';
+import {HlmIconComponent} from '../../../components/lib/ui-icon-helm/src';
+import {HlmInputDirective} from '../../../components/lib/ui-input-helm/src';
+import {
+  HlmSelectContentDirective, HlmSelectImports,
+  HlmSelectOptionComponent,
+  HlmSelectValueDirective
+} from '../../../components/lib/ui-select-helm/src';
+import {HlmScrollAreaModule} from '../../../components/lib/ui-scrollarea-helm/src';
+import {HlmButtonDirective} from '../../../components/lib/ui-button-helm/src';
+import {
+  HlmTableDirective,
+  HlmTableImports,
+  HlmTdComponent,
+  HlmThComponent
+} from '../../../components/lib/ui-table-helm/src';
+import {HlmCheckboxComponent, HlmCheckboxImports} from '../../../components/lib/ui-checkbox-helm/src';
+import {
+  HlmMenuComponent,
+  HlmMenuGroupComponent,
+  HlmMenuItemDirective,
+  HlmMenuItemImports, HlmMenuLabelComponent,
+  HlmMenuSeparatorComponent, HlmMenuStructureImports
+} from '../../../components/lib/ui-menu-helm/src';
+import {HlmSpinnerComponent} from '../../../components/lib/ui-spinner-helm/src';
+import {
+  HlmSheetCloseDirective, HlmSheetComponent, HlmSheetContentComponent,
+  HlmSheetDescriptionDirective,
+  HlmSheetFooterComponent, HlmSheetHeaderComponent, HlmSheetTitleDirective
+} from '../../../components/lib/ui-sheet-helm/src';
 
 @Component({
-  selector: 'app-oraganisation-page',
-  standalone: true,
   imports: [
     HlmCardDirective,
     HlmCardContentDirective,
@@ -131,8 +133,10 @@ import {HlmSpinnerComponent} from '@spartan-ng/ui-spinner-helm';
       lucideSearch,
       lucidePlus
     })
-  ],  templateUrl: './oraganisation-page.component.html',
-  styleUrl: './oraganisation-page.component.css'
+  ],
+  selector: 'app-oraganisation-page',
+  standalone: true, styleUrl: './oraganisation-page.component.css',
+  templateUrl: './oraganisation-page.component.html'
 })
 export class OraganisationPageComponent {
 

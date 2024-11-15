@@ -1,8 +1,9 @@
 import { Component, computed, input } from '@angular/core';
 import { lucideCircle } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/ui-core';
-import { HlmIconComponent, provideIcons } from '@spartan-ng/ui-icon-helm';
 import type { ClassValue } from 'clsx';
+import {provideIcons} from '@ng-icons/core';
+import {HlmIconComponent} from '../../../ui-icon-helm/src';
 
 @Component({
 	selector: 'hlm-menu-item-radio',

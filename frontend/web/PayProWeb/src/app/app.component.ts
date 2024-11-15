@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
 import {NavBarComponent} from './components/nav-bar/nav-bar.component';
 import {provideHttpClient} from '@angular/common/http';
+import {HlmButtonDirective} from './components/lib/ui-button-helm/src';
 
 @Component({
   selector: 'app-root',

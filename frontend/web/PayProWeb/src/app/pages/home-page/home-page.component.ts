@@ -1,6 +1,5 @@
 import {Component, computed, effect, OnInit, signal, TrackByFunction, WritableSignal} from '@angular/core';
-import {HlmCardContentDirective, HlmCardDirective, HlmCardImports} from '@spartan-ng/ui-card-helm';
-import {HlmIconComponent} from '@spartan-ng/ui-icon-helm';
+;
 import {provideIcons} from '@ng-icons/core';
 import {
   lucideMoreHorizontal,
@@ -10,43 +9,13 @@ import {
   lucideUserMinus,
   lucideUserPlus
 } from '@ng-icons/lucide';
-import {HlmInputDirective} from '@spartan-ng/ui-input-helm';
-import {BrnSelectComponent, BrnSelectContentComponent, BrnSelectValueComponent} from '@spartan-ng/ui-select-brain';
-import {
-  HlmSelectContentDirective,
-  HlmSelectImports,
-  HlmSelectOptionComponent,
-  HlmSelectValueDirective
-} from '@spartan-ng/ui-select-helm';
-import {HlmScrollAreaModule} from '@spartan-ng/ui-scrollarea-helm';
-import {HlmButtonDirective} from '@spartan-ng/ui-button-helm';
-import {HlmTableDirective, HlmTableImports, HlmTdComponent, HlmThComponent} from '@spartan-ng/ui-table-helm';
-import {BrnTableImports, PaginatorState, useBrnColumnManager} from '@spartan-ng/ui-table-brain';
-import {HlmCheckboxComponent, HlmCheckboxImports} from '@spartan-ng/ui-checkbox-helm';
-import {
-  HlmMenuComponent,
-  HlmMenuGroupComponent,
-  HlmMenuItemImports,
-  HlmMenuLabelComponent,
-  HlmMenuSeparatorComponent,
-  HlmMenuStructureImports
-} from '@spartan-ng/ui-menu-helm';
-import {SelectionModel} from '@angular/cdk/collections';
+
 import {toObservable, toSignal} from '@angular/core/rxjs-interop';
 import {debounceTime, map, of} from 'rxjs';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {BrnMenuTriggerDirective} from '@spartan-ng/ui-menu-brain';
 import {DecimalPipe, TitleCasePipe} from '@angular/common';
-import {
-  HlmSheetComponent,
-  HlmSheetContentComponent,
-  HlmSheetDescriptionDirective,
-  HlmSheetFooterComponent,
-  HlmSheetHeaderComponent,
-  HlmSheetTitleDirective
-} from '@spartan-ng/ui-sheet-helm';
-import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui-sheet-brain';
-import {HlmLabelDirective} from '@spartan-ng/ui-label-helm';
+
 import {RouterLink} from '@angular/router';
 import {UserDto} from '../../model/UserDto';
 import {UserService} from '../../services/user/user.service';
@@ -56,7 +25,40 @@ import {GeneratePasswordService} from '../../services/generate-password/generate
 import {fakeOrganisation} from '../../environement/env';
 import {v4} from 'uuid';
 import {StorageService} from '../../services/storage/storage.service';
-import {HlmSpinnerComponent} from '@spartan-ng/ui-spinner-helm';
+import {HlmCardContentDirective, HlmCardDirective, HlmCardImports} from '../../components/lib/ui-card-helm/src';
+import {HlmIconComponent} from '../../components/lib/ui-icon-helm/src';
+import {HlmInputDirective} from '../../components/lib/ui-input-helm/src';
+import {BrnSelectComponent, BrnSelectContentComponent, BrnSelectValueComponent} from '@spartan-ng/ui-select-brain';
+import {
+  HlmSelectContentDirective, HlmSelectImports,
+  HlmSelectOptionComponent,
+  HlmSelectValueDirective
+} from '../../components/lib/ui-select-helm/src';
+import {HlmScrollAreaModule} from '../../components/lib/ui-scrollarea-helm/src';
+import {HlmButtonDirective} from '../../components/lib/ui-button-helm/src';
+import {
+  HlmTableDirective,
+  HlmTableImports,
+  HlmTdComponent,
+  HlmThComponent
+} from '../../components/lib/ui-table-helm/src';
+import {BrnTableImports, PaginatorState, useBrnColumnManager} from '@spartan-ng/ui-table-brain';
+import {HlmCheckboxComponent, HlmCheckboxImports} from '../../components/lib/ui-checkbox-helm/src';
+import {
+  HlmMenuComponent,
+  HlmMenuGroupComponent, HlmMenuItemImports, HlmMenuLabelComponent,
+  HlmMenuSeparatorComponent,
+  HlmMenuStructureImports
+} from '../../components/lib/ui-menu-helm/src';
+import {
+  HlmSheetComponent,
+  HlmSheetContentComponent, HlmSheetDescriptionDirective, HlmSheetFooterComponent,
+  HlmSheetHeaderComponent, HlmSheetTitleDirective
+} from '../../components/lib/ui-sheet-helm/src';
+import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui-sheet-brain';
+import {HlmLabelDirective} from '../../components/lib/ui-label-helm/src';
+import {HlmSpinnerComponent} from '../../components/lib/ui-spinner-helm/src';
+import { SelectionModel } from '@angular/cdk/collections';
 
 
 @Component({
@@ -204,7 +206,7 @@ export class HomePageComponent implements OnInit {
   protected readonly _availablePageSizes = [5, 10, 20, 10000];
   protected readonly _pageSize = signal(this._availablePageSizes[0]);
 
-  private readonly _selectionModel = new SelectionModel<UserDto>(true);
+    private readonly _selectionModel = new SelectionModel<UserDto>(true);
   protected readonly _isUserDtoSelected = (UserDto: UserDto) => this._selectionModel.isSelected(UserDto);
   protected readonly _selected = toSignal(this._selectionModel.changed.pipe(map((change) => change.source.selected)), {
     initialValue: [],
@@ -254,8 +256,9 @@ export class HomePageComponent implements OnInit {
 
   protected readonly _trackBy: TrackByFunction<UserDto> = (_: number, p: UserDto) => p.id;
   protected readonly _totalElements = computed(() => this._filteredUserDtos().length);
-  protected readonly _onStateChange = ({ startIndex, endIndex }: PaginatorState) =>
-    this._displayedIndices.set({ start: startIndex, end: endIndex });
+  protected readonly _onStateChange = ({ startIndex, endIndex }: PaginatorState) => {
+    this._displayedIndices.set({start: startIndex, end: endIndex});
+  };
 
   async ngOnInit() {
     this.userFrom.setControl('password', new FormControl(this.generatePasswordService.generatePassword()))
