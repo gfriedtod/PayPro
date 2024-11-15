@@ -38,12 +38,12 @@ export class NavBarComponent implements OnInit{
     {
       title: 'Overview',
       icon: 'lucideUser',
-      link: '/home'
+      link: '/main/home'
     },
     {
       title: 'Organisation',
       icon: 'lucideWorkflow',
-      link: '/organisation'
+      link: '/main/organisation'
     }
   ];
 

@@ -7,7 +7,11 @@ module.exports = {
     './REPLACE_WITH_PATH_TO_YOUR_COMPONENTS_DIRECTORY/**/*.{html,ts}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'illustration1': "url('../public/illustration1.png')",
+      }
+    },
   },
   plugins: [],
 };
