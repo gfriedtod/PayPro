@@ -49,7 +49,7 @@
           <hlm-checkbox  class=""  formControlName="acceptTerms" hlmInput id="terms"
                  type="checkbox">
           </hlm-checkbox>
-          <div class="sm:text-xs xl:text-[1rem]">
+          <div class="sm:text-xs xl:text-xs">
             By creating an account, you agree to the terms and conditions
           </div>
 
@@ -57,9 +57,17 @@
 
       </div>
       <div class="w-full" hlmCardFooter>
-        <button (click)="singUp()" class="w-full" hlmBtn>Sign Up</button>
+        <button (click)="singUp()" class="w-full" hlmBtn>
+          @if(perform()){
+              <hlm-spinner></hlm-spinner>
+          }@else{
+            Sign Up
+          }
+          </button>
 
       </div>
+
+      <button hlmBtn variant="link" routerLink="/login">Login</button>
     </form>
   </div>
 

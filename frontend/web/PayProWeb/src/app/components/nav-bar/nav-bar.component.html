@@ -1,12 +1,12 @@
 <div class="h-dvh flex flex-col gap-2 w-64 bg-white items-center rounded-lg p-2">
-  <img src="logo.png" class="w-32" alt="yey">
+  <img src="logo.png" routerLink="/general" class="w-32" alt="yey">
   <div></div>
   <div></div>
   <div></div>
   <div></div>
 
   @for (item of items; track item.link){
-    <button routerLink="{{item.link}}" (click)="justTest()"  class="w-full h-10 flex gap-2 {{ this.getCurrentRoute() !== item.link ? 'bg-white text-black hover:text-white' : ''}}" hlmBtn> <hlm-icon name="{{item.icon}}"></hlm-icon> {{item.title}} </button>
+    <button routerLink="{{item.link+'/'+this.id}}" (click)="justTest()" class="w-full h-10 flex gap-2 {{ this.getCurrentRoute() !== item.link ? 'bg-white text-black hover:text-white' : ''}}" hlmBtn> <hlm-icon name="{{item.icon}}"></hlm-icon> {{item.title}} </button>
 
   }
 

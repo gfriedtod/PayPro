@@ -46,14 +46,7 @@ public class SecurityConfigurer{
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/commands/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/commands/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/status/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/category/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/client/category/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/user/delivery/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/location/**").permitAll()
+
 
                         .anyRequest().authenticated())
                 .authenticationManager(authenticationManager)

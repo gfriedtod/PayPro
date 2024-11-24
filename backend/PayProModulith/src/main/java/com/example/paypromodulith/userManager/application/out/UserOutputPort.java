@@ -2,7 +2,6 @@ package com.example.paypromodulith.userManager.application.out;
 
 import com.example.paypromodulith.userManager.domain.model.OrganisationDto;
 import com.example.paypromodulith.userManager.domain.model.UserDto;
-import com.example.paypromodulith.userManager.infrastructure.out.persitences.entity.Organisation;
 
 import java.util.List;
 import java.util.UUID;

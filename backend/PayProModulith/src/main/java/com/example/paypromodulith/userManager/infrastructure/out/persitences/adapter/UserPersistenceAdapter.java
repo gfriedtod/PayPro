@@ -6,9 +6,12 @@ import com.example.paypromodulith.userManager.application.out.UserOutputPort;
 import com.example.paypromodulith.userManager.domain.model.OrganisationDto;
 import com.example.paypromodulith.userManager.domain.model.UserDto;
 
+import com.example.paypromodulith.userManager.infrastructure.out.persitences.mapper.OrganisationMapper;
+import com.example.paypromodulith.userManager.infrastructure.out.persitences.mapper.UserMapper;
 import com.example.paypromodulith.userManager.infrastructure.out.persitences.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,14 +22,16 @@ public class UserPersistenceAdapter implements UserOutputPort {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
 
+    @Transactional
     @Override
     public List<UserDto> findAll() {
-        return userRepository.findAll().stream().map(user -> modelMapper.map(user, UserDto.class)).toList();
+        return userRepository.findAll().stream().map(UserMapper::toDto).toList();
     }
 
+    @Transactional
     @Override
     public UserDto create(UserDto userDto) {
-        return modelMapper.map(userRepository.save(modelMapper.map(userDto, User.class)), UserDto.class);
+        return UserMapper.toDto(userRepository.save(UserMapper.toEntity(userDto)));
     }
 
     @Override
@@ -39,10 +44,10 @@ public class UserPersistenceAdapter implements UserOutputPort {
         return null;
     }
 
+    @Transactional
     @Override
     public List<UserDto> findAllByOrganisation(OrganisationDto organisation) {
-        System.out.println("test exist "+modelMapper.map(organisation, Organisation.class).getId());
-        var list = userRepository.findAllByOrganisation(modelMapper.map(organisation, Organisation.class)).stream().map(user -> modelMapper.map(user, UserDto.class)).toList();
+        var list = userRepository.findAllByOrganisationId(organisation.getId()).stream().map(UserMapper::toDto).toList();
         System.out.println(list.size());
         return list;
     }

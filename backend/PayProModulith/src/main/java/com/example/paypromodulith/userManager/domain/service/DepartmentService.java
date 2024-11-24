@@ -18,4 +18,9 @@ public class DepartmentService implements DepartementUseCase {
     public List<DepartmentDto> findAllByOrganisation(OrganisationDto organisationDto) {
         return departementOutputPort.findAllByOrganisation(organisationDto);
     }
+
+    @Override
+    public DepartmentDto create(DepartmentDto departmentDto) {
+        return departementOutputPort.save(departmentDto);
+    }
 }

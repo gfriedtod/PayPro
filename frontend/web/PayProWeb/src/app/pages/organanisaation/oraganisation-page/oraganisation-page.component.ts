@@ -1,10 +1,10 @@
-import {Component, computed, effect, signal, TrackByFunction} from '@angular/core';
+import {Component, computed, effect, inject, signal, TrackByFunction, WritableSignal} from '@angular/core';
 import {
   BrnTableImports, PaginatorState, useBrnColumnManager
 } from "@spartan-ng/ui-table-brain";
 import {BrnSelectComponent, BrnSelectContentComponent, BrnSelectValueComponent} from "@spartan-ng/ui-select-brain";
 import {DecimalPipe, TitleCasePipe} from "@angular/common";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {BrnMenuTriggerDirective} from '@spartan-ng/ui-menu-brain';
 import {provideIcons} from '@ng-icons/core';
 import {lucidePlus, lucideUser, lucideUserMinus, lucideUserPlus,lucideSearch} from '@ng-icons/lucide';
@@ -46,6 +46,9 @@ import {
   HlmSheetDescriptionDirective,
   HlmSheetFooterComponent, HlmSheetHeaderComponent, HlmSheetTitleDirective
 } from '../../../components/lib/ui-sheet-helm/src';
+import {Router} from '@angular/router';
+import {v4} from 'uuid';
+import {OrganisationDto} from '../../../model/OrganisationDto';
 
 @Component({
   imports: [
@@ -123,7 +126,8 @@ import {
     HlmMenuSeparatorComponent,
     HlmMenuItemDirective,
     HlmMenuItemImports,
-    HlmSpinnerComponent
+    HlmSpinnerComponent,
+    ReactiveFormsModule
   ],
   providers: [
     provideIcons({
@@ -141,11 +145,22 @@ import {
 export class OraganisationPageComponent {
 
   departmentDtos = signal<DepartementDto[]>([]);
+  router: Router = inject(Router);
+
+
+  departmentForm = new FormGroup({
+    name: new FormControl('',[Validators.required]),
+  });
+  private id: string = '';
+
   async ngOnInit()  {
+     this.id   = this.router.url.split('/').pop() ?? '';
     this.loading.set(true);
     console.log("hello home");
-    (await this.departementService.fetchDepatments()).subscribe(
-      (users) => {this.departmentDtos.set(users); this.loading.set(false)},
+
+
+    (await this.departementService.fetchDepatments(this.id)).subscribe(
+      (departements) => {this.departmentDtos.set(departements); this.loading.set(false)},
       (error) => console.error(error)
     )
   }
@@ -237,6 +252,35 @@ export class OraganisationPageComponent {
       this._emailSort.set(null);
     } else {
       this._emailSort.set('ASC');
+    }
+  }
+
+  async submit() {
+
+    if (this.departmentForm.valid) {
+      this.loading.set(true);
+      let departement: WritableSignal<DepartementDto>
+      departement = signal<DepartementDto>({
+        name: this.departmentForm.value.name as string,
+        id: v4(),
+        createdAt: new Date().toISOString(),
+        organisation: {id: this.id} as OrganisationDto,
+      });
+
+      (await this.departementService.saveDepartement(departement())).subscribe(
+        {
+          next: (data) => {
+            this.loading.set(false);
+            this.departmentForm.reset();
+            this.ngOnInit();
+          },
+          error: () => {
+            this.loading.set(false);
+          }
+
+        }
+      )
+
     }
   }
 }

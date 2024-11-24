@@ -65,24 +65,29 @@
       </button>
     </div>
 
-    <hlm-sheet side="right">
+    <hlm-sheet  side="right">
       <button brnSheetTrigger class="gap-2 h-11 " hlmBtn>
         <hlm-icon name="lucidePlus"></hlm-icon>
         Add Departement
       </button>
-      <hlm-sheet-content *brnSheetContent="let ctx">
+      <hlm-sheet-content [formGroup]="departmentForm" *brnSheetContent="let ctx">
         <hlm-sheet-header>
           <h3 hlmSheetTitle>Edit Profile</h3>
           <p hlmSheetDescription>Make changes to your profile here. Click save when you're done.</p>
         </hlm-sheet-header>
         <div class="py-4 grid gap-4">
           <div class="items-center grid grid-cols-4 gap-4">
-            <label class="text-right" for="name" hlmLabel>Name</label>
-            <input class="col-span-3" hlmInput id="name" value="Pedro Duarte"/>
+            <label class="text-right" for="name"  hlmLabel>Name</label>
+            <input class="col-span-3" hlmInput id="name" formControlName="name" value="Pedro Duarte"/>
           </div>
         </div>
         <hlm-sheet-footer>
-          <button hlmBtn type="submit">Save Changes</button>
+          <button (click)="submit()" hlmBtn type="submit">
+            @if (loading()) {
+            <hlm-spinner/>
+          } @else {
+            Save Changes
+          }</button>
         </hlm-sheet-footer>
       </hlm-sheet-content>
     </hlm-sheet>

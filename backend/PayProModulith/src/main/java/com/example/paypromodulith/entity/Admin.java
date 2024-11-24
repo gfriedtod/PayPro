@@ -1,8 +1,7 @@
 package com.example.paypromodulith.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
@@ -12,6 +11,9 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "admin")
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

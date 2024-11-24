@@ -7,9 +7,12 @@ import com.example.paypromodulith.userManager.application.out.FileOutputPort;
 import com.example.paypromodulith.userManager.domain.model.FileDto;
 import com.example.paypromodulith.userManager.domain.model.UserDto;
 
+import com.example.paypromodulith.userManager.infrastructure.out.persitences.mapper.FileMapper;
+import com.example.paypromodulith.userManager.infrastructure.out.persitences.mapper.UserMapper;
 import com.example.paypromodulith.userManager.infrastructure.out.persitences.repository.FileRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,13 +20,18 @@ import java.util.List;
 public class FilePersistenceAdapter implements FileOutputPort {
     private final FileRepository fileRepository;
     private final ModelMapper modelMapper;
+    @Transactional
     @Override
     public FileDto save(FileDto fileDto) {
-        return modelMapper.map(fileRepository.save(modelMapper.map(fileDto, File.class)),FileDto.class);
+        return FileMapper.toDto(fileRepository.save(FileMapper.toEntity(fileDto)));
     }
 
+    @Transactional
     @Override
     public List<FileDto> fetchFilesByUser(UserDto userDto) {
-        return fileRepository.findAllByUser(modelMapper.map(userDto, User.class)).stream().map(file -> modelMapper.map(file, FileDto.class)).toList();
+        return fileRepository.findAllByUserId(
+                userDto.getId()
+                ).stream().map(file -> FileMapper.toDto((File) file))
+                .toList();
     }
 }

@@ -1,4 +1,4 @@
-import {Component, computed, effect, OnInit, signal, TrackByFunction, WritableSignal} from '@angular/core';
+import {Component, computed, effect, inject, OnInit, signal, TrackByFunction, WritableSignal} from '@angular/core';
 import {provideIcons} from '@ng-icons/core';
 import {
   lucideArrowLeft,
@@ -9,7 +9,7 @@ import {
   lucideFile
 } from '@ng-icons/lucide';
 
-import { RouterLink } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 
 import {DatePipe, DecimalPipe, TitleCasePipe, UpperCasePipe} from '@angular/common';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -26,7 +26,6 @@ import {data} from 'autoprefixer';
 import {FileService} from '../../services/file/file.service';
 import {DepartementDto} from '../../model/DepartementDto';
 import {DepartementService} from '../../services/departement/departement.service';
-import {fakeOrganisation} from '../../environement/env';
 import {UserService} from '../../services/user/user.service';
 import {HlmButtonDirective} from '../../components/lib/ui-button-helm/src';
 import {HlmIconComponent} from '../../components/lib/ui-icon-helm/src';
@@ -63,6 +62,7 @@ import {
 } from '@spartan-ng/ui-table-brain';
 import {BrnSelectComponent, BrnSelectContentComponent, BrnSelectValueComponent} from '@spartan-ng/ui-select-brain';
 import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui-sheet-brain';
+import {OrganisationDto} from '../../model/OrganisationDto';
 
 @Component({
   imports: [
@@ -169,6 +169,7 @@ export class UserDetailComponent implements OnInit{
   user : WritableSignal<UserDto> =signal({} as UserDto);
   files: WritableSignal<FileDto[]> = signal([]);
   departmentDtos = signal<DepartementDto[]>([]);
+  router : Router = inject(Router);
 
   documentForm = new FormGroup({
     document: new FormControl('', [Validators.required]),
@@ -250,6 +251,7 @@ export class UserDetailComponent implements OnInit{
     this._displayedIndices.set({ start: startIndex, end: endIndex });
    image!: File;
   loading = signal<boolean>(false);
+   id: string ='';
 
   constructor(private userService: UserService,private storage: StorageImageService, private fileService: FileService, private departementService: DepartementService) {
     // needed to sync the debounced filter to the name filter, but being able to override the
@@ -305,7 +307,7 @@ export class UserDetailComponent implements OnInit{
         user: this.user(),
         id: v4(),
         createdAt: new Date().toISOString(),
-        organisation: this.user().organisation,
+        organisation: {id: this.id} as OrganisationDto,
         name: this.documentForm.value.name as string,
         link: data?.data.publicUrl!
       })
@@ -345,8 +347,9 @@ export class UserDetailComponent implements OnInit{
         this._FileDtos.set(data);
       },
     );
+    this.id = this.router.url.split('/').pop() ?? '';
 
-    (await this.departementService.fetchDepatments()).subscribe(
+    (await this.departementService.fetchDepatments(this.id)).subscribe(
       (users) => this.departmentDtos.set(users),
       (error) => console.error(error)
     )
@@ -361,7 +364,7 @@ export class UserDetailComponent implements OnInit{
       user = signal({
         id:  this.user().id,
         createdAt: '',
-        organisation: fakeOrganisation,
+        organisation: { id : this.id } as OrganisationDto,
         name: this.userFrom.value.name as string,
         email: this.userFrom.value.email as string,
         department: this.departmentDtos().find((d) => d.id === this.userFrom.value.department) as DepartementDto, //this.userFrom.value.department ,
@@ -386,5 +389,9 @@ export class UserDetailComponent implements OnInit{
   openLink(link:string) {
     window.open(link, '_blank');
 
+  }
+
+  copy(id: string) {
+    navigator.clipboard.writeText(id);
   }
 }

@@ -24,22 +24,20 @@ public class JwtHelper {
     private static final int MINUTES = 1440;
 
     private static Key key() throws NoSuchAlgorithmException {
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("EC");
-        keyPairGenerator.initialize(256);
-        KeyPair keyPair = keyPairGenerator.generateKeyPair();
-        System.out.println(keyPair);
-        return keyPair.getPrivate();
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public static String generateToken(TokenDetails tokenDetails) throws NoSuchAlgorithmException {
         var now = Instant.now();
+        var key = key();
         System.out.println(key());
         return Jwts.builder()
                 .setId(tokenDetails.getId().toString())
                 .setSubject(tokenDetails.getFirstName())
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(now.plus(MINUTES, ChronoUnit.MINUTES)))
-                .signWith(key(), SignatureAlgorithm.ES256)
+                .signWith(key, SignatureAlgorithm.forSigningKey(key))
                 .compact();
     }
 

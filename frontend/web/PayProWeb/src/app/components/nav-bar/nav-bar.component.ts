@@ -1,12 +1,13 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, OnInit, signal, WritableSignal} from '@angular/core';
 
 import {lucideArrowRight, lucideUser, lucideWorkflow} from '@ng-icons/lucide';
 import {provideIcons} from '@ng-icons/core';
-import {Route, Router, RouterLink, RouterLinkActive} from '@angular/router';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {of} from 'rxjs';
 import {NgClass} from '@angular/common';
 import {HlmIconComponent} from '../lib/ui-icon-helm/src';
 import {HlmButtonDirective} from '../lib/ui-button-helm/src';
+import {OrganisationDto} from '../../model/OrganisationDto';
 
 @Component({
   selector: 'app-nav-bar',
@@ -34,6 +35,8 @@ import {HlmButtonDirective} from '../lib/ui-button-helm/src';
 })
 export class NavBarComponent implements OnInit{
   currentRoute =signal('');
+  organisation : WritableSignal<OrganisationDto> = signal({} as OrganisationDto);
+  id: string ='';
 
   items = [
     {
@@ -53,10 +56,13 @@ export class NavBarComponent implements OnInit{
   constructor(private  router:Router) {
   }
   getCurrentRoute() {
-    return this.router.url;
+    let urls = this.router.url.split('/');
+    urls.pop()
+    return urls.join('/');
   }
 
   ngOnInit(): void {
+    this.id = this.router.url.split('/').pop() ?? '';
   }
 
   justTest() {

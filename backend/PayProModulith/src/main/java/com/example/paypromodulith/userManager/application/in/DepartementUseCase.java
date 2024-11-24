@@ -8,4 +8,6 @@ import java.util.List;
 public interface DepartementUseCase {
 
     List<DepartmentDto> findAllByOrganisation(OrganisationDto organisationDto);
+
+    DepartmentDto create(DepartmentDto departmentDto);
 }

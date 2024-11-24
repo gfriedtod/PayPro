@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment, fakeOrganisation} from '../../environement/env';
+import {environment} from '../../environement/env';
 import {UserDto} from '../../model/UserDto';
 
 @Injectable({
@@ -10,8 +10,8 @@ export class UserService {
 
   constructor(private  http: HttpClient) { }
 
-  async fetchUsers() {
-    return this.http.get<UserDto[]>(environment.api + `/users/organisation/${fakeOrganisation.id}`);
+  async fetchUsers(id:string) {
+    return this.http.get<UserDto[]>(environment.api + `/users/organisation/${id}`);
   }
 
   async postUser(user: UserDto) {

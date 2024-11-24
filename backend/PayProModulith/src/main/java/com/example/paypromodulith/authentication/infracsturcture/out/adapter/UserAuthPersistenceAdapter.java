@@ -5,6 +5,7 @@ import com.example.paypromodulith.authentication.domain.model.UserDto;
 import com.example.paypromodulith.authentication.infracsturcture.out.persitence.repository.UserAuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.transaction.annotation.Transactional;
 
 
 public class UserAuthPersistenceAdapter implements UserOutputPort {
@@ -19,6 +20,7 @@ public class UserAuthPersistenceAdapter implements UserOutputPort {
 
     @Override
     public UserDto loadUserByUsername(String username) {
-        return modelMapper.map(userRepository.findByEmail(username), UserDto.class);
+        var user = userRepository.findByEmail(username);
+        return user.map(value -> modelMapper.map(value, UserDto.class)).orElse(null);
     }
 }

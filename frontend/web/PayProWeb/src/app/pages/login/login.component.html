@@ -1,0 +1,42 @@
+<main class="flex  gap-10 items-center content-center justify-center w-full h-dvh flex-1 px-20 text-center">
+  <div class="bg-illustration1 bg-cover bg-no-repeat w-6/12 h-3/4"></div>
+  <div  class="w-8/12 h-3/4 flex flex-col justify-center items-center border-0 sm:text-xl xl:text-2xl" >
+    <div class="flex flex-col sm:gap-0 xl:gap-2" hlmCardHeader>
+      <h1 class="text-4xl font-bold sm:text-xl xl:text-3xl">Login</h1>
+      <h1 class="text-2xl font-semibold sm:text-xl xl:text-2xl">Enter email and password to continue</h1>
+    </div>
+
+    <form [formGroup]="login" class="flex flex-col sm:gap-0 xl:gap-3 mt-5 sm:text-xs xl:text-xl  md:w-9/12 xl:w-8/12" hlmCardContent>
+
+      <div class="flex flex-col items-start gap-1 w-full">
+        <label for="email" hlmLabel>Email</label>
+        <input class="w-full" formControlName="email" hlmInput id="email" placeholder="Enter your email" type="text">
+      </div>
+      <div class="flex flex-col items-start gap-1">
+        <label for="password" hlmLabel>Password</label>
+        <input class="w-full" formControlName="password" hlmInput id="password" placeholder="Enter your password"
+               type="password">
+      </div>
+      <div class="flex flex-col  items-start gap-3 sm:text-xs xl:text-xl">
+        <label for="terms" hlmLabel>Terms and conditions</label>
+        <div class="flex items-center font-semibold gap-2">
+          <hlm-checkbox  class=""  formControlName="acceptTerms" hlmInput id="terms"
+                         type="checkbox">
+          </hlm-checkbox>
+          <div class="sm:text-xs xl:text-xs">
+            By creating an account, you agree to the terms and conditions
+          </div>
+
+        </div>
+
+      </div>
+      <div class="w-full" hlmCardFooter>
+        <button (click)="loginReq()" class="w-full" hlmBtn>@if (perform()){<hlm-spinner></hlm-spinner>}@else{Login}</button>
+
+      </div>
+      <button hlmBtn variant="link" routerLink="/signup">create account</button>
+
+    </form>
+  </div>
+
+</main>

@@ -1,8 +1,7 @@
 package com.example.paypromodulith.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
@@ -14,11 +13,15 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "departments")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor  // Ajoutez cette annotation
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @ColumnDefault("gen_random_uuid()")
     @Column(name = "id", nullable = false)
+
     private UUID id;
 
     @ColumnDefault("now()")

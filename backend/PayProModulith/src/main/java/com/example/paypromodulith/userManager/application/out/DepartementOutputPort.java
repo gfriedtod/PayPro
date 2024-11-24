@@ -8,4 +8,6 @@ import java.util.List;
 public interface DepartementOutputPort {
     List<DepartmentDto> findAllByOrganisation(OrganisationDto organisationDto);
 
+    DepartmentDto save(DepartmentDto departmentDto);
+
 }

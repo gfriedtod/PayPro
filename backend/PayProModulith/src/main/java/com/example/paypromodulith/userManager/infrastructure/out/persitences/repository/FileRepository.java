@@ -10,4 +10,6 @@ import java.util.UUID;
 
 public interface FileRepository extends JpaRepository<File, UUID> {
     Collection<Object> findAllByUser(User map);
+
+    Collection<Object> findAllByUserId(UUID user_id);
 }

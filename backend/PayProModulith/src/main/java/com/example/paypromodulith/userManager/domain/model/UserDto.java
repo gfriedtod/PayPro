@@ -1,6 +1,5 @@
 package com.example.paypromodulith.userManager.domain.model;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 
 import java.io.Serializable;
@@ -9,9 +8,10 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 /**
- * DTO for {@link com.example.paypromodulith.userManager.infrastructure.out.persitences.entity.User}
+ * DTO for {@link com.example.paypromodulith.entity.User}
  */
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

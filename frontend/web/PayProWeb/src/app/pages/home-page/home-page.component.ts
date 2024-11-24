@@ -1,4 +1,4 @@
-import {Component, computed, effect, OnInit, signal, TrackByFunction, WritableSignal} from '@angular/core';
+import {Component, computed, effect, inject, OnInit, signal, TrackByFunction, WritableSignal} from '@angular/core';
 ;
 import {provideIcons} from '@ng-icons/core';
 import {
@@ -16,13 +16,12 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {BrnMenuTriggerDirective} from '@spartan-ng/ui-menu-brain';
 import {DecimalPipe, TitleCasePipe} from '@angular/common';
 
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {UserDto} from '../../model/UserDto';
 import {UserService} from '../../services/user/user.service';
 import {DepartementDto} from '../../model/DepartementDto';
 import {DepartementService} from '../../services/departement/departement.service';
 import {GeneratePasswordService} from '../../services/generate-password/generate-password.service';
-import {fakeOrganisation} from '../../environement/env';
 import {v4} from 'uuid';
 import {StorageService} from '../../services/storage/storage.service';
 import {HlmCardContentDirective, HlmCardDirective, HlmCardImports} from '../../components/lib/ui-card-helm/src';
@@ -59,6 +58,8 @@ import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui
 import {HlmLabelDirective} from '../../components/lib/ui-label-helm/src';
 import {HlmSpinnerComponent} from '../../components/lib/ui-spinner-helm/src';
 import { SelectionModel } from '@angular/cdk/collections';
+import {OrganisationDto} from '../../model/OrganisationDto';
+import {copy} from '../../environement/env';
 
 
 @Component({
@@ -175,6 +176,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class HomePageComponent implements OnInit {
 
+  router: Router = inject(Router);
    users: WritableSignal<UserDto[]> = signal([]);
   userFrom: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -192,6 +194,7 @@ export class HomePageComponent implements OnInit {
   });
   departmentDtos = signal<DepartementDto[]>([]);
   loading = signal(false)
+   id: string ='';
 
   constructor(private userService: UserService, private departementService: DepartementService, private generatePasswordService: GeneratePasswordService,private storageService: StorageService) {
     // needed to sync the debounced filter to the name filter, but being able to override the
@@ -264,11 +267,15 @@ export class HomePageComponent implements OnInit {
     this.userFrom.setControl('password', new FormControl(this.generatePasswordService.generatePassword()))
     console.log("hello home");
     this.loading.set(true);
-    (await this.userService.fetchUsers()).subscribe(
+
+    /// get the id on the url
+     this.id = this.router.url.split('/').pop() ?? '';
+
+    (await this.userService.fetchUsers(this.id)).subscribe(
       (users) => {this.users.set(users);this.loading.set(false)},
       (error) => console.error(error)
     );
-    (await this.departementService.fetchDepatments()).subscribe(
+    (await this.departementService.fetchDepatments(this.id)).subscribe(
       (users) => this.departmentDtos.set(users),
       (error) => console.error(error)
     )
@@ -310,7 +317,7 @@ export class HomePageComponent implements OnInit {
       user = signal({
         id:  v4(),
         createdAt: '',
-        organisation: fakeOrganisation,
+        organisation: { id : this.id} as OrganisationDto,
         name: this.userFrom.value.name as string,
         email: this.userFrom.value.email as string,
         department: this.departmentDtos().find((d) => d.id === this.userFrom.value.department) as DepartementDto, //this.userFrom.value.department ,
@@ -343,4 +350,6 @@ export class HomePageComponent implements OnInit {
   sortGender(gender: string){
     return this.users().filter((u) => u.gender == gender).length
   }
+
+  protected readonly copy = copy;
 }

@@ -46,20 +46,20 @@
         </div>
       </div >
     </div>
-    <div class="col-span-1">
-      <div hlmCard class="bg-[#EFF8FF] w-full h-28 flex justify-start items-center gap-2 p-5">
-        <div hlmCard class="bg-white w-14 h-14">
-          <div class="w-full h-full flex justify-center items-center">
-            <hlm-icon name="lucideUser" class="text-black"></hlm-icon>
+<!--    <div class="col-span-1">-->
+<!--      <div hlmCard class="bg-[#EFF8FF] w-full h-28 flex justify-start items-center gap-2 p-5">-->
+<!--        <div hlmCard class="bg-white w-14 h-14">-->
+<!--          <div class="w-full h-full flex justify-center items-center">-->
+<!--            <hlm-icon name="lucideUser" class="text-black"></hlm-icon>-->
 
-          </div>
-        </div>
-        <div class="flex flex-col justify-center items-start">
-          <h1 class="font-bold">New Employees</h1>
-          <h1 class=>10</h1>
-        </div>
-      </div >
-    </div>
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="flex flex-col justify-center items-start">-->
+<!--          <h1 class="font-bold">New Employees</h1>-->
+<!--          <h1 class=>10</h1>-->
+<!--        </div>-->
+<!--      </div >-->
+<!--    </div>-->
   </div>
 
   <div class="flex justify-between">
@@ -262,7 +262,7 @@
       </hlm-th>
       <hlm-td truncate *brnCellDef="let element">
         <button (click)="save(element)" class="w-full h-10 flex gap-2 font-normal flex justify-start" hlmBtn hlmBtn
-                routerLink="/users"
+                routerLink="/main/user/{{id}}"
                 variant="ghost"> {{ element.email }}
         </button>
       </hlm-td>
@@ -292,12 +292,11 @@
             <hlm-menu-label>Actions</hlm-menu-label>
             <hlm-menu-separator />
             <hlm-menu-group>
-              <button hlmMenuItem>Copy UserDto ID</button>
+              <button hlmMenuItem (copy)="copy(id)">Copy UserDto ID</button>
             </hlm-menu-group>
             <hlm-menu-separator />
             <hlm-menu-group>
-              <button hlmMenuItem>View customer</button>
-              <button hlmMenuItem>View UserDto details</button>
+              <button hlmMenuItem routerLink="/main/user/{{id}}">View  details</button>
             </hlm-menu-group>
           </hlm-menu>
         </ng-template>

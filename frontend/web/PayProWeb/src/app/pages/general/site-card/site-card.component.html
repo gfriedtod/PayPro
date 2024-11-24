@@ -1,0 +1,19 @@
+<div hlmCard class="group/item h-40  w-full class transition hover:bg-gray-100 " routerLink="/main/home/{{item.id}}">
+  <div hlmCardHeader class="w-full flex flex-row justify-between items-center">
+    <div class="w-1/2">
+      <p class="text-[0.9rem] truncate font-semibold ">{{item.name}}</p>
+
+    </div>
+    <hlm-icon name="lucideChevronsRight" class="text-black self-start transition group-hover/item:translate-x-1 "></hlm-icon>
+
+  </div>
+  <div hlmCardContent class="h-10"></div>
+
+  <div hlmCardFooter class="w-full flex gap-[0.1rem] items-center justify-start text-[0.9rem]  ">
+    <hlm-icon name="lucideClock" size="sm"></hlm-icon>
+    <div>
+      créer le {{item.createdAt | date:'dd/MM/yyyy'}}
+    </div>
+  </div>
+
+</div>

@@ -1,6 +1,6 @@
 <div class="w-full flex flex-col justify-start bg-[#F9F9F9] p-10 gap-10 min-h-dvh">
   <div class="w-full flex justify-start ">
-    <button hlmBtn variant="ghost" routerLink="/home" (click)="goBack()" class="flex gap-2 items-center">
+    <button hlmBtn variant="ghost" routerLink="/main/home/{{id}}" (click)="goBack()" class="flex gap-2 items-center">
       <hlm-icon name="lucideArrowLeft"></hlm-icon></button>
     <h1 class="text-3xl font-bold">Profile</h1>
   </div>
@@ -294,12 +294,12 @@
           <hlm-menu-label>Actions</hlm-menu-label>
           <hlm-menu-separator />
           <hlm-menu-group>
-            <button hlmMenuItem>Copy FileDto ID</button>
+            <button hlmMenuItem (click)="copy(element.id)">Copy File ID</button>
           </hlm-menu-group>
           <hlm-menu-separator />
           <hlm-menu-group>
-            <button hlmMenuItem>View customer</button>
-            <button hlmMenuItem>View FileDto details</button>
+            <button hlmMenuItem >View customer</button>
+            <button hlmMenuItem (click)="openLink(element.id)">View File details</button>
           </hlm-menu-group>
         </hlm-menu>
       </ng-template>

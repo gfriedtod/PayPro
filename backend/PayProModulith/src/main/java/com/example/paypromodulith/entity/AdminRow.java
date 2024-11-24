@@ -1,8 +1,7 @@
 package com.example.paypromodulith.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.OffsetDateTime;
@@ -11,6 +10,9 @@ import java.time.OffsetDateTime;
 @Setter
 @Entity
 @Table(name = "\"adminRow\"")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor  // Ajoutez cette annotation
 public class AdminRow {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "adminRow_id_gen")
@@ -19,13 +21,13 @@ public class AdminRow {
     private Long id;
 
     @ColumnDefault("now()")
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private OffsetDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @ColumnDefault("gen_random_uuid()")
     @JoinColumn(name = "admin")
-    private User admin;
+    private Admin admin;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @ColumnDefault("gen_random_uuid()")

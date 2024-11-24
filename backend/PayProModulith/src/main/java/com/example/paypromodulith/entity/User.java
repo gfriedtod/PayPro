@@ -1,8 +1,7 @@
 package com.example.paypromodulith.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
@@ -13,6 +12,9 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "users")
+@NoArgsConstructor(access = AccessLevel.PUBLIC)  // Assurez-vous que le constructeur est public
+@AllArgsConstructor// Ajoutez cette annotation
+@Builder
 public class User {
     @Id
     @ColumnDefault("gen_random_uuid()")

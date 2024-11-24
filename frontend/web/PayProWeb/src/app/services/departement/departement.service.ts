@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {UserDto} from '../../model/UserDto';
-import {environment, fakeOrganisation} from '../../environement/env';
+import {environment} from '../../environement/env';
 import {HttpClient} from '@angular/common/http';
 import {DepartementDto} from '../../model/DepartementDto';
 
@@ -10,7 +10,11 @@ import {DepartementDto} from '../../model/DepartementDto';
 export class DepartementService {
 
   constructor(private http:HttpClient) { }
-  async fetchDepatments() {
-    return this.http.get<DepartementDto[]>(environment.api + `/department/organisation/${fakeOrganisation.id}`);
+  async fetchDepatments(id :string) {
+    return this.http.get<DepartementDto[]>(environment.api + `/department/organisation/${id}`);
+  }
+
+  async  saveDepartement(departement:DepartementDto) {
+    return this.http.post<DepartementDto>(`${environment.api}/department`, departement);
   }
 }

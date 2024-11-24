@@ -21,7 +21,7 @@ public class AdminAuthService implements AdminAuthInput {
     public Optional<LoginResponse> login(LoginRequest request) throws NoSuchAlgorithmException {
         AdminDto admin = adminOutputPort.loadUserByUsername(request.getEmail());
         if (passwordEncoder.matches(request.getPassword(), admin.getPassword())) {
-             String token = JwtHelper.generateToken(new TokenDetails(admin.getId(), admin.getName()));
+             String token = JwtHelper.generateToken(new TokenDetails(admin.getId(), admin.getEmail()));
             return Optional.ofNullable(LoginResponse.builder().user(admin).token(token).build());
         }
         return Optional.empty();
