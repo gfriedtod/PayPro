@@ -27,8 +27,8 @@ RUN addgroup --system springuser && \
 USER springuser
 
 # Configuration de l'environnement de production
-ENV SPRING_PROFILES_ACTIVE=prod \
-    JAVA_TOOL_OPTIONS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+ENV SPRING_PROFILES_ACTIVE=prod
+#    JAVA_TOOL_OPTIONS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
 
 EXPOSE 8080
 
