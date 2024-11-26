@@ -1,6 +1,6 @@
 import {Component, OnInit, signal, WritableSignal} from '@angular/core';
 
-import {lucideArrowRight, lucideUser, lucideWorkflow} from '@ng-icons/lucide';
+import {lucideArrowRight, lucideLogOut, lucideUser, lucideWorkflow} from '@ng-icons/lucide';
 import {provideIcons} from '@ng-icons/core';
 import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {of} from 'rxjs';
@@ -27,7 +27,8 @@ import {OrganisationDto} from '../../model/OrganisationDto';
     provideIcons({
       lucideArrowRight,
       lucideUser,
-      lucideWorkflow
+      lucideWorkflow,
+      lucideLogOut
     })
   ],
   templateUrl: './nav-bar.component.html',
@@ -67,5 +68,10 @@ export class NavBarComponent implements OnInit{
 
   justTest() {
     console.log(this.getCurrentRoute())
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['login']);
   }
 }

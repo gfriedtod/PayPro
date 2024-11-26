@@ -66,4 +66,9 @@ export class TokenService {
     const payload = this.parseJwt(token);
     return payload.jti;
   }
+
+  isValid() {
+
+
+  }
 }

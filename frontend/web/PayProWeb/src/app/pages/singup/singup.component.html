@@ -1,3 +1,7 @@
+@if (visibleToast()){
+  <app-toast class="z-[1001] absolute right-1 bottom-1 before:fade-in after:fade-out" [error]="toastState()"></app-toast>
+
+}
 <main class="flex  gap-10 items-center content-center justify-center w-full h-dvh flex-1 px-20 text-center">
   <div class="bg-illustration1 bg-cover bg-no-repeat w-6/12 h-3/4"></div>
   <div  class="w-8/12 h-3/4 flex flex-col justify-center items-center border-0 sm:text-xl xl:text-2xl" >

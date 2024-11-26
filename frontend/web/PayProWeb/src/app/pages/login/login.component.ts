@@ -14,6 +14,8 @@ import {TokenService} from '../../services/token/token.service';
 import {AuthService} from '../../services/auth/auth.service';
 import {LoginRequest} from '../../model/LoginRequest';
 import {HlmSpinnerComponent} from '../../components/lib/ui-spinner-helm/src';
+import {ToastComponent} from '../../components/toast/toast.component';
+import {timer} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +31,8 @@ import {HlmSpinnerComponent} from '../../components/lib/ui-spinner-helm/src';
     HlmLabelDirective,
     ReactiveFormsModule,
     RouterLink,
-    HlmSpinnerComponent
+    HlmSpinnerComponent,
+    ToastComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -45,6 +48,8 @@ export class LoginComponent {
   router:Router = inject(Router)
 
   perform = signal(false)
+  visibleToast = signal(false);
+  toastState = signal(true);
   async loginReq() {
 
     function sleep(number: number) {
@@ -61,8 +66,20 @@ export class LoginComponent {
         next: (data) => {
           this.tokenService.saveToken(data.token);
           localStorage.setItem('user', JSON.stringify(data.user));
-          this.router.navigate(['/general']);
           this.perform.set(false);
+
+        },
+        error: (error) => {
+          console.log(error);
+          this.perform.set(false);
+          this.toastState.set(false);
+          this.visibleToast.set(true);
+          timer(1000).subscribe(() => this.visibleToast.set(false));
+        },
+        complete: () => {
+          this.perform.set(false);
+          this.router.navigate(['/general']);
+
 
         }
       })

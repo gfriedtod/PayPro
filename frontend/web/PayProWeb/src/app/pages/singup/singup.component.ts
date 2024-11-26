@@ -15,6 +15,8 @@ import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../services/auth/auth.service';
 import {AdminDto} from '../../model/AdminDto';
 import {HlmSpinnerComponent} from '../../components/lib/ui-spinner-helm/src';
+import {ToastComponent} from '../../components/toast/toast.component';
+import {timer} from 'rxjs';
 
 
 @Component({
@@ -32,6 +34,7 @@ import {HlmSpinnerComponent} from '../../components/lib/ui-spinner-helm/src';
     HlmCheckboxComponent,
     RouterLink,
     HlmSpinnerComponent,
+    ToastComponent,
   ],
   templateUrl: './singup.component.html',
   styleUrl: './singup.component.css'
@@ -52,6 +55,8 @@ export class SingupComponent {
   router = inject(Router);
 
   perform = signal(false);
+  visibleToast = signal<boolean>(false);
+  toastState = signal<boolean>(true);
 
   async singUp() {
 
@@ -70,14 +75,22 @@ export class SingupComponent {
         .subscribe(
           {
             next: () => {
-              this.router.navigate(['/login']);
               this.perform.set(false)
+
             },
             error: () => {
               this.perform.set(false)
+              this.visibleToast.set(true);
+              this.toastState.set(false);
+              timer(1000).subscribe(() => this.visibleToast.set(false));
             },
             complete: () => {
               this.perform.set(false)
+              this.visibleToast.set(true);
+              this.toastState.set(true);
+              timer(1000).subscribe(() => this.visibleToast.set(false));
+              this.router.navigate(['/login']);
+
             }
           }
 

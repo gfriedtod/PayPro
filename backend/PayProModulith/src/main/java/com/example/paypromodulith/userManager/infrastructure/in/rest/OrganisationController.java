@@ -25,7 +25,7 @@ public class OrganisationController {
             System.out.println("idok"+ adminId);
             return ResponseEntity.ok(organisationService.findByAdmin(AdminDto.builder().id(UUID.fromString(adminId)).name("").build()));
         } catch (Exception e) {
-            System.out.println(e);
+            log.error("e: ", e);
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

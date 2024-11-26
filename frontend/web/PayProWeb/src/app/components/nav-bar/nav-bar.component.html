@@ -1,14 +1,19 @@
-<div class="h-dvh flex flex-col gap-2 w-64 bg-white items-center rounded-lg p-2">
-  <img src="logo.png" routerLink="/general" class="w-32" alt="yey">
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
+<div class="h-dvh flex flex-col justify-between gap-2 w-64 bg-white items-center rounded-lg p-2">
+  <div class="flex flex-col gap-2 p-2 w-64 items-center ">
+    <img src="logo.png" routerLink="/general" class="w-32" alt="yey">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
 
-  @for (item of items; track item.link){
-    <button routerLink="{{item.link+'/'+this.id}}" (click)="justTest()" class="w-full h-10 flex gap-2 {{ this.getCurrentRoute() !== item.link ? 'bg-white text-black hover:text-white' : ''}}" hlmBtn> <hlm-icon name="{{item.icon}}"></hlm-icon> {{item.title}} </button>
+    @for (item of items; track item.link){
+      <button routerLink="{{item.link+'/'+this.id}}" (click)="justTest()" class="w-full h-10 flex gap-2 {{ this.getCurrentRoute() !== item.link ? 'bg-white text-black hover:text-white' : ''}}" hlmBtn> <hlm-icon name="{{item.icon}}"></hlm-icon> {{item.title}} </button>
 
-  }
+    }
+  </div>
+
+
+  <button (click)="logout()" class="w-full h-10  self-end gap-2 bg-white text-black hover:bg-red-400 hover:text-white" hlmBtn> <hlm-icon name="lucideLogOut"></hlm-icon> Logout </button>
 
 
 

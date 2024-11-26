@@ -26,7 +26,6 @@ public class OrganisationPersistenceAdapter implements OrganisationOutputPort {
     @Override
     public List<OrganisationDto> findByAdmin(AdminDto adminDto) {
         var adminRows = adminRowRepository.findAllByAdmin(AdminMapper.toEntity(adminDto));
-        System.out.println("lenght od admin rows "+adminRows.get().get(0).getOrganisation().getName());
         return adminRows.map(rows -> rows.stream().map(adminRow -> OrganisationMapper.toDto(adminRow.getOrganisation())).toList()).orElse(null);
     }
 

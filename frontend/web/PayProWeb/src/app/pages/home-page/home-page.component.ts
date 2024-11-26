@@ -11,7 +11,7 @@ import {
 } from '@ng-icons/lucide';
 
 import {toObservable, toSignal} from '@angular/core/rxjs-interop';
-import {debounceTime, map, of} from 'rxjs';
+import {debounceTime, map, of, timer} from 'rxjs';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {BrnMenuTriggerDirective} from '@spartan-ng/ui-menu-brain';
 import {DecimalPipe, TitleCasePipe} from '@angular/common';
@@ -60,6 +60,7 @@ import {HlmSpinnerComponent} from '../../components/lib/ui-spinner-helm/src';
 import { SelectionModel } from '@angular/cdk/collections';
 import {OrganisationDto} from '../../model/OrganisationDto';
 import {copy} from '../../environement/env';
+import {ToastComponent} from '../../components/toast/toast.component';
 
 
 @Component({
@@ -159,7 +160,8 @@ import {copy} from '../../environement/env';
     HlmSpinnerComponent,
     HlmSpinnerComponent,
     HlmSpinnerComponent,
-    HlmSpinnerComponent
+    HlmSpinnerComponent,
+    ToastComponent
   ],
   providers: [
     provideIcons({
@@ -272,12 +274,46 @@ export class HomePageComponent implements OnInit {
      this.id = this.router.url.split('/').pop() ?? '';
 
     (await this.userService.fetchUsers(this.id)).subscribe(
-      (users) => {this.users.set(users);this.loading.set(false)},
-      (error) => console.error(error)
+      {
+        next: (users) => {
+          this.users.set(users);
+          this.loading.set(false);
+        },
+        error: (error) => {
+          console.error(error)
+          this.visibleToast.set(true);
+          this.toastState.set(false);
+          timer(1000).subscribe(() => this.visibleToast.set(false));
+
+        },
+        complete: () => {
+          this.visibleToast.set(true);
+          this.toastState.set(true);
+          timer(1000).subscribe(() => this.visibleToast.set(false));
+        }
+      }
     );
     (await this.departementService.fetchDepatments(this.id)).subscribe(
-      (users) => this.departmentDtos.set(users),
-      (error) => console.error(error)
+      {
+        next: (users) => {
+          this.departmentDtos.set(users);
+          this.loading.set(false);
+
+        },
+        error: (error) => {
+          console.error(error)
+          this.visibleToast.set(true);
+          this.toastState.set(false);
+          timer(1000).subscribe(() => this.visibleToast.set(false));
+
+        },
+        complete: () => {
+          this.loading.set(false);
+          this.visibleToast.set(true);
+          this.toastState.set(true);
+          timer(1000).subscribe(() => this.visibleToast.set(false));
+        }
+      }
     )
   }
 
@@ -335,8 +371,18 @@ export class HomePageComponent implements OnInit {
         (user)=> {
           this.users.update((u) => [...u, user]);
           this.loading.set(false)
+          //show and closed toast
+          this.visibleToast.set(true);
+          this.toastState.set(true);
+          timer(5000).subscribe(() => this.visibleToast.set(false));
+
         },
-        (error) =>{ console.error(error);this.loading.set(false)
+        (error) =>{
+          console.error(error);this.loading.set(false)
+          this.visibleToast.set(true);
+          this.toastState.set(false);
+
+          timer(1000).subscribe(() => this.visibleToast.set(false));
         }
       )
 
@@ -352,4 +398,6 @@ export class HomePageComponent implements OnInit {
   }
 
   protected readonly copy = copy;
+  visibleToast= signal(false);
+  toastState = signal(true);
 }

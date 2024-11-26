@@ -26,6 +26,8 @@ import {UserDto} from '../../model/UserDto';
 import {AdminDto} from '../../model/AdminDto';
 import {OrganisationDto} from '../../model/OrganisationDto';
 import {v4} from 'uuid';
+import {ToastComponent} from '../../components/toast/toast.component';
+import {timer} from 'rxjs';
 
 @Component({
   selector: 'app-general',
@@ -53,7 +55,8 @@ import {v4} from 'uuid';
     HlmSheetHeaderComponent,
     HlmSheetTitleDirective,
     HlmSpinnerComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastComponent
   ],
   templateUrl: './general.component.html',
   styleUrl: './general.component.css',
@@ -77,6 +80,8 @@ export class GeneralComponent {
   loadingOrganisation = signal(false)
 
   organisationService = inject(OrganisationService);
+  visibleToast = signal<boolean>(false);
+  toastState = signal<boolean>(true);
 
   async fetchOrganisationByUserId(user:AdminDto) {
 
@@ -87,8 +92,19 @@ export class GeneralComponent {
           next: (data) => {
             this.organisation.set(data);
           },
-          error: (error) => console.error(error),
-          complete: () => this.loadingOrganisation.set(false)
+          error: (error) => {
+            console.error(error)
+            this.toastState.set(false);
+            this.visibleToast.set(true);
+            timer(1000).subscribe(() => this.visibleToast.set(false));
+          },
+          complete: () => {
+            this.loadingOrganisation.set(false);
+            this.loading.set(false);
+            this.toastState.set(true);
+            this.visibleToast.set(true);
+            timer(1000).subscribe(() => this.visibleToast.set(false));
+          }
 
         }
       );
@@ -124,8 +140,16 @@ export class GeneralComponent {
         error: (error) => {
           console.error(error);
           this.loading.set(false);
+          this.visibleToast.set(true);
+          this.toastState.set(false);
+          timer(1000).subscribe(() => this.visibleToast.set(false));
         },
-        complete: () => this.loading.set(false)
+        complete: () => {
+          this.loading.set(false)
+          this.visibleToast.set(true);
+          this.toastState.set(true);
+          timer(1000).subscribe(() => this.visibleToast.set(false));
+        }
       });
     }
 

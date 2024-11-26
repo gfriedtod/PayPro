@@ -9,7 +9,7 @@ import {BrnMenuTriggerDirective} from '@spartan-ng/ui-menu-brain';
 import {provideIcons} from '@ng-icons/core';
 import {lucidePlus, lucideUser, lucideUserMinus, lucideUserPlus,lucideSearch} from '@ng-icons/lucide';
 import {toObservable, toSignal} from '@angular/core/rxjs-interop';
-import {debounceTime, map} from 'rxjs';
+import {debounceTime, map, timer} from 'rxjs';
 import {SelectionModel} from '@angular/cdk/collections';
 
 import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui-sheet-brain';
@@ -49,6 +49,7 @@ import {
 import {Router} from '@angular/router';
 import {v4} from 'uuid';
 import {OrganisationDto} from '../../../model/OrganisationDto';
+import {ToastComponent} from '../../../components/toast/toast.component';
 
 @Component({
   imports: [
@@ -127,7 +128,8 @@ import {OrganisationDto} from '../../../model/OrganisationDto';
     HlmMenuItemDirective,
     HlmMenuItemImports,
     HlmSpinnerComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastComponent
   ],
   providers: [
     provideIcons({
@@ -224,6 +226,8 @@ export class OraganisationPageComponent {
   protected readonly _onStateChange = ({ startIndex, endIndex }: PaginatorState) =>
     this._displayedIndices.set({ start: startIndex, end: endIndex });
   loading = signal<boolean>(false);
+  visibleToast = signal<boolean>(false);
+  toastState = signal<boolean>(true);
 
   constructor(private departementService: DepartementService) {
     // needed to sync the debounced filter to the name filter, but being able to override the
@@ -276,6 +280,16 @@ export class OraganisationPageComponent {
           },
           error: () => {
             this.loading.set(false);
+            this.visibleToast.set(true);
+            this.toastState.set(false);
+            timer(1000).subscribe(() => this.visibleToast.set(false));
+          },
+          complete: () => {
+            this.loading.set(false);
+            this.visibleToast.set(true);
+            this.toastState.set(true);
+            timer(1000).subscribe(() => this.visibleToast.set(false));
+
           }
 
         }

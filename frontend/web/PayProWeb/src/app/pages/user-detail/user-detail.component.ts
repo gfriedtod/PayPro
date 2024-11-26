@@ -63,6 +63,7 @@ import {
 import {BrnSelectComponent, BrnSelectContentComponent, BrnSelectValueComponent} from '@spartan-ng/ui-select-brain';
 import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui-sheet-brain';
 import {OrganisationDto} from '../../model/OrganisationDto';
+import {ToastComponent} from '../../components/toast/toast.component';
 
 @Component({
   imports: [
@@ -148,7 +149,8 @@ import {OrganisationDto} from '../../model/OrganisationDto';
     HlmIconComponent,
     HlmIconComponent,
     HlmSpinnerComponent,
-    HlmSpinnerComponent
+    HlmSpinnerComponent,
+    ToastComponent
   ],
   providers: [
     provideIcons({
@@ -252,8 +254,10 @@ export class UserDetailComponent implements OnInit{
    image!: File;
   loading = signal<boolean>(false);
    id: string ='';
+   visibleToast = signal(false);
+   toastState = signal(true);
 
-  constructor(private userService: UserService,private storage: StorageImageService, private fileService: FileService, private departementService: DepartementService) {
+  constructor(private userService: UserService,private storage: StorageImageService, private fileService: FileService, private departementService: DepartementService , private  localStorage: StorageService) {
     // needed to sync the debounced filter to the name filter, but being able to override the
     // filter when loading new users without debounce
     effect(() => this._emailFilter.set(this._debouncedFilter() ?? ''), { allowSignalWrites: true });
@@ -342,16 +346,44 @@ export class UserDetailComponent implements OnInit{
     this.userFrom.setControl('phone', new FormControl(this.user().phone));
     this.userFrom.setControl('address', new FormControl(this.user().address));
     this.fileService.fetchDocs(this.user()).subscribe(
-      (data) => {
-        this.loading.set(false);
-        this._FileDtos.set(data);
-      },
+      {
+        next: (data) => {
+          this.files.set(data);
+        },
+        error: (error) => {
+          console.error(error)
+          this.visibleToast.set(true);
+          this.toastState.set(false);
+          timer(1000).subscribe(() => this.visibleToast.set(false));
+        },
+        complete: () => {
+          this.loading.set(false)
+          this.visibleToast.set(true);
+          this.toastState.set(true);
+          timer(1000).subscribe(() => this.visibleToast.set(false));
+        }
+      }
     );
     this.id = this.router.url.split('/').pop() ?? '';
 
     (await this.departementService.fetchDepatments(this.id)).subscribe(
-      (users) => this.departmentDtos.set(users),
-      (error) => console.error(error)
+      {
+        next: (data) => {
+          this.departmentDtos.set(data);
+        },
+        error: (error) => {
+          console.error(error)
+          this.visibleToast.set(true);
+          this.toastState.set(false);
+          timer(1000).subscribe(() => this.visibleToast.set(false));
+        },
+        complete: () => {
+          this.loading.set(false)
+          this.visibleToast.set(true);
+          this.toastState.set(true);
+          timer(1000).subscribe(() => this.visibleToast.set(false));
+        }
+      }
     )
   }
 
@@ -360,6 +392,7 @@ export class UserDetailComponent implements OnInit{
     console.log(this.userFrom.value);
 
     if (this.userFrom.valid) {
+      this.loading.set(true);
       console.log(this.userFrom.value);
       user = signal({
         id:  this.user().id,
@@ -379,10 +412,29 @@ export class UserDetailComponent implements OnInit{
         address: this.userFrom.value.address as string,
       });
       (await this.userService.postUser(user())).subscribe(
-        (user)=> {
+        {
+          next: (data) => {
+            this.user.set(data);
+          },
+          error: (error) => {
+            console.error(error)
+            this.loading.set(false);
+            this.visibleToast.set(true);
+            this.toastState.set(false);
+            timer(1000).subscribe(() => this.visibleToast.set(false));
+          },
+          complete: () => {
+            console.log('complete')
+            this.localStorage.setData(this.user());
+
+            this.loading.set(false);
+            this.visibleToast.set(true);
+            this.toastState.set(true);
+            timer(1000).subscribe(() => this.visibleToast.set(false));
+          }
 
         },
-        (error) => console.error(error)
+
       )
     }
   }
