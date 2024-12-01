@@ -1,19 +1,66 @@
-### Building and running your application
+# RAPPORT DE RÉUNION
 
-When you're ready, start your application by running:
-`docker compose up --build`.
+## Informations générales
+- **Date :** [26/MM/AAAA]
+- **Heure :** De [HH:MM] à [HH:MM]
+- **Lieu :** [Physique / Visioconférence]
+- **Participants :**
+    - Présents :
+        1.
+        2.
+    - Excusés :
+        1.
+    - Absents :
+        1.
 
-Your application will be available at http://localhost:8080.
+## Ordre du jour
+1.
+2.
+3.
 
-### Deploying your application to the cloud
+## Points discutés
 
-First, build your image, e.g.: `docker build -t myapp .`.
-If your cloud uses a different CPU architecture than your development
-machine (e.g., you are on a Mac M1 and your cloud provider is amd64),
-you'll want to build the image for that platform, e.g.:
-`docker build --platform=linux/amd64 -t myapp .`.
+### 1. [Sujet 1]
+- **Détails :**
+- **Décisions :**
+- **Responsable(s) :**
+- **Échéance :**
 
-Then, push it to your registry, e.g. `docker push myregistry.com/myapp`.
+### 2. [Sujet 2]
+- **Détails :**
+- **Décisions :**
+- **Responsable(s) :**
+- **Échéance :**
 
-Consult Docker's [getting started](https://docs.docker.com/go/get-started-sharing/)
-docs for more detail on building and pushing.
+## Décisions principales
+- [ ] 
+- [ ] 
+- [ ] 
+
+## Actions à mener
+
+| Action | Responsable | Échéance | Statut |
+|--------|-------------|----------|--------|
+| | | | |
+| | | | |
+
+## Prochaine réunion
+- **Date proposée :**
+- **Ordre du jour préliminaire :**
+    1.
+    2.
+
+## Commentaires et observations
+- 
+-
+
+## Validation
+- **Rédacteur :** [Nom]
+- **Date de rédaction :** [Date]
+- **Signature :**
+
+---
+
+**Annexes :** (si nécessaire)
+- 
+-

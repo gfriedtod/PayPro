@@ -12,12 +12,16 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @CrossOrigin("*")
-@RequestMapping("api/v1/auth")
+@RequestMapping("auth")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final AdminAuthService adminAuthService;
 
+    @GetMapping("hello")
+    public String hello(){
+        return "hello";
+    }
     @PostMapping("login")
     ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
         try{

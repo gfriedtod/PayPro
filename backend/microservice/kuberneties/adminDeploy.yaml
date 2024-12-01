@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-deploy
+  labels:
+    app: admin-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: admin-app
+  template:
+    metadata:
+      name: admin-app
+      labels:
+        app: admin-app
+    spec:
+      containers:
+        - name: paypro
+          image: gfriedtod/paypro
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+      restartPolicy: Always
+      

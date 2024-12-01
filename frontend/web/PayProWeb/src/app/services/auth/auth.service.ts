@@ -12,11 +12,11 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
    async  signUp(admin: AdminDto) {
-    return this.http.post(environment.api + '/api/v1/auth/singup', admin);
+    return this.http.post(environment.api + '/auth/singup', admin);
   }
 
 
   async login(log: LoginRequest) {
-    return this.http.post<LoginResponse>(environment.api + '/api/v1/auth/login', log);
+    return this.http.post<LoginResponse>(environment.api + '/auth/login', log);
   }
 }

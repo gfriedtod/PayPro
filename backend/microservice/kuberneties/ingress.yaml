@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: proxy
+#  annotations:
+#    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: localhost
+      http:
+          paths:
+          - path: /frontend
+            pathType: Prefix
+            backend:
+              service:
+                name: sv
+                port:
+                  number: 1025
+              
+                  
+          - path: /modulith/v1
+            pathType: Prefix
+            backend:
+              service:
+                name: admin-management-service
+                port:
+                  number: 8085
+      
+                  
+          
+                  
+      
+        
+
