@@ -33,11 +33,11 @@ public class JwtHelper {
         var key = key();
         System.out.println(key());
         return Jwts.builder()
-                .setId(tokenDetails.getId().toString())
-                .setSubject(tokenDetails.getFirstName())
-                .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(now.plus(MINUTES, ChronoUnit.MINUTES)))
-                .signWith(key, SignatureAlgorithm.forSigningKey(key))
+                .id(tokenDetails.getId().toString())
+                .subject(tokenDetails.getFirstName())
+                .issuedAt(Date.from(now))
+                .expiration(Date.from(now.plus(MINUTES, ChronoUnit.MINUTES)))
+                .signWith(key())
                 .compact();
     }
 
@@ -53,7 +53,9 @@ public class JwtHelper {
         try {
             return Jwts
                     .parser()
+
                     .setSigningKey(key())
+
                     .parseClaimsJws(token)
                     .getBody();
         } catch (ExpiredJwtException e) {

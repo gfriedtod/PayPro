@@ -11,6 +11,7 @@ import com.example.paypromodulith.userManager.infrastructure.out.persitences.map
 import com.example.paypromodulith.userManager.infrastructure.out.persitences.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class UserPersistenceAdapter implements UserOutputPort {
 
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
@@ -31,6 +33,7 @@ public class UserPersistenceAdapter implements UserOutputPort {
     @Transactional
     @Override
     public UserDto create(UserDto userDto) {
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         return UserMapper.toDto(userRepository.save(UserMapper.toEntity(userDto)));
     }
 

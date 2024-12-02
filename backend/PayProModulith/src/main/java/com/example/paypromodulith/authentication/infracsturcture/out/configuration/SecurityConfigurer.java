@@ -44,11 +44,11 @@ public class SecurityConfigurer{
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/modulith/v1/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
 
 
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .authenticationManager(authenticationManager)
 
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

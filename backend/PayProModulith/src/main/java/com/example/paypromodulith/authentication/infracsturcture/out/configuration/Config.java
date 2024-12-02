@@ -2,6 +2,7 @@ package com.example.paypromodulith.authentication.infracsturcture.out.configurat
 
 import com.example.paypromodulith.authentication.domain.service.AdminAuthService;
 import com.example.paypromodulith.authentication.domain.service.ClientService;
+import com.example.paypromodulith.authentication.domain.service.UserAuthService;
 import com.example.paypromodulith.authentication.infracsturcture.out.adapter.AdminAuthPersitenceAdapter;
 import com.example.paypromodulith.authentication.infracsturcture.out.adapter.UserAuthPersistenceAdapter;
 import com.example.paypromodulith.authentication.infracsturcture.out.persitence.repository.AdminAuthRepository;
@@ -30,6 +31,11 @@ public class Config {
     @Bean
     ClientService clientService(UserAuthPersistenceAdapter userAuthPersistenceAdapter,AdminAuthPersitenceAdapter adminAuthPersitenceAdapter){
         return new ClientService(adminAuthPersitenceAdapter, userAuthPersistenceAdapter);
+    }
+
+    @Bean
+    UserAuthService userService(UserAuthPersistenceAdapter userAuthPersistenceAdapter, PasswordEncoder passwordEncoder){
+        return  new UserAuthService(userAuthPersistenceAdapter,passwordEncoder);
     }
 
 }
