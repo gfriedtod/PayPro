@@ -1,5 +1,6 @@
 package com.example.paypromodulith.entity;
 
+import com.example.paypromodulith.AdminDepartment;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -31,11 +32,14 @@ public class Department {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "organisation_id")
     private Organisation organisation;
 
     @OneToMany(mappedBy = "department")
     private Set<User> users = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "department")
+    private Set<AdminDepartment> adminDepartments = new LinkedHashSet<>();
 
 }

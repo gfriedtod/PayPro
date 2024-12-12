@@ -36,7 +36,7 @@ public class UserService implements UserUseCase {
     }
 
     @Override
-    public List<UserDto> findAllByOrganisation(OrganisationDto organisation) {
-        return userOutputPort.findAllByOrganisation(organisation);
+    public List<UserDto> findAllByOrganisation(OrganisationDto organisation, UUID adminId) {
+        return userOutputPort.findAllByOrganisation(organisation, adminId);
     }
 }

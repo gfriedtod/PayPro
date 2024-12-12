@@ -6,6 +6,8 @@ import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -25,7 +27,7 @@ public class User {
     @Column(name = "created_at")
     private Instant createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
     private Department department;
 
@@ -67,8 +69,11 @@ public class User {
     @Column(name = "phone", length = Integer.MAX_VALUE)
     private String phone;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "organisation_id")
     private Organisation organisation;
+
+    @OneToMany(mappedBy = "user")
+    private Set<File> files = new LinkedHashSet<>();
 
 }

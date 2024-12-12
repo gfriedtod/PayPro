@@ -61,6 +61,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import {OrganisationDto} from '../../model/OrganisationDto';
 import {copy} from '../../environement/env';
 import {ToastComponent} from '../../components/toast/toast.component';
+import {AdminDto} from '../../model/AdminDto';
 
 
 @Component({
@@ -272,8 +273,9 @@ export class HomePageComponent implements OnInit {
 
     /// get the id on the url
      this.id = this.router.url.split('/').pop() ?? '';
+    const user = JSON.parse(localStorage.getItem('user')!) as AdminDto;
 
-    (await this.userService.fetchUsers(this.id)).subscribe(
+    (await this.userService.fetchUsers(this.id,user.id!)).subscribe(
       {
         next: (users) => {
           this.users.set(users);

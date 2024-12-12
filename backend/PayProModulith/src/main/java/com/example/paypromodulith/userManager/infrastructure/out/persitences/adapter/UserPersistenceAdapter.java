@@ -1,12 +1,9 @@
 package com.example.paypromodulith.userManager.infrastructure.out.persitences.adapter;
 
-import com.example.paypromodulith.entity.Organisation;
-import com.example.paypromodulith.entity.User;
 import com.example.paypromodulith.userManager.application.out.UserOutputPort;
 import com.example.paypromodulith.userManager.domain.model.OrganisationDto;
 import com.example.paypromodulith.userManager.domain.model.UserDto;
 
-import com.example.paypromodulith.userManager.infrastructure.out.persitences.mapper.OrganisationMapper;
 import com.example.paypromodulith.userManager.infrastructure.out.persitences.mapper.UserMapper;
 import com.example.paypromodulith.userManager.infrastructure.out.persitences.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,8 +46,8 @@ public class UserPersistenceAdapter implements UserOutputPort {
 
     @Transactional
     @Override
-    public List<UserDto> findAllByOrganisation(OrganisationDto organisation) {
-        var list = userRepository.findAllByOrganisationId(organisation.getId()).stream().map(UserMapper::toDto).toList();
+    public List<UserDto> findAllByOrganisation(OrganisationDto organisation,UUID idAmin) {
+        var list = userRepository.findAllByOrganisationIdAndAdminId(organisation.getId(), idAmin).stream().map(UserMapper::toDto).toList();
         System.out.println(list.size());
         return list;
     }

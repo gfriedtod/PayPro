@@ -19,11 +19,19 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/organisation/{organisationId}")
-    public ResponseEntity<?> findAllByOrganisation(@PathVariable String organisationId) {
+    @GetMapping("/organisation/{organisationId}/{adminId}")
+    public ResponseEntity<?> findAllByOrganisation(@PathVariable String organisationId , @PathVariable String adminId) {
 
         try {
-            return ResponseEntity.ok(userService.findAllByOrganisation(OrganisationDto.builder().id(UUID.fromString(organisationId)).name("").build()));
+            return ResponseEntity.ok(userService.findAllByOrganisation(
+                    OrganisationDto
+                            .builder()
+                            .id(
+                                    UUID
+                                            .fromString(organisationId)
+                            ).name("")
+                            .build(),
+                    UUID.fromString(adminId)));
         } catch (Exception e) {
             log.error("e: ", e);
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -19,7 +19,7 @@ public class UserAuthService implements UserAuthInput {
 
 
     public Optional<LoginUserResponse> login(LoginRequest request) throws NoSuchAlgorithmException {
-        UserDto user = userOutputPort.loadUserByUsername(request.getEmail());
+        var user = userOutputPort.loadUserByUsername(request.getEmail());
         if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             String token = JwtHelper.generateToken(new TokenDetails(user.getId(), user.getEmail()));
             return Optional.ofNullable(LoginUserResponse.builder().user(user).token(token).build());

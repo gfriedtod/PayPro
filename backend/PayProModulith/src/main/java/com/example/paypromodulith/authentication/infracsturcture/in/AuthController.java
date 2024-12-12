@@ -42,7 +42,7 @@ public class AuthController {
     ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
         try{
          var res =   this.adminAuthService.login(loginRequest);
-
+         log.info("res: {}", res);
          if(res.isPresent()){
              return  ResponseEntity.ok(res.get());
          }
@@ -56,7 +56,7 @@ public class AuthController {
 
     }
 
-    @PostMapping("singup")
+    @PostMapping("signup")
     ResponseEntity<?> singup(@RequestBody AdminDto adminDto){
         try{
             return ResponseEntity.ok(this.adminAuthService.signup(adminDto));

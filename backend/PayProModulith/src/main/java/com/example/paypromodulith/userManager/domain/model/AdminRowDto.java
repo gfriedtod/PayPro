@@ -4,6 +4,8 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * DTO for {@link com.example.paypromodulith.entity.AdminRow}
@@ -18,4 +20,5 @@ public class AdminRowDto implements Serializable {
     OffsetDateTime createdAt;
     AdminDto admin;
     OrganisationDto organisation;
+    private List<List<UUID>> departmentList;
 }

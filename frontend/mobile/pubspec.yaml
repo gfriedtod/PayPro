@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.1 <4.0.0'
+  sdk: '>=3.5.1 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -38,6 +38,19 @@ dependencies:
   flutter_bloc: ^8.1.6
   google_fonts: ^6.2.1
   flutter_snake_navigationbar: ^0.6.1
+  dio: ^5.7.0
+  freezed: ^2.5.7
+  build_runner: ^2.4.13
+  flutter_secure_storage: ^9.0.0
+  syncfusion_flutter_pdfviewer: ^27.2.4
+  dart_jsonwebtoken: ^2.14.2
+  flutter_secure_token_manager: ^0.0.1
+  jwt_decoder: ^2.0.1
+  shared_preferences: ^2.3.3
+  get_storage: ^2.1.1
+  easy_pdf_viewer: ^1.0.8
+#  build_runner: ^2.4.13
+#  build_runner: ^2.4.13
 
 dev_dependencies:
   flutter_test:
@@ -62,8 +75,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+     - assets/images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

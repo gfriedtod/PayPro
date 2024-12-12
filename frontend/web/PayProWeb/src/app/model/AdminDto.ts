@@ -6,4 +6,5 @@ export interface AdminDto {
 	password: string;
   phone?: string;
   address?:string;
+  gender?:string;
 }

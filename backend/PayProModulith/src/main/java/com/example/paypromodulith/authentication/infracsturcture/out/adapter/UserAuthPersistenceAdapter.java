@@ -3,9 +3,8 @@ package com.example.paypromodulith.authentication.infracsturcture.out.adapter;
 import com.example.paypromodulith.authentication.application.output.UserOutputPort;
 import com.example.paypromodulith.authentication.domain.model.*;
 import com.example.paypromodulith.authentication.infracsturcture.out.persitence.repository.UserAuthRepository;
+import com.example.paypromodulith.userManager.infrastructure.out.persitences.mapper.UserMapper;
 import org.modelmapper.ModelMapper;
-
-import java.util.Optional;
 
 
 public class UserAuthPersistenceAdapter implements UserOutputPort {
@@ -19,9 +18,9 @@ public class UserAuthPersistenceAdapter implements UserOutputPort {
     }
 
     @Override
-    public UserDto loadUserByUsername(String username) {
+    public com.example.paypromodulith.userManager.domain.model.UserDto loadUserByUsername(String username) {
         var user = userRepository.findByEmail(username);
-        return user.map(value -> modelMapper.map(value, UserDto.class)).orElse(null);
+        return user.map(UserMapper::toDto).orElse(null);
     }
 
     @Override
