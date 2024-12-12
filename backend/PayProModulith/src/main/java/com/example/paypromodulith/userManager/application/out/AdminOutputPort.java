@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AdminOutputPort {
-    List<AdminDto> fetchAllAdminByOrganisationId(UUID idOrganisation);
+  List<AdminDto> fetchAllAdminByOrganisationId(UUID idOrganisation);
 
-    List<AdminDto> fetchAllAdminBySpaceId(UUID idOrganisation);
+  List<AdminDto> fetchAllAdminBySpaceId(UUID idOrganisation);
 }

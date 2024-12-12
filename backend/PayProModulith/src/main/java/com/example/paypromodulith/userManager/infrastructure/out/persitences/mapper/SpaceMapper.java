@@ -5,15 +5,11 @@ import com.example.paypromodulith.userManager.domain.model.SpaceDto;
 
 public class SpaceMapper {
 
-    public static Space toEntity(SpaceDto spaceDto) {
-        return Space.builder()
-                .id(spaceDto.getId())
-                .build();
-    }
+  public static Space toEntity(SpaceDto spaceDto) {
+    return Space.builder().id(spaceDto.getId()).build();
+  }
 
-    public static SpaceDto toDto(Space space) {
-        return SpaceDto.builder()
-                .id(space.getId())
-                .build();
-    }
+  public static SpaceDto toDto(Space space) {
+    return SpaceDto.builder().id(space.getId()).build();
+  }
 }

@@ -5,9 +5,8 @@ import com.example.paypromodulith.userManager.domain.model.OrganisationDto;
 
 import java.util.List;
 
-public interface DepartementOutputPort {
-    List<DepartmentDto> findAllByOrganisation(OrganisationDto organisationDto);
+public interface DepartmentOutputPort {
+  List<DepartmentDto> findAllByOrganisation(OrganisationDto organisationDto);
 
-    DepartmentDto save(DepartmentDto departmentDto);
-
+  DepartmentDto save(DepartmentDto departmentDto);
 }

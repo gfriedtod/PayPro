@@ -6,7 +6,7 @@ import com.example.paypromodulith.userManager.domain.model.OrganisationDto;
 import java.util.List;
 
 public interface OrganisationOutputPort {
-    List<OrganisationDto> findByAdmin(AdminDto adminDto);
-    OrganisationDto saveOrganisation(OrganisationDto organisationDto);
+  List<OrganisationDto> findByAdmin(AdminDto adminDto);
 
+  OrganisationDto saveOrganisation(OrganisationDto organisationDto);
 }

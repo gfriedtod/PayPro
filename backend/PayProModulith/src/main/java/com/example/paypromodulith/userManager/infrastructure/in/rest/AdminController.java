@@ -15,26 +15,25 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AdminController {
 
-    private final AdminService adminService;
+  private final AdminService adminService;
 
-    @GetMapping("/organisation/{organisationId}")
-    public ResponseEntity<?> fetchAllAdminByOrganisationId(@PathVariable UUID organisationId) {
-        try{
-            return ResponseEntity.ok(adminService.fetchAllAdminByOrganisationId(organisationId));
-        } catch (Exception e) {
-            log.error("e: ", e);
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+  @GetMapping("/organisation/{organisationId}")
+  public ResponseEntity<?> fetchAllAdminByOrganisationId(@PathVariable UUID organisationId) {
+    try {
+      return ResponseEntity.ok(adminService.fetchAllAdminByOrganisationId(organisationId));
+    } catch (Exception e) {
+      log.error("e: ", e);
+      return ResponseEntity.badRequest().body(e.getMessage());
     }
+  }
 
-        @GetMapping("/space/{spaceId}")
-        public ResponseEntity<?> fetchAllAdminBySpaceId(@PathVariable UUID spaceId) {
-            try {
-                return ResponseEntity.ok(adminService.fetchAllAdminBySpaceId(spaceId));
-            } catch (Exception e) {
-                log.error("e: ", e);
-                return ResponseEntity.badRequest().body(e.getMessage());
-            }
-        }
-
+  @GetMapping("/space/{spaceId}")
+  public ResponseEntity<?> fetchAllAdminBySpaceId(@PathVariable UUID spaceId) {
+    try {
+      return ResponseEntity.ok(adminService.fetchAllAdminBySpaceId(spaceId));
+    } catch (Exception e) {
+      log.error("e: ", e);
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
 }

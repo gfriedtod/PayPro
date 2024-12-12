@@ -1,11 +1,10 @@
 package com.example.paypromodulith.userManager.domain.model;
 
-import lombok.*;
-
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
+import lombok.*;
 
 /**
  * DTO for {@link com.example.paypromodulith.entity.User}
