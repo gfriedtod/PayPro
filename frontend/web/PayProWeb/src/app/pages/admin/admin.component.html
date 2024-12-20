@@ -20,7 +20,7 @@
         </div>
         <div class="flex flex-col justify-center items-start">
           <h1 class="font-bold">Total Admin</h1>
-          <h1 class=>{{ admin.length }}</h1>
+          <h1 class=>{{ admin().length }}</h1>
         </div>
       </div >
     </div>
@@ -34,7 +34,7 @@
         </div>
         <div class="flex flex-col justify-center items-start">
           <h1 class="font-bold">Total Super Admin</h1>
-          <h1 class=>{{ sortGender("MALE") }}</h1>
+          <h1 class=>{{ sortAdmin("SUPER_ADMIN") }}</h1>
         </div>
       </div >
     </div>
@@ -48,7 +48,7 @@
         </div>
         <div class="flex flex-col justify-center items-start">
           <h1 class="font-bold">Total Simple Admin</h1>
-          <h1 class=>{{ sortGender("FEMALE") }}</h1>
+          <h1 class=>{{ sortAdmin("ADMIN") }}</h1>
         </div>
       </div >
     </div>
@@ -114,10 +114,6 @@
             <input class="col-span-3" formControlName="name" hlmInput id="name" value="Pedro Duarte"/>
           </div>
           <div class="items-center grid grid-cols-4 gap-4">
-            <label class="text-right" for="Adminname" hlmLabel>name</label>
-            <input class="col-span-3" formControlName="displayName" hlmInput id="Adminname" value="@peduarte"/>
-          </div>
-          <div class="items-center grid grid-cols-4 gap-4">
             <label class="text-right" for="password" hlmLabel>Password</label>
             <input class="col-span-3" formControlName="password" hlmInput id="password" value="@peduarte"/>
           </div>
@@ -132,9 +128,10 @@
                 <hlm-select-value/>
               </hlm-select-trigger>
               <hlm-select-content>
+                @for (val of roles();track val){
+                  <hlm-option value="{{val.id}}">{{ val.name }}</hlm-option>
+                }
 
-                <hlm-option value="ADMIN">ADMIN</hlm-option>
-                <hlm-option value="SUPER ADMIN">SUPER ADMIN</hlm-option>
 
               </hlm-select-content>
             </brn-select>
@@ -204,7 +201,7 @@
     <brn-column-def name="status" class="w-32 sm:w-40">
       <hlm-th truncate *brnHeaderDef>Status</hlm-th>
       <hlm-td truncate *brnCellDef="let element">
-        {{ element.rule | titlecase }}
+        {{ element.role.name | titlecase }}
       </hlm-td>
     </brn-column-def>
     <brn-column-def name="email" class="w-32 lg:flex-1">
@@ -215,8 +212,8 @@
         </button>
       </hlm-th>
       <hlm-td truncate *brnCellDef="let element">
-        <button (click)="save(element)" class="w-full h-10 flex gap-2 font-normal flex justify-start" hlmBtn hlmBtn
-                routerLink="/main/Admin/{{element.id}}"
+        <button (click)="save(element)" class="w-full h-10  gap-2 font-normal flex justify-start" hlmBtn
+                routerLink="/general/admin-detail"
                 variant="ghost"> {{ element.email }}
         </button>
       </hlm-td>
@@ -224,15 +221,15 @@
     <brn-column-def name="amount" class="">
       <hlm-th *brnHeaderDef>Name</hlm-th>
       <hlm-td class="font-medium tabular-nums" *brnCellDef="let element">
-        {{ element.displayName }}
+        {{ element.name }}
       </hlm-td>
     </brn-column-def>
-    <brn-column-def name="departement" class="w-32">
-      <hlm-th *brnHeaderDef>Departement</hlm-th>
-      <hlm-td class="font-medium tabular-nums" *brnCellDef="let element">
-        {{ element.department.name}}
-      </hlm-td>
-    </brn-column-def>
+<!--    <brn-column-def name="departement" class="w-32">-->
+<!--      <hlm-th *brnHeaderDef>Departement</hlm-th>-->
+<!--      <hlm-td class="font-medium tabular-nums" *brnCellDef="let element">-->
+<!--        {{ element.department.name}}-->
+<!--      </hlm-td>-->
+<!--    </brn-column-def>-->
 
     <brn-column-def name="actions" class="w-16">
       <hlm-th *brnHeaderDef></hlm-th>

@@ -7,9 +7,8 @@ public class AdminRowMapper {
 
     public static AdminRow toEntity(AdminRowDto adminRowDto) {
         return AdminRow.builder()
-                .id(adminRowDto.getId())
-                .createdAt(adminRowDto.getCreatedAt())
-                .admin(AdminMapper.toEntity(adminRowDto.getAdmin()))
+//                .createdAt(adminRowDto.getCreatedAt())
+                .admin(AdminMapper.toEntityWithoutDependencies(adminRowDto.getAdmin()))
                 .organisation(OrganisationMapper.toEntityWithoutDependencies(adminRowDto.getOrganisation()))
                 .build();
     }
@@ -28,6 +27,17 @@ public class AdminRowMapper {
                 .id(adminRow.getId())
                 .createdAt(adminRow.getCreatedAt())
                 .admin(AdminMapper.toDto(adminRow.getAdmin()))
+                // Ne pas inclure l'organisation pour éviter la récursion
+                .build();
+    }
+
+    public static  AdminRowDto toDtoWithoutAdmin(AdminRow adminRow) {
+        return AdminRowDto.builder()
+                .id(adminRow.getId())
+                .createdAt(adminRow.getCreatedAt())
+                .organisation(OrganisationMapper.toDtoWithoutDependencies(adminRow.getOrganisation()))
+
+//                .admin(AdminMapper.toDto(adminRow.getAdmin()))
                 // Ne pas inclure l'organisation pour éviter la récursion
                 .build();
     }

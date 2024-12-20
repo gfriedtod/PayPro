@@ -1,7 +1,5 @@
 package com.example.paypromodulith.userManager.domain.model;
 
-import com.example.paypromodulith.AdminDepartment;
-import com.example.paypromodulith.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,8 +22,8 @@ public class AdminDto implements Serializable {
   private String name;
   private String email;
   private String password;
-  private Role role;
-  private Set<AdminDepartment> adminDepartments = new LinkedHashSet<>();
+  private RoleDto role;
+  private Set<AdminDepartmentDto> adminDepartments = new LinkedHashSet<>();
   private Set<AdminRowDto> adminRows = new LinkedHashSet<>();
   private SpaceDto space;
 }

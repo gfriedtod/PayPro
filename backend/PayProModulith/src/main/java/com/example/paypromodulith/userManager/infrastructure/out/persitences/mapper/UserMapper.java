@@ -8,7 +8,7 @@ public class UserMapper {
    public static User toEntity(UserDto userDto) {
         return User.builder()
                 .id(userDto.getId())
-                .createdAt(userDto.getCreatedAt())
+//                .createdAt(userDto.getCreatedAt())
                 .department(DepartmentMapper.toEntity(userDto.getDepartment()))
                 .organisation(OrganisationMapper.toEntityWithoutDependencies(userDto.getOrganisation()))
                 .displayName(userDto.getDisplayName())

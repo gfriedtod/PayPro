@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class OrganisationPersistenceAdapter implements OrganisationOutputPort {
@@ -26,8 +27,13 @@ public class OrganisationPersistenceAdapter implements OrganisationOutputPort {
     @Override
     public List<OrganisationDto> findByAdmin(AdminDto adminDto) {
         ///new condition
-        var adminRows = adminRowRepository.findAllByAdmin(AdminMapper.toEntity(adminDto));
+        var adminRows = adminRowRepository.findAllByAdminId(adminDto.getId());
         return adminRows.map(rows -> rows.stream().map(adminRow -> OrganisationMapper.toDto(adminRow.getOrganisation())).toList()).orElse(null);
+    }
+
+    @Override
+    public List<OrganisationDto> findBySpaceId(UUID space){
+        return organisationRepository.findAllBySpaceId(space).stream().map(OrganisationMapper::toDtoWithoutDependencies).toList();
     }
 
     @Override

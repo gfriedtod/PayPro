@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
 
-    List<User> findAllByOrganisation(Organisation organisation);
+    List<User> findAllByOrganisationId(UUID organisation);
 
     @Query(value = "SELECT  u.*" +
             "FROM users u" +

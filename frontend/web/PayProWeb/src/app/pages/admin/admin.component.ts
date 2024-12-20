@@ -1,9 +1,9 @@
-import {Component, computed, signal, TrackByFunction} from '@angular/core';
+import {Component, computed, OnInit, signal, TrackByFunction, WritableSignal} from '@angular/core';
 import {
   BrnCellDefDirective,
   BrnColumnDefComponent, BrnHeaderDefDirective,
   BrnPaginatorDirective,
-  BrnTableComponent, PaginatorState, useBrnColumnManager
+  BrnTableComponent, BrnTableImports, PaginatorState, useBrnColumnManager
 } from "@spartan-ng/ui-table-brain";
 import {BrnSelectComponent, BrnSelectContentComponent, BrnSelectValueComponent} from "@spartan-ng/ui-select-brain";
 import {BrnSheetContentDirective, BrnSheetTriggerDirective} from "@spartan-ng/ui-sheet-brain";
@@ -30,14 +30,19 @@ import {
     HlmSheetDescriptionDirective, HlmSheetFooterComponent, HlmSheetHeaderComponent, HlmSheetTitleDirective
 } from "../../components/lib/ui-sheet-helm/src";
 import {HlmSpinnerComponent} from "../../components/lib/ui-spinner-helm/src";
-import {HlmTableDirective, HlmTdComponent, HlmThComponent} from "../../components/lib/ui-table-helm/src";
+import {
+  HlmTableDirective,
+  HlmTableImports,
+  HlmTdComponent,
+  HlmThComponent
+} from "../../components/lib/ui-table-helm/src";
 import {RouterLink} from "@angular/router";
 import {TitleCasePipe} from "@angular/common";
 import {ToastComponent} from "../../components/toast/toast.component";
 import {toObservable, toSignal} from '@angular/core/rxjs-interop';
-import {debounceTime, map} from 'rxjs';
+import {debounceTime, map, timer} from 'rxjs';
 import {SelectionModel} from '@angular/cdk/collections';
-import {AdminDto} from '../../model/AdminDto';
+import {AdminDto, RoleDto} from '../../model/AdminDto';
 import {DepartementDto} from '../../model/DepartementDto';
 import {BrnMenuTriggerDirective} from '@spartan-ng/ui-menu-brain';
 import {copy} from '../../environement/env';
@@ -50,6 +55,8 @@ import {
   lucideUserMinus,
   lucideUserPlus
 } from '@ng-icons/lucide';
+import {AdminService} from '../../services/admin/admin.service';
+import {RoleService} from '../../services/role/role.service';
 
 @Component({
   selector: 'app-admin',
@@ -106,7 +113,10 @@ import {
     HlmThComponent,
     BrnColumnDefComponent,
     BrnColumnDefComponent,
-    HlmThComponent
+    HlmThComponent,
+    BrnColumnDefComponent,
+    BrnTableImports,
+    HlmTableImports
   ],
   providers:[
     provideIcons({
@@ -121,10 +131,56 @@ import {
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
-export class AdminComponent {
+export class AdminComponent implements OnInit{
 
 
-  admin: AdminDto[] = []
+  admin: WritableSignal<AdminDto[]> = signal([])
+  roles: WritableSignal<RoleDto[]> = signal([]);
+  user :WritableSignal<AdminDto> = signal({} as AdminDto);
+
+
+  constructor(private adminService: AdminService, private roleService: RoleService) {
+  }
+
+  async ngOnInit() {
+
+    this.user.set(JSON.parse(localStorage.getItem('user')!) as AdminDto);
+
+    this.loading.set(true);
+    await this.fecthAllAdminBySpaceId();
+    await this.fetchAllRoles();
+    this.loading.set(false);
+
+  }
+
+  private async fecthAllAdminBySpaceId() {
+    (await this.adminService.fetchAdminBySpaceId(this.user().space.id)).subscribe(
+      {
+        next: (data) => {
+          this.admin.set(data);
+        },
+        error: (error) => {
+          console.error(error);
+          this.fecthAllAdminBySpaceId();
+        },
+        complete: () => {
+          // this.loading.set(false);
+        },
+      }
+    );
+  }
+
+  private async fetchAllRoles() {
+    (await this.roleService.fetchAll()).subscribe({
+      next: (data) => {
+        this.roles.set(data);
+      },
+      error: (error) => {
+        console.error(error);
+        this.fetchAllRoles()
+      }
+    })
+  }
 
   protected readonly _rawFilterInput = signal('');
   protected readonly _emailFilter = signal('');
@@ -144,7 +200,7 @@ export class AdminComponent {
     status: { visible: true, label: 'Status' },
     email: { visible: true, label: 'Email' },
     amount: { visible: true, label: 'Amount ($)' },
-    departement: { visible: true, label: 'Departement' },
+    // departement: { visible: true, label: 'Departement' },
   });
   protected readonly _allDisplayedColumns = computed(() => [
     'select',
@@ -152,7 +208,7 @@ export class AdminComponent {
     'actions',
   ]);
 
-  private readonly _AdminDtos = signal(this.admin);
+  private readonly _AdminDtos =this.admin;
   private readonly _filteredAdminDtos = computed(() => {
     const emailFilter = this._emailFilter()?.trim()?.toLowerCase();
     if (emailFilter && emailFilter.length > 0) {
@@ -210,8 +266,8 @@ export class AdminComponent {
       this._emailSort.set('ASC');
     }
   }
-  sortGender(gender: string){
-    return this.admin.filter((u) => u.gender == gender).length
+  sortAdmin(gender: string){
+    return this.admin()?.filter((u) => u.role.name == gender).length
   }
 
   visibleToast= signal(false);
@@ -221,25 +277,47 @@ export class AdminComponent {
   adminFrom: FormGroup = new  FormGroup({
     name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    department: new FormControl('', [Validators.required]),
     role: new FormControl('', [Validators.required]),
-    status: new FormControl('Admin', [Validators.required]),
-    gender: new FormControl('', [Validators.required]),
-    displayName: new FormControl('', [Validators.required]),
-    cni: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    dateOfBirth: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required]),
-    address: new FormControl('', [Validators.required]),
   });
 
-  saveAdmin() {
+  async saveAdmin() {
+    if (this.adminFrom.valid) {
+      this.loading.set(true);
+      let admin: AdminDto = {
+        name: this.adminFrom.value.name,
+        email: this.adminFrom.value.email,
+        password: this.adminFrom.value.password,
+        role: this.roles().find(role => role.id == this.adminFrom.value.role)!,
+        space: this.user().space
+
+      };
+      (await this.adminService.createAdmin(admin!)).subscribe({
+        next: (res) => {
+          this.loading.set(false)
+          this.visibleToast.set(true)
+          this.toastState.set(true)
+          timer(1000).subscribe(() => this.visibleToast.set(false));
+          this.admin.update(
+            value => [...value,res.adminDto]
+          )
+        },
+        error: (error) => {
+          this.loading.set(false)
+          this.visibleToast.set(true)
+          this.toastState.set(false)
+          timer(1000).subscribe(() => this.visibleToast.set(false));
+        }
+      });
+
+    }
 
   }
 
   protected readonly copy = copy;
 
   save(element: any) {
+    localStorage.setItem('adminShared', JSON.stringify(element));
 
   }
 }

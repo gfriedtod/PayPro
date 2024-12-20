@@ -17,7 +17,7 @@ class AuthenticationRepository {
         throw DioException(requestOptions: res.requestOptions);
       }
     } on DioException catch (e) {
-      return e;
+      rethrow;
     }
   }
 }

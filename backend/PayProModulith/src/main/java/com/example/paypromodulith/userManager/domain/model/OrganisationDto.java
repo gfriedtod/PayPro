@@ -20,4 +20,5 @@ public class OrganisationDto implements Serializable {
   private Set<AdminRowDto> adminRows = new LinkedHashSet<>();
   private Set<DepartmentDto> departments = new LinkedHashSet<>();
   private Set<FileDto> files = new LinkedHashSet<>();
+  private SpaceDto space;
 }

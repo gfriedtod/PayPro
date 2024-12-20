@@ -15,5 +15,5 @@ public interface UserUseCase {
 
   UserDto update(UserDto userDto);
 
-  List<UserDto> findAllByOrganisation(OrganisationDto organisation, UUID adminId);
+  List<UserDto> findAllByOrganisation(UUID organisation, UUID adminId);
 }

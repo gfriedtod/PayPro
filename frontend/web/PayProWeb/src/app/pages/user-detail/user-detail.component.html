@@ -279,11 +279,18 @@
       </button>
     </hlm-th>
     <hlm-td truncate *brnCellDef="let element">
-
-      <button (click)="openLink(element.link)" class=" group-hover:font-bold group-hover:text-black w-full h-10 flex hover:font-bold hover:text-black hover:transition-all gap-2 font-normal flex justify-start" hlmBtn hlmBtn variant="ghost">
-        <hlm-icon class=""  name="lucideFile"></hlm-icon>
-        {{ element.name }}
-      </button>
+<hlm-dialog>
+  <button brnDialogTrigger (click)="openLink(element.link)" class=" group-hover:font-bold group-hover:text-black w-full h-10 flex hover:font-bold hover:text-black hover:transition-all gap-2 font-normal flex justify-start" hlmBtn hlmBtn variant="ghost">
+    <hlm-icon class=""  name="lucideFile"></hlm-icon>
+    {{ element.name }}
+  </button>
+  <hlm-dialog-content class="max-w-[1060px] relative" *brnDialogContent="let ctx">
+    <ngx-doc-viewer class="min-w-[1064px] min-h-[60vh] max-w-[1060px]"
+      [url]="element.link"
+      style="width:100%;height:80vh;"
+    ></ngx-doc-viewer>
+  </hlm-dialog-content>
+</hlm-dialog>
     </hlm-td>
   </brn-column-def>
   <brn-column-def name="actions" class="w-16">

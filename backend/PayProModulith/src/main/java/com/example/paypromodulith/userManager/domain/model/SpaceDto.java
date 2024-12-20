@@ -20,4 +20,5 @@ public class SpaceDto implements Serializable {
   private UUID id;
   private OffsetDateTime createdAt;
   private Set<AdminDto> admins = new LinkedHashSet<>();
+  private Set<OrganisationDto> organisationDtos = new LinkedHashSet<>();
 }

@@ -24,7 +24,7 @@ import {HlmSpinnerComponent} from '../../components/lib/ui-spinner-helm/src';
 import {OrganisationService} from '../../services/organisation/organisation.service';
 import {UserDto} from '../../model/UserDto';
 import {AdminDto} from '../../model/AdminDto';
-import {OrganisationDto} from '../../model/OrganisationDto';
+import {OrganisationDto, SpaceDto} from '../../model/OrganisationDto';
 import {v4} from 'uuid';
 import {ToastComponent} from '../../components/toast/toast.component';
 import {timer} from 'rxjs';
@@ -78,15 +78,19 @@ export class GeneralComponent {
 
   organisation : WritableSignal<OrganisationDto[]> =signal([])
   loadingOrganisation = signal(false)
+  user: WritableSignal<AdminDto> = signal({} as AdminDto);
 
   organisationService = inject(OrganisationService);
   visibleToast = signal<boolean>(false);
   toastState = signal<boolean>(true);
 
-  async fetchOrganisationByUserId(user:AdminDto) {
+  async fetchOrganisationBySpaceId(user:AdminDto) {
 
     this.loadingOrganisation.set(true);
-    (await this.organisationService.fetchOrganisationByUserId(user))
+
+
+
+    (await this.organisationService.fetchOrganisationBySpaceId(user.space.id))
       .subscribe(
         {
           next: (data) => {
@@ -97,6 +101,8 @@ export class GeneralComponent {
             this.toastState.set(false);
             this.visibleToast.set(true);
             timer(1000).subscribe(() => this.visibleToast.set(false));
+            this.fetchOrganisationBySpaceId(user)
+
           },
           complete: () => {
             this.loadingOrganisation.set(false);
@@ -107,13 +113,18 @@ export class GeneralComponent {
           }
 
         }
-      );
+      );[]
 
   }
 
   ngOnInit() {
-    const user = JSON.parse(localStorage.getItem('user')!) as AdminDto;
-    this.fetchOrganisationByUserId(user);
+     this.user.set(JSON.parse(localStorage.getItem('user')!) as AdminDto);
+     if(this.user().role.name == 'ADMIN'){
+       this.organisation.set(this.user().adminRows!.map(row => row.organisation));
+     }else{
+       this.fetchOrganisationBySpaceId(this.user());
+
+     }
   }
 
   async submitSite() {
@@ -125,6 +136,7 @@ export class GeneralComponent {
       site().name = this.site.value.name;
       site().createdAt = Date.parse(this.site.value.date).toString();
       site().departments = [];
+      site().space = {id: this.user().space.id} as SpaceDto;
       site().adminRows = [
         {
           organisation: {id: orgId} as OrganisationDto,

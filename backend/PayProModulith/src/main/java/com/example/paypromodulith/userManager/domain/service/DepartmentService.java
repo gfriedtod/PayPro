@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Service
@@ -16,7 +17,7 @@ public class DepartmentService implements DepartementUseCase {
   private final DepartmentOutputPort departmentOutputPort;
 
     @Override
-    public List<DepartmentDto> findAllByOrganisation(OrganisationDto organisationDto) {
+    public List<DepartmentDto> findAllByOrganisation(UUID organisationDto) {
     return departmentOutputPort.findAllByOrganisation(organisationDto);
     }
 

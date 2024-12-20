@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pay_pro_app/page/home_page.dart';
 import 'package:pay_pro_app/services/authentication/authentication_bloc.dart';
@@ -16,6 +17,7 @@ class LoginPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    // print(GetStorage().read('token'));
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(

@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pay_pro_app/model/login_response.dart';
+import 'package:pay_pro_app/page/login_page.dart';
 import 'package:pay_pro_app/page/pdf_page.dart';
 
+import '../services/authentication/authentication_bloc.dart';
 import '../services/user/user_bloc.dart';
 
 class HomePageView extends StatelessWidget {
@@ -19,11 +21,18 @@ class HomePageView extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          context.read<AuthenticationBloc>().add(AuthenticationEvent.logout());
+          Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (context) =>  LoginPageView(),
+          ));
+
+        },
         backgroundColor: Colors.black,
-        child: const Icon(
-          Icons.add,
+        label:  Text("Logout",style: GoogleFonts.poppins(color: Colors.white),),
+        icon: const Icon(
+          Icons.logout,
           color: Colors.white,
         ),
       ),

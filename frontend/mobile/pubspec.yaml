@@ -46,9 +46,11 @@ dependencies:
   dart_jsonwebtoken: ^2.14.2
   flutter_secure_token_manager: ^0.0.1
   jwt_decoder: ^2.0.1
-  shared_preferences: ^2.3.3
+  shared_preferences: ^2.3.4
   get_storage: ^2.1.1
   easy_pdf_viewer: ^1.0.8
+  localstorage: ^5.0.0
+  webview_flutter: ^4.10.0
 #  build_runner: ^2.4.13
 #  build_runner: ^2.4.13
 

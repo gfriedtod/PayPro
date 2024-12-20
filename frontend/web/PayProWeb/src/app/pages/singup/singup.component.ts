@@ -13,10 +13,12 @@ import {HlmLabelDirective} from '../../components/lib/ui-label-helm/src';
 import {HlmCheckboxComponent} from '../../components/lib/ui-checkbox-helm/src';
 import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../services/auth/auth.service';
-import {AdminDto} from '../../model/AdminDto';
+import {AdminDto, RoleDto} from '../../model/AdminDto';
 import {HlmSpinnerComponent} from '../../components/lib/ui-spinner-helm/src';
 import {ToastComponent} from '../../components/toast/toast.component';
 import {timer} from 'rxjs';
+import {v4} from 'uuid';
+import {RoleService} from '../../services/role/role.service';
 
 
 @Component({
@@ -53,25 +55,47 @@ export class SingupComponent {
 
   auth : AuthService = inject(AuthService);
   router = inject(Router);
-
+  roleService = inject(RoleService);
+  role! : RoleDto
   perform = signal(false);
   visibleToast = signal<boolean>(false);
   toastState = signal<boolean>(true);
 
+  async ngOnInit() {
+    this.perform.set(true);
+
+    (await this.roleService.fetchAll()).subscribe({
+      next: (data) => {
+        this.role = data[0]
+        this.perform.set(false)
+      }
+    })
+  }
+
   async singUp() {
 
-    if (this.signup.valid) {
+    if (this.signup.valid && this.signup.value.password === this.signup.value.confirmPassword && this.role != undefined) {
       this.perform.set(true)
       this.admin = {
+        adminDepartments: [],
+        adminRows: [],
+        id: v4(),
+        role:  this.role ?? { id: v4(), name: 'SUPER_ADMIN' },
+        space: {
+          id: v4(),
+          organisationDtos: []
+        },
         name: this.signup.value.name,
         email: this.signup.value.email,
         password: this.signup.value.password,
         phone: this.signup.value.phone,
         address: this.signup.value.address,
-        createdAt: new Date().toISOString(),
+
+
+        // createdAt: new Date().toISOString(),
 
       };
-      (await this.auth.signUp(this.signup.value))
+      (await this.auth.signUp(this.admin))
         .subscribe(
           {
             next: () => {
@@ -95,6 +119,11 @@ export class SingupComponent {
           }
 
       );
+    }else {
+      this.perform.set(false)
+      this.visibleToast.set(true);
+      this.toastState.set(false);
+      timer(1000).subscribe(() => this.visibleToast.set(false));
     }
 
   }

@@ -14,6 +14,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "organisations")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Organisation {
     @Id
     @ColumnDefault("gen_random_uuid()")
@@ -27,7 +29,7 @@ public class Organisation {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "organisation",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "organisation",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<AdminRow> adminRows = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "organisation",fetch = FetchType.LAZY)
@@ -39,17 +41,9 @@ public class Organisation {
     @OneToMany(mappedBy = "organisation",fetch = FetchType.LAZY)
     private Set<User> users;
 
-    public Organisation(UUID id, Instant createdAt, String name, Set<AdminRow> adminRows, Set<Department> departments, Set<File> files, Set<User> users) {
-        this.id = id;
-        this.createdAt = createdAt;
-        this.name = name;
-        this.adminRows = adminRows;
-        this.departments = departments;
-        this.files = files;
-        this.users = users;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @ColumnDefault("'a977ae25-5ea3-4e3d-9702-55aff68dca1f'")
+    @JoinColumn(name = "space")
+    private Space space;
 
-    public Organisation() {
-
-    }
 }

@@ -4,9 +4,10 @@ import com.example.paypromodulith.userManager.domain.model.DepartmentDto;
 import com.example.paypromodulith.userManager.domain.model.OrganisationDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface DepartmentOutputPort {
-  List<DepartmentDto> findAllByOrganisation(OrganisationDto organisationDto);
+  List<DepartmentDto> findAllByOrganisation(UUID organisationDto);
 
   DepartmentDto save(DepartmentDto departmentDto);
 }

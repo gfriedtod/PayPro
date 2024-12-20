@@ -20,7 +20,7 @@ public class DepartmentController {
     @GetMapping("/organisation/{organisationId}")
     public ResponseEntity<?> findAllByOrganisation(@PathVariable String organisationId) {
         try {
-            return ResponseEntity.ok(departmentService.findAllByOrganisation(OrganisationDto.builder().id(UUID.fromString(organisationId)).name("").build()));
+            return ResponseEntity.ok(departmentService.findAllByOrganisation(UUID.fromString(organisationId)));
         } catch (Exception e) {
             log.error("e: ", e);
             return ResponseEntity.badRequest().body(e.getMessage());

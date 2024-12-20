@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +17,11 @@ public class OrganisationService implements OrganisationUseCase {
     @Override
     public List<OrganisationDto> findByAdmin(AdminDto adminDto) {
         return organisationOutputPort.findByAdmin(adminDto);
+    }
+
+    @Override
+    public List<OrganisationDto> findBySpaceId(UUID space) {
+        return organisationOutputPort.findBySpaceId(space);
     }
 
     @Override

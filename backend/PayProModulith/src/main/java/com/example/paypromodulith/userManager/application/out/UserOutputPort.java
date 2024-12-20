@@ -15,5 +15,5 @@ public interface UserOutputPort {
 
   UserDto update(UserDto userDto);
 
-  List<UserDto> findAllByOrganisation(OrganisationDto organisation, UUID idAmin);
+  List<UserDto> findAllByOrganisation(UUID organisation, UUID idAmin);
 }

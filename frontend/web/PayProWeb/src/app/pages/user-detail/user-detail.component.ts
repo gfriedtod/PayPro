@@ -64,6 +64,10 @@ import {BrnSelectComponent, BrnSelectContentComponent, BrnSelectValueComponent} 
 import {BrnSheetContentDirective, BrnSheetTriggerDirective} from '@spartan-ng/ui-sheet-brain';
 import {OrganisationDto} from '../../model/OrganisationDto';
 import {ToastComponent} from '../../components/toast/toast.component';
+import {HlmCommandDialogDirective} from '../../components/lib/ui-command-helm/src';
+import {HlmDialogComponent, HlmDialogContentComponent} from '../../components/lib/ui-dialog-helm/src';
+import {BrnDialogImports} from '@spartan-ng/ui-dialog-brain';
+import {NgxDocViewerModule} from 'ngx-doc-viewer';
 
 @Component({
   imports: [
@@ -150,7 +154,12 @@ import {ToastComponent} from '../../components/toast/toast.component';
     HlmIconComponent,
     HlmSpinnerComponent,
     HlmSpinnerComponent,
-    ToastComponent
+    ToastComponent,
+    HlmCommandDialogDirective,
+    HlmDialogComponent,
+    HlmDialogContentComponent,
+    BrnDialogImports,
+    NgxDocViewerModule
   ],
   providers: [
     provideIcons({
@@ -306,6 +315,7 @@ export class UserDetailComponent implements OnInit{
     if(this.documentForm.valid){
       this.loading.set(true);
       const data = (await this.storage.storeFile(this.image))
+      console.log(data?.data.publicUrl!)
       file = signal<FileDto>({
         dateFile: this.documentForm.value.date as string,
         user: this.user(),
@@ -439,7 +449,9 @@ export class UserDetailComponent implements OnInit{
     }
   }
   openLink(link:string) {
-    window.open(link, '_blank');
+    console.log(link)
+    // window.open(link, '_blank');
+    // window.open(link, '_blank');
 
   }
 

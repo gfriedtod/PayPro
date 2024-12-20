@@ -1,9 +1,9 @@
 import {Component, signal, WritableSignal} from '@angular/core';
-import {NavBarComponent} from "../../components/nav-bar/nav-bar.component";
+import {NavBarComponent} from "../../../components/nav-bar/nav-bar.component";
 import {Router, RouterLink, RouterOutlet} from "@angular/router";
-import {HlmButtonDirective} from '../../components/lib/ui-button-helm/src';
-import {HlmIconComponent} from '../../components/lib/ui-icon-helm/src';
-import {OrganisationDto} from '../../model/OrganisationDto';
+import {HlmButtonDirective} from '../../../components/lib/ui-button-helm/src';
+import {HlmIconComponent} from '../../../components/lib/ui-icon-helm/src';
+import {OrganisationDto} from '../../../model/OrganisationDto';
 import {provideIcons} from '@ng-icons/core';
 import {lucideArrowRight, lucideLogOut, lucideUser, lucideWorkflow} from '@ng-icons/lucide';
 

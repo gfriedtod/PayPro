@@ -1,11 +1,10 @@
-package com.example.paypromodulith;
+package com.example.paypromodulith.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.OffsetDateTime;
@@ -15,6 +14,9 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "roles")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
     @Id
     @ColumnDefault("gen_random_uuid()")

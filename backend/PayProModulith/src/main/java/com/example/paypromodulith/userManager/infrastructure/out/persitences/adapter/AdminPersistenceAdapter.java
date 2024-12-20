@@ -26,6 +26,6 @@ public class AdminPersistenceAdapter implements AdminOutputPort {
 
     @Override
     public List<AdminDto> fetchAllAdminBySpaceId(UUID idSpace) {
-        return adminRepository.findAllBySpaceId(idSpace).stream().map(AdminMapper::toDto).toList();
+        return adminRepository.findAllBySpaceId(idSpace).stream().map(AdminMapper::toDtoWithoutDependencies).toList();
     }
 }

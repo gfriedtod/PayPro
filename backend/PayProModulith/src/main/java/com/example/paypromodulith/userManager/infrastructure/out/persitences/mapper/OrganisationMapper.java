@@ -12,6 +12,8 @@ public class OrganisationMapper {
         return Organisation.builder()
                 .id(organisationDto.getId())
                 .name(organisationDto.getName())
+                .space(SpaceMapper.toEntity(organisationDto.getSpace()))
+                .createdAt(organisationDto.getCreatedAt())
                 .adminRows(new LinkedHashSet<>(organisationDto.getAdminRows().stream().map(AdminRowMapper::toEntity).toList()))
                 .build();
     }
@@ -46,9 +48,12 @@ public class OrganisationMapper {
     }
 
     public static OrganisationDto toDtoWithoutDependencies(Organisation organisation) {
+        System.out.println(organisation.getName());
         return OrganisationDto.builder()
                 .id(organisation.getId())
                 .name(organisation.getName())
+                .name(organisation.getName())
+                .createdAt(organisation.getCreatedAt())
                 .build();
     }
 }

@@ -1,22 +1,24 @@
 package com.example.paypromodulith.authentication.domain.model;
 
-import com.example.paypromodulith.entity.Organisation;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.UUID;
+import lombok.*;
 
-/**
- * DTO for {@link Organisation}
- */
-@Data
+/** DTO for {@link com.example.paypromodulith.entity.Organisation} */
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class OrganisationDto implements Serializable {
-    private UUID id;
-    private Instant createdAt;
-    private String name;
+  private UUID id;
+  private Instant createdAt;
+  private String name;
+  private Set<AdminRowDto> adminRows = new LinkedHashSet<>();
+  private Set<DepartmentDto> departments = new LinkedHashSet<>();
+  private Set<FileDto> files = new LinkedHashSet<>();
+  private SpaceDto space;
 }

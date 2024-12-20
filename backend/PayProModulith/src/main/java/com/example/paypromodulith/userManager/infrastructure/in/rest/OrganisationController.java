@@ -38,4 +38,14 @@ public class OrganisationController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+  @GetMapping("space/{id}")
+  public ResponseEntity<?> findBySpace(@PathVariable UUID id) {
+    try {
+      return ResponseEntity.ok(organisationService.findBySpaceId(id));
+    } catch (Exception e) {
+      log.error("e: ", e);
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
 }

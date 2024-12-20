@@ -1,7 +1,5 @@
 package com.example.paypromodulith.entity;
 
-import com.example.paypromodulith.AdminDepartment;
-import com.example.paypromodulith.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -42,13 +40,13 @@ public class Admin {
     @JoinColumn(name = "role")
     private Role role;
 
-    @OneToMany(mappedBy = "admin")
+    @OneToMany(mappedBy = "admin",fetch = FetchType.LAZY)
     private Set<AdminDepartment> adminDepartments = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "admin")
+    @OneToMany(mappedBy = "admin",fetch = FetchType.LAZY)
     private Set<AdminRow> adminRows = new LinkedHashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @ColumnDefault("'a977ae25-5ea3-4e3d-9702-55aff68dca1f'")
     @JoinColumn(name = "space")
     private Space space;

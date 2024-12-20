@@ -7,8 +7,10 @@ import {SingupComponent} from './pages/singup/singup.component';
 import {authGuard} from './guard/auth.guard';
 import {LoginComponent} from './pages/login/login.component';
 import {GeneralComponent} from './pages/general/general.component';
-import {AdminKernelComponent} from './pages/admin-kernel/admin-kernel.component';
+import {AdminKernelComponent} from './pages/admin/admin-kernel/admin-kernel.component';
 import {AdminComponent} from './pages/admin/admin.component';
+import {AdminDetailComponent} from './pages/admin/admin-detail/admin-detail.component';
+import {PdfViewerComponent} from './pages/pdf-viewer/pdf-viewer.component';
 
 export const routes: Routes = [
 
@@ -36,6 +38,10 @@ export const routes: Routes = [
       {
         path: 'administration',
         component:AdminComponent
+      },
+      {
+        path: 'admin-detail',
+        component:AdminDetailComponent
       }
 
     ]
@@ -61,7 +67,13 @@ export const routes: Routes = [
       },
       {
         path: 'user/:id',
-        component:UserDetailComponent
+        component:UserDetailComponent,
+        children:[
+          {
+            path: 'doc',
+            component:PdfViewerComponent
+          }
+        ]
       }
     ]
 

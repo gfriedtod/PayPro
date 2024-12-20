@@ -1,6 +1,5 @@
 package com.example.paypromodulith.entity;
 
-import com.example.paypromodulith.AdminDepartment;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;

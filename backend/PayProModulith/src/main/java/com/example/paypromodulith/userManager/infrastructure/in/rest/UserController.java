@@ -23,13 +23,7 @@ public class UserController {
 
         try {
             return ResponseEntity.ok(userService.findAllByOrganisation(
-                    OrganisationDto
-                            .builder()
-                            .id(
-                                    UUID
-                                            .fromString(organisationId)
-                            ).name("")
-                            .build(),
+                    UUID.fromString(organisationId),
                     UUID.fromString(adminId)));
         } catch (Exception e) {
             log.error("e: ", e);
@@ -40,6 +34,7 @@ public class UserController {
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody UserDto userDto) {
         try {
+            System.out.println(userDto.getPassword());
             return ResponseEntity.ok(userService.create(userDto));
         } catch (Exception e) {
             log.error("e: ", e);

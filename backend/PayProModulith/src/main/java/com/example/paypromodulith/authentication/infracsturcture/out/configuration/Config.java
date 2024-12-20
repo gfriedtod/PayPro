@@ -7,6 +7,7 @@ import com.example.paypromodulith.authentication.infracsturcture.out.adapter.Adm
 import com.example.paypromodulith.authentication.infracsturcture.out.adapter.UserAuthPersistenceAdapter;
 import com.example.paypromodulith.authentication.infracsturcture.out.persitence.repository.AdminAuthRepository;
 import com.example.paypromodulith.authentication.infracsturcture.out.persitence.repository.UserAuthRepository;
+import com.example.paypromodulith.mail.domain.service.MaileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +25,8 @@ public class Config {
         return new UserAuthPersistenceAdapter(userRepository,modelMapper);
     }
     @Bean
-    AdminAuthService adminAuthService(AdminAuthPersitenceAdapter adminAuthPersitenceAdapter, PasswordEncoder passwordEncoder){
-        return new AdminAuthService(adminAuthPersitenceAdapter,passwordEncoder);
+    AdminAuthService adminAuthService(AdminAuthPersitenceAdapter adminAuthPersitenceAdapter, PasswordEncoder passwordEncoder, MaileService maileService){
+        return new AdminAuthService(adminAuthPersitenceAdapter,passwordEncoder,maileService);
     }
 
     @Bean

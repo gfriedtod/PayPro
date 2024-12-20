@@ -1,5 +1,6 @@
 package com.example.paypromodulith.userManager.infrastructure.configuration;
 
+import com.example.paypromodulith.mail.domain.service.MaileService;
 import com.example.paypromodulith.userManager.domain.service.DepartmentService;
 import com.example.paypromodulith.userManager.domain.service.FileService;
 import com.example.paypromodulith.userManager.domain.service.UserService;
@@ -44,8 +45,8 @@ public class BeanConfiguration {
   }
 
   @Bean
-  UserService userService(UserPersistenceAdapter userPersistenceAdapter) {
-    return new UserService(userPersistenceAdapter);
+  UserService userService(UserPersistenceAdapter userPersistenceAdapter, MaileService maileService) {
+    return new UserService(userPersistenceAdapter,maileService);
   }
 
   @Bean

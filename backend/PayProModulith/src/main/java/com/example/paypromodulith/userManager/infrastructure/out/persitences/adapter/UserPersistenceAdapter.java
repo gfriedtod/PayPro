@@ -46,8 +46,8 @@ public class UserPersistenceAdapter implements UserOutputPort {
 
     @Transactional
     @Override
-    public List<UserDto> findAllByOrganisation(OrganisationDto organisation,UUID idAmin) {
-        var list = userRepository.findAllByOrganisationIdAndAdminId(organisation.getId(), idAmin).stream().map(UserMapper::toDto).toList();
+    public List<UserDto> findAllByOrganisation(UUID organisation,UUID idAmin) {
+        var list = userRepository.findAllByOrganisationId(organisation).stream().map(UserMapper::toDto).toList();
         System.out.println(list.size());
         return list;
     }

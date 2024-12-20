@@ -12,7 +12,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
    async  signUp(admin: AdminDto) {
-    return this.http.post(environment.api + '/auth/singup', admin);
+    return this.http.post(environment.api + '/auth/signup', admin);
   }
 
 

@@ -2,6 +2,7 @@ package com.example.paypromodulith.authentication.domain.model;
 
 import com.example.paypromodulith.entity.User;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserDto implements Serializable {
     private UUID id;
     private Instant createdAt;

@@ -1,10 +1,7 @@
-package com.example.paypromodulith;
+package com.example.paypromodulith.entity;
 
-import com.example.paypromodulith.entity.Admin;
-import com.example.paypromodulith.entity.Department;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.OffsetDateTime;
@@ -13,6 +10,9 @@ import java.time.OffsetDateTime;
 @Setter
 @Entity
 @Table(name = "admin_department")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AdminDepartment {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "admin_department_id_gen")

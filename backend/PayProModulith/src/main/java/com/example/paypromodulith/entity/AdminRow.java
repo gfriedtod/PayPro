@@ -32,7 +32,7 @@ public class AdminRow {
     @JoinColumn(name = "admin")
     private Admin admin;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @ColumnDefault("gen_random_uuid()")
     @JoinColumn(name = "organisation")
     private Organisation organisation;

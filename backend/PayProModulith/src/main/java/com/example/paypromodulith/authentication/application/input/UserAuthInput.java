@@ -1,7 +1,6 @@
 package com.example.paypromodulith.authentication.application.input;
 
 import com.example.paypromodulith.authentication.domain.model.LoginRequest;
-import com.example.paypromodulith.authentication.domain.model.LoginResponse;
 import com.example.paypromodulith.authentication.domain.model.LoginUserResponse;
 
 import java.security.NoSuchAlgorithmException;
