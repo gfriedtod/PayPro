@@ -51,6 +51,7 @@ dependencies:
   easy_pdf_viewer: ^1.0.8
   localstorage: ^5.0.0
   webview_flutter: ^4.10.0
+  document_viewer: ^0.0.1
 #  build_runner: ^2.4.13
 #  build_runner: ^2.4.13
 

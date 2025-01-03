@@ -1,3 +1,4 @@
+import 'package:document_viewer/document_viewer.dart';
 import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,21 +33,26 @@ class PdfPageView extends StatelessWidget {
       ..loadRequest(Uri.parse('https://flutter.dev'));
     return  Scaffold(
       backgroundColor: Colors.white,
-        body:  FutureBuilder(
-          future: PDFDocument.fromURL(url),
-          builder: (context,snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator(
-                color: Colors.black,
-                strokeWidth: 8,
-              ));
+        body:  DocumentViewer(filePath: url),
 
-            }
-            if (snapshot.data != null) {
-              return PDFViewer( document: snapshot.data!,);
-            }
-            return Container();
-          }
-        ),);
+
+        // FutureBuilder(
+        //   future: PDFDocument.fromURL(url),
+        //   builder: (context,snapshot) {
+        //     if (snapshot.connectionState == ConnectionState.waiting) {
+        //       return const Center(child: CircularProgressIndicator(
+        //         color: Colors.black,
+        //         strokeWidth: 8,
+        //       ));
+        //
+        //     }
+        //     if (snapshot.data != null) {
+        //       return PDFViewer( document: snapshot.data!,);
+        //     }
+        //     return Container();
+        //   }
+        // ),
+
+    );
   }
 }
