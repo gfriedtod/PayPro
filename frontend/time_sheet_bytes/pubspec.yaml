@@ -48,6 +48,7 @@ dependencies:
   dio: ^5.7.0
   path_provider: ^2.1.5
   mailjet: ^1.0.4+4
+  icons_launcher: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -59,7 +60,15 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
-
+icons_launcher:
+  image_path: "assets/images/logo.png"
+  platforms:
+    android:
+      enable: true
+      image_path: "assets/images/logo.png"
+      background_color: "#000000"
+    ios:
+      enable: true
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 

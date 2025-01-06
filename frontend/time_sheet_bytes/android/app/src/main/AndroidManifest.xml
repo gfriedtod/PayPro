@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="time_sheet_bytes"
+        android:label="time sheet bytes"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
