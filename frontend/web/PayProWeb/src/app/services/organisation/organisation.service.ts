@@ -17,6 +17,9 @@ export class OrganisationService {
     return this.http.get<OrganisationDto[]>(`${environment.api}/organisation/admin/${user.id}`);
   }
 
+  async fetchOrganisationBySpaceId(id: string) {
+    return this.http.get<OrganisationDto[]>(`${environment.api}/organisation/space/${id}`);
+  }
   async saveOrganisation(organisation:OrganisationDto) {
     return this.http.post<OrganisationDto>(`${environment.api}/organisation`, organisation);
   }

@@ -3,8 +3,11 @@ package com.example.paypromodulith.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Type;
 
 import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -29,9 +32,12 @@ public class AdminRow {
     @JoinColumn(name = "admin")
     private Admin admin;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @ColumnDefault("gen_random_uuid()")
     @JoinColumn(name = "organisation")
     private Organisation organisation;
+
+    @Column(name = "\"departmentList\"",columnDefinition = "uuid[]")
+    private List<UUID> departmentList;
 
 }

@@ -10,8 +10,8 @@ export class UserService {
 
   constructor(private  http: HttpClient) { }
 
-  async fetchUsers(id:string) {
-    return this.http.get<UserDto[]>(environment.api + `/users/organisation/${id}`);
+  async fetchUsers(id:string , idAdmin:string) {
+    return this.http.get<UserDto[]>(environment.api + `/users/organisation/${id}/${idAdmin}`);
   }
 
   async postUser(user: UserDto) {

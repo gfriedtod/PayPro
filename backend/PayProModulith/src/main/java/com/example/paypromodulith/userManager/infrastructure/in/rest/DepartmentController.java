@@ -3,12 +3,11 @@ package com.example.paypromodulith.userManager.infrastructure.in.rest;
 import com.example.paypromodulith.userManager.domain.model.DepartmentDto;
 import com.example.paypromodulith.userManager.domain.model.OrganisationDto;
 import com.example.paypromodulith.userManager.domain.service.DepartmentService;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @Slf4j
 @RequestMapping("/department")
@@ -21,7 +20,7 @@ public class DepartmentController {
     @GetMapping("/organisation/{organisationId}")
     public ResponseEntity<?> findAllByOrganisation(@PathVariable String organisationId) {
         try {
-            return ResponseEntity.ok(departmentService.findAllByOrganisation(OrganisationDto.builder().id(UUID.fromString(organisationId)).name("").build()));
+            return ResponseEntity.ok(departmentService.findAllByOrganisation(UUID.fromString(organisationId)));
         } catch (Exception e) {
             log.error("e: ", e);
             return ResponseEntity.badRequest().body(e.getMessage());

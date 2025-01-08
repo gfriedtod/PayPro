@@ -10,8 +10,7 @@ COPY build.gradle settings.gradle ./
 COPY src ./src
 
 # Rendre gradlew exécutable et construire l'application
-RUN chmod +x ./gradlew && \
-    ./gradlew build --no-daemon
+RUN ./gradlew build --no-daemon
 
 # Étape finale avec une image plus légère
 FROM eclipse-temurin:21-jre-jammy

@@ -1,5 +1,7 @@
 package com.example.paypromodulith.userManager.domain.service;
 
+import com.example.paypromodulith.mail.domain.dto.EmailRequest;
+import com.example.paypromodulith.mail.domain.service.MaileService;
 import com.example.paypromodulith.userManager.application.in.UserUseCase;
 import com.example.paypromodulith.userManager.application.out.UserOutputPort;
 import com.example.paypromodulith.userManager.domain.model.OrganisationDto;
@@ -15,6 +17,7 @@ import java.util.UUID;
 public class UserService implements UserUseCase {
 
     private final UserOutputPort userOutputPort;
+    private final MaileService maileService;
     @Override
     public List<UserDto> findAll() {
         return userOutputPort.findAll();
@@ -22,7 +25,30 @@ public class UserService implements UserUseCase {
 
     @Override
     public UserDto create(UserDto userDto) {
-        return userOutputPort.create(userDto);
+        try{
+            String password = userDto.getPassword();
+            var user  = userOutputPort.create(userDto);
+            System.out.println(userDto.getPassword());
+
+            maileService.send(
+                    EmailRequest.builder()
+                            .to(user.getEmail())
+                            .subject("Welcome to Paypro")
+                            .message("<h1>Welcome to Paypro</h1>\n" +
+                                    "\n" +
+                                    "<p>Hi " + user.getName() + "</p>\n" +
+                                    "\n" +
+                                    "<p>email: " + user.getEmail()+ "</p>\n" +
+                                    "\n" +
+                                    "<p>password: " + password + "</p>\n" +
+                                    "<p>Thank you for registering with us. We are excited to have you join our community!</p>\n" +
+                                    "\n" ).build()
+
+            );
+           return user;
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -36,7 +62,7 @@ public class UserService implements UserUseCase {
     }
 
     @Override
-    public List<UserDto> findAllByOrganisation(OrganisationDto organisation) {
-        return userOutputPort.findAllByOrganisation(organisation);
+    public List<UserDto> findAllByOrganisation(UUID organisation, UUID adminId) {
+        return userOutputPort.findAllByOrganisation(organisation, adminId);
     }
 }

@@ -78,7 +78,7 @@ export class LoginComponent {
         },
         complete: () => {
           this.perform.set(false);
-          this.router.navigate(['/general']);
+          this.router.navigate(['/general/site']);
 
 
         }

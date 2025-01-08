@@ -2,7 +2,7 @@
   <app-toast class="z-[1001] absolute right-1 bottom-1 before:fade-in after:fade-out" [error]="toastState()"></app-toast>
 
 }
-<main class="w-full h-dvh flex flex-col items-center p-2 ">
+<main class="w-full h-dvh flex flex-col gap-3 items-center p-2 ">
   <div class="h-10"></div>
   <div class="w-10/12">
     <h1 hlmH3 class="w-full text-start text-3xl">Dashboard</h1>
@@ -44,7 +44,9 @@
     </hlm-sheet>
 
   </div>
-  <div class="h-5"></div>
+
+  <div class="h-[20px]"></div>
+
   <div class="w-10/12 grid grid-cols-6 gap-4">
     @if (loadingOrganisation()){
       <hlm-spinner class="self-center"></hlm-spinner>

@@ -22,7 +22,7 @@ public class ClientService implements UserDetailsService  {
             System.out.println(admin.getEmail());
             return User.builder().username(admin.getEmail()).password(admin.getPassword()).build();
         } else if (user != null) {
-            return User.builder().username(user.getEmail()).build();
+            return User.builder().username(user.getEmail()).password(user.getPassword()).build();
         }
 
         return null;

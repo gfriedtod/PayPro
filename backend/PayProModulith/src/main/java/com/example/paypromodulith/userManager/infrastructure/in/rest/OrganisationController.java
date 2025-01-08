@@ -3,12 +3,11 @@ package com.example.paypromodulith.userManager.infrastructure.in.rest;
 import com.example.paypromodulith.userManager.domain.model.AdminDto;
 import com.example.paypromodulith.userManager.domain.model.OrganisationDto;
 import com.example.paypromodulith.userManager.domain.service.OrganisationService;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -39,4 +38,14 @@ public class OrganisationController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+  @GetMapping("space/{id}")
+  public ResponseEntity<?> findBySpace(@PathVariable UUID id) {
+    try {
+      return ResponseEntity.ok(organisationService.findBySpaceId(id));
+    } catch (Exception e) {
+      log.error("e: ", e);
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
 }

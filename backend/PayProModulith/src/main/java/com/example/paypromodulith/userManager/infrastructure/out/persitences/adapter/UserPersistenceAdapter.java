@@ -1,16 +1,14 @@
 package com.example.paypromodulith.userManager.infrastructure.out.persitences.adapter;
 
-import com.example.paypromodulith.entity.Organisation;
-import com.example.paypromodulith.entity.User;
 import com.example.paypromodulith.userManager.application.out.UserOutputPort;
 import com.example.paypromodulith.userManager.domain.model.OrganisationDto;
 import com.example.paypromodulith.userManager.domain.model.UserDto;
 
-import com.example.paypromodulith.userManager.infrastructure.out.persitences.mapper.OrganisationMapper;
 import com.example.paypromodulith.userManager.infrastructure.out.persitences.mapper.UserMapper;
 import com.example.paypromodulith.userManager.infrastructure.out.persitences.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -21,6 +19,7 @@ public class UserPersistenceAdapter implements UserOutputPort {
 
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
@@ -31,6 +30,7 @@ public class UserPersistenceAdapter implements UserOutputPort {
     @Transactional
     @Override
     public UserDto create(UserDto userDto) {
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         return UserMapper.toDto(userRepository.save(UserMapper.toEntity(userDto)));
     }
 
@@ -46,8 +46,8 @@ public class UserPersistenceAdapter implements UserOutputPort {
 
     @Transactional
     @Override
-    public List<UserDto> findAllByOrganisation(OrganisationDto organisation) {
-        var list = userRepository.findAllByOrganisationId(organisation.getId()).stream().map(UserMapper::toDto).toList();
+    public List<UserDto> findAllByOrganisation(UUID organisation,UUID idAmin) {
+        var list = userRepository.findAllByOrganisationId(organisation).stream().map(UserMapper::toDto).toList();
         System.out.println(list.size());
         return list;
     }

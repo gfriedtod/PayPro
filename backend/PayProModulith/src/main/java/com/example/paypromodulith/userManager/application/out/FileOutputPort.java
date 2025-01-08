@@ -6,8 +6,7 @@ import com.example.paypromodulith.userManager.domain.model.UserDto;
 import java.util.List;
 
 public interface FileOutputPort {
-    FileDto save(FileDto fileDto);
+  FileDto save(FileDto fileDto);
 
-    List<FileDto> fetchFilesByUser(UserDto userDto);
-
+  List<FileDto> fetchFilesByUser(UserDto userDto);
 }

@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 import {HomePageComponent} from './pages/home-page/home-page.component';
 import {OraganisationPageComponent} from './pages/organanisaation/oraganisation-page/oraganisation-page.component';
 import {UserDetailComponent} from './pages/user-detail/user-detail.component';
@@ -7,6 +7,10 @@ import {SingupComponent} from './pages/singup/singup.component';
 import {authGuard} from './guard/auth.guard';
 import {LoginComponent} from './pages/login/login.component';
 import {GeneralComponent} from './pages/general/general.component';
+import {AdminKernelComponent} from './pages/admin/admin-kernel/admin-kernel.component';
+import {AdminComponent} from './pages/admin/admin.component';
+import {AdminDetailComponent} from './pages/admin/admin-detail/admin-detail.component';
+import {PdfViewerComponent} from './pages/pdf-viewer/pdf-viewer.component';
 
 export const routes: Routes = [
 
@@ -25,7 +29,24 @@ export const routes: Routes = [
   },
   {
     path:'general',
-    component:GeneralComponent
+    component:AdminKernelComponent,
+    canActivate: [authGuard],
+
+    children:[
+      {
+        path: 'site',
+        component:GeneralComponent
+      },
+      {
+        path: 'administration',
+        component:AdminComponent
+      },
+      {
+        path: 'admin-detail',
+        component:AdminDetailComponent
+      }
+
+    ]
   },
   {
     path: 'main',
@@ -48,7 +69,13 @@ export const routes: Routes = [
       },
       {
         path: 'user/:id',
-        component:UserDetailComponent
+        component:UserDetailComponent,
+        children:[
+          {
+            path: 'doc',
+            component:PdfViewerComponent
+          }
+        ]
       }
     ]
 

@@ -1,0 +1,293 @@
+@if (visibleToast()){
+  <app-toast class="z-[1001] absolute right-1 bottom-1 before:fade-in after:fade-out" [error]="toastState()"></app-toast>
+
+}
+<div class="w-full flex flex-col justify-start  bg-[#F9F9F9] p-10 gap-10">
+
+
+  <div class="w-full flex justify-start ">
+    <h1 class="text-3xl font-bold">Admin Zone</h1>
+  </div>
+
+  <div class="grid grid-cols-4 gap-4">
+    <div class="col-span-1">
+      <div hlmCard class="bg-[#D0E7FF] w-full h-28 flex justify-start items-center gap-2 p-5">
+        <div hlmCard class="bg-white w-14 h-14">
+          <div class="w-full h-full flex justify-center items-center">
+            <hlm-icon name="lucideUser" class="text-black"></hlm-icon>
+
+          </div>
+        </div>
+        <div class="flex flex-col justify-center items-start">
+          <h1 class="font-bold">Total Admin</h1>
+          <h1 class=>{{ admin().length }}</h1>
+        </div>
+      </div >
+    </div>
+    <div class="col-span-1">
+      <div hlmCard  class="bg-[#AEF4EB] shadow-white border-none   w-full h-28 flex justify-start items-center gap-2 p-5">
+        <div hlmCard class="bg-white w-14 h-14">
+          <div class="w-full h-full flex justify-center items-center">
+            <hlm-icon name="lucideUserPlus" class="text-black"></hlm-icon>
+
+          </div>
+        </div>
+        <div class="flex flex-col justify-center items-start">
+          <h1 class="font-bold">Total Super Admin</h1>
+          <h1 class=>{{ sortAdmin("SUPER_ADMIN") }}</h1>
+        </div>
+      </div >
+    </div>
+    <div class="col-span-1">
+      <div hlmCard class="bg-[#G9F8FF] w-full h-28 flex justify-start items-center gap-2 p-5">
+        <div hlmCard class="bg-white w-14 h-14">
+          <div class="w-full h-full flex justify-center items-center">
+            <hlm-icon name="lucideUserMinus" class="text-black"></hlm-icon>
+
+          </div>
+        </div>
+        <div class="flex flex-col justify-center items-start">
+          <h1 class="font-bold">Total Simple Admin</h1>
+          <h1 class=>{{ sortAdmin("ADMIN") }}</h1>
+        </div>
+      </div >
+    </div>
+    <!--    <div class="col-span-1">-->
+    <!--      <div hlmCard class="bg-[#EFF8FF] w-full h-28 flex justify-start items-center gap-2 p-5">-->
+    <!--        <div hlmCard class="bg-white w-14 h-14">-->
+    <!--          <div class="w-full h-full flex justify-center items-center">-->
+    <!--            <hlm-icon name="lucideAdmin" class="text-black"></hlm-icon>-->
+
+    <!--          </div>-->
+    <!--        </div>-->
+    <!--        <div class="flex flex-col justify-center items-start">-->
+    <!--          <h1 class="font-bold">New Employees</h1>-->
+    <!--          <h1 class=>10</h1>-->
+    <!--        </div>-->
+    <!--      </div >-->
+    <!--    </div>-->
+  </div>
+
+  <div class="flex justify-between">
+    <div class="flex  gap-3">
+      <input class="bg-white h-12 text-gray-300 " hlmInput type="text" placeholder="Employee name">
+      <brn-select class="inline-block" placeholder="Select an option">
+        <hlm-select-trigger class="w-56 h-[3rem]">
+          <hlm-select-value />
+        </hlm-select-trigger>
+        <hlm-select-content>
+          <hlm-option value="Refresh">Refresh</hlm-option>
+          <hlm-option value="Settings">Settings</hlm-option>
+          <hlm-option value="Help">Help</hlm-option>
+          <hlm-option value="Signout">Sign out</hlm-option>
+        </hlm-select-content>
+      </brn-select>
+<!--      <brn-select class="inline-block" placeholder="Select an option">-->
+<!--        <hlm-select-trigger class="w-56 h-[3rem]">-->
+<!--          <hlm-select-value />-->
+<!--        </hlm-select-trigger>-->
+<!--        <hlm-select-content>-->
+<!--          @for (val of departmentDtos();track val.id){-->
+<!--            <hlm-option value="{{val.id}}">{{ val.name }}</hlm-option>-->
+<!--          }-->
+
+<!--        </hlm-select-content>-->
+<!--      </brn-select>-->
+      <button hlmBtn class="h-11">
+        <hlm-icon name="lucideSearch"></hlm-icon>
+      </button>
+    </div>
+
+    <hlm-sheet side="right">
+      <button brnSheetTrigger class="gap-2 h-11 " hlmBtn>
+        <hlm-icon name="lucidePlus"></hlm-icon>
+        Add Admin
+      </button>
+      <hlm-sheet-content *brnSheetContent="let ctx" class="overflow-scroll">
+        <hlm-sheet-header>
+          <h3 hlmSheetTitle>Edit Profile</h3>
+          <p hlmSheetDescription>Make changes to your profile here. Click save when you're done.</p>
+        </hlm-sheet-header>
+        <div [formGroup]="adminFrom" class="py-4 grid gap-4">
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="name" hlmLabel>Name</label>
+            <input class="col-span-3" formControlName="name" hlmInput id="name" value="Pedro Duarte"/>
+          </div>
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="password" hlmLabel>Password</label>
+            <input class="col-span-3" formControlName="password" hlmInput id="password" value="@peduarte"/>
+          </div>
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="email" hlmLabel>email</label>
+            <input class="col-span-3" formControlName="email" hlmInput id="email" value="@peduarte"/>
+          </div>
+          <div class="items-center grid grid-cols-4 gap-4">
+            <label class="text-right" for="role" hlmLabel>Role</label>
+            <brn-select class="inline-block" formControlName="role" id="role" placeholder="Select an option">
+              <hlm-select-trigger class="w-60">
+                <hlm-select-value/>
+              </hlm-select-trigger>
+              <hlm-select-content>
+                @for (val of roles();track val){
+                  <hlm-option value="{{val.id}}">{{ val.name }}</hlm-option>
+                }
+
+
+              </hlm-select-content>
+            </brn-select>
+
+          </div>
+
+
+        </div>
+        <hlm-sheet-footer>
+          <button (click)="saveAdmin()" hlmBtn type="submit">
+            @if (loading()) {
+              <hlm-spinner size="sm"></hlm-spinner>
+            } @else {
+              Save Changes
+            }
+          </button>
+        </hlm-sheet-footer>
+      </hlm-sheet-content>
+    </hlm-sheet>
+  </div>
+  <div class="flex flex-col justify-between gap-4 sm:flex-row">
+    <input
+      hlmInput
+      class="w-full md:w-80 bg-white h-12 "
+      placeholder="Filter emails..."
+      [ngModel]="_emailFilter()"
+      (ngModelChange)="_rawFilterInput.set($event)"
+    />
+
+    <button hlmBtn variant="outline" align="end" [brnMenuTriggerFor]="menu">
+      Columns
+      <hlm-icon name="lucideChevronDown" class="ml-2" size="sm" />
+    </button>
+    <ng-template #menu>
+      <hlm-menu class="w-32">
+        @for (column of _brnColumnManager.allColumns; track column.name) {
+          <button
+            hlmMenuItemCheckbox
+            [disabled]="_brnColumnManager.isColumnDisabled(column.name)"
+            [checked]="_brnColumnManager.isColumnVisible(column.name)"
+            (triggered)="_brnColumnManager.toggleVisibility(column.name)"
+          >
+            <hlm-menu-item-check />
+            <span>{{ column.label }}</span>
+          </button>
+        }
+      </hlm-menu>
+    </ng-template>
+  </div>
+
+  <brn-table
+    hlm
+    stickyHeader
+    class="border-border mt-4 block h-[335px] relative overflow-auto rounded-md border"
+    [dataSource]="_filteredSortedPaginatedAdminDtos()"
+    [displayedColumns]="_allDisplayedColumns()"
+    [trackBy]="_trackBy"
+  >
+    <brn-column-def name="select" class="w-12">
+      <hlm-th *brnHeaderDef>
+        <hlm-checkbox [checked]="_checkboxState()" (changed)="handleHeaderCheckboxChange()" />
+      </hlm-th>
+      <hlm-td *brnCellDef="let element">
+        <hlm-checkbox [checked]="_isAdminDtoSelected(element)" (changed)="toggleAdminDto(element)" />
+      </hlm-td>
+    </brn-column-def>
+    <brn-column-def name="status" class="w-32 sm:w-40">
+      <hlm-th truncate *brnHeaderDef>Status</hlm-th>
+      <hlm-td truncate *brnCellDef="let element">
+        {{ element.role.name | titlecase }}
+      </hlm-td>
+    </brn-column-def>
+    <brn-column-def name="email" class="w-32 lg:flex-1">
+      <hlm-th *brnHeaderDef>
+        <button hlmBtn size="sm" variant="ghost" (click)="handleEmailSortChange()">
+          Email
+          <hlm-icon class="ml-3" size="sm" name="lucideArrowUpDown" />
+        </button>
+      </hlm-th>
+      <hlm-td truncate *brnCellDef="let element">
+        <button (click)="save(element)" class="w-full h-10  gap-2 font-normal flex justify-start" hlmBtn
+                routerLink="/general/admin-detail"
+                variant="ghost"> {{ element.email }}
+        </button>
+      </hlm-td>
+    </brn-column-def>
+    <brn-column-def name="amount" class="">
+      <hlm-th *brnHeaderDef>Name</hlm-th>
+      <hlm-td class="font-medium tabular-nums" *brnCellDef="let element">
+        {{ element.name }}
+      </hlm-td>
+    </brn-column-def>
+<!--    <brn-column-def name="departement" class="w-32">-->
+<!--      <hlm-th *brnHeaderDef>Departement</hlm-th>-->
+<!--      <hlm-td class="font-medium tabular-nums" *brnCellDef="let element">-->
+<!--        {{ element.department.name}}-->
+<!--      </hlm-td>-->
+<!--    </brn-column-def>-->
+
+    <brn-column-def name="actions" class="w-16">
+      <hlm-th *brnHeaderDef></hlm-th>
+      <hlm-td *brnCellDef="let element">
+        <button hlmBtn variant="ghost" class="h-6 w-6 p-0.5" align="end" [brnMenuTriggerFor]="menu">
+          <hlm-icon class="w-4 h-4" name="lucideMoreHorizontal" />
+        </button>
+
+        <ng-template #menu>
+          <hlm-menu>
+            <hlm-menu-label>Actions</hlm-menu-label>
+            <hlm-menu-separator />
+            <hlm-menu-group>
+              <button hlmMenuItem (copy)="copy(element.id)">Copy AdminDto ID</button>
+            </hlm-menu-group>
+            <hlm-menu-separator />
+            <hlm-menu-group>
+              <button hlmMenuItem routerLink="/main/Admin/{{element.id}}">View  details</button>
+            </hlm-menu-group>
+          </hlm-menu>
+        </ng-template>
+      </hlm-td>
+    </brn-column-def>
+    <div brnNoDataRow class="flex items-center justify-center p-20 text-muted-foreground">
+      @if (loading()) {
+        <hlm-spinner/>
+      } @else {
+        No data
+      }
+    </div>
+  </brn-table>
+  <div
+    class="flex flex-col justify-between mt-4 sm:flex-row sm:items-center"
+    *brnPaginator="let ctx; totalElements: _totalElements(); pageSize: _pageSize(); onStateChange: _onStateChange"
+  >
+    <span class="text-sm text-muted-foreground text-sm">{{ _selected().length }} of {{ _totalElements() }} row(s) selected</span>
+    <div class="flex mt-2 sm:mt-0">
+      <brn-select class="inline-block" placeholder="{{ _availablePageSizes[0] }}" [(ngModel)]="_pageSize">
+        <hlm-select-trigger class="inline-flex mr-1 w-15 h-9">
+          <hlm-select-value />
+        </hlm-select-trigger>
+        <hlm-select-content>
+          @for (size of _availablePageSizes; track size) {
+            <hlm-option [value]="size">
+              {{ size === 10000 ? 'All' : size }}
+            </hlm-option>
+          }
+        </hlm-select-content>
+      </brn-select>
+
+      <div class="flex space-x-1">
+        <button size="sm" variant="outline" hlmBtn [disabled]="!ctx.decrementable()" (click)="ctx.decrement()">
+          Previous
+        </button>
+        <button size="sm" variant="outline" hlmBtn [disabled]="!ctx.incrementable()" (click)="ctx.increment()">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

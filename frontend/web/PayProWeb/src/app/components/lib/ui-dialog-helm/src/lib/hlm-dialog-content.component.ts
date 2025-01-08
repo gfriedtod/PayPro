@@ -3,14 +3,15 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, computed, inject
 import { lucideX } from '@ng-icons/lucide';
 import { hlm } from '@spartan-ng/ui-core';
 import { BrnDialogCloseDirective, BrnDialogRef, injectBrnDialogContext } from '@spartan-ng/ui-dialog-brain';
-import { HlmIconComponent, provideIcons } from '@spartan-ng/ui-icon-helm';
 import type { ClassValue } from 'clsx';
 import { HlmDialogCloseDirective } from './hlm-dialog-close.directive';
+import {HlmIconComponent} from '../../../ui-icon-helm/src';
+import {provideIcons} from '@ng-icons/core';
 
 @Component({
 	selector: 'hlm-dialog-content',
 	standalone: true,
-	imports: [NgComponentOutlet, BrnDialogCloseDirective, HlmDialogCloseDirective, HlmIconComponent],
+	imports: [NgComponentOutlet, BrnDialogCloseDirective, HlmIconComponent],
 	providers: [provideIcons({ lucideX })],
 	host: {
 		'[class]': '_computedClass()',
