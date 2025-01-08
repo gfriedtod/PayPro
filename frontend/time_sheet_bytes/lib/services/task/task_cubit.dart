@@ -106,7 +106,6 @@ class TaskCubit extends Cubit<TaskState> {
       File file =
           await convertJsonToCsv(tasks.map((task) => task.toJson()).toList());
 
-
       final messageData = {
         "Messages": [
           {
@@ -115,10 +114,7 @@ class TaskCubit extends Cubit<TaskState> {
               "Name": user.name,
             },
             "To": [
-              {
-                "Email": user.emailTo,
-                "Name": user.name
-              }
+              {"Email": user.emailTo, "Name": user.name}
             ],
             "Subject": "Daily Task of ${user.name}",
             "TextPart": "Daily Task of ${user.name}",
@@ -140,18 +136,23 @@ class TaskCubit extends Cubit<TaskState> {
         headers: {
           'Authorization': 'Basic $credentials',
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods':
+          'GET,PUT,POST,DELETE'
         },
       );
 
       try {
         final response = await dio.post(
-          "https://api.mailjet.com/v3.1/send",
+          "/send",
           data: messageData,
         );
 
-        tasks= [];
+        tasks = [];
 
-       emit( TaskState.added(tasks));
+        emit(TaskState.added(tasks));
       } on DioException catch (e) {
         // Handle error (e.g., print error message)
         print('Error sending email: ${e}');

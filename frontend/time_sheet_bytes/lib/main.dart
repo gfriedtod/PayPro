@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:time_sheet_bytes/page/add_task_page.dart';
 import 'package:time_sheet_bytes/page/main_page.dart';
 import 'package:time_sheet_bytes/page/personal_information_page.dart';
@@ -13,6 +14,7 @@ import 'package:time_sheet_bytes/services/task/task_cubit.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initLocalStorage(); // Initialize GetStorage
+
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
